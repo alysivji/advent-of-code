@@ -81,6 +81,7 @@ celerybeat-schedule
 
 # dotenv
 .env
+.envrc
 
 # virtualenv
 .venv
@@ -99,3 +100,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+#misc
+.DS_Store
+.vscode/
