@@ -3,10 +3,12 @@
 http://adventofcode.com/2017/day/8
 """
 
+from collections import defaultdict
 import re
-from typing import List, NamedTuple
+from typing import Dict, List, NamedTuple
 
-INSTRUCTION_REGEX = re.compile("(\w+)\s(inc|dec)\s(\-*\d+)\sif\s(\w+)\s(<|>|<=|>=|==|!=)\s(\-*\d+)")
+INSTRUCTION_REGEX = re.compile(
+    "(\w+)\s(inc|dec)\s(\-*\d+)\sif\s(\w+)\s(<|>|<=|>=|==|!=)\s(\-*\d+)")
 TEST_INPUT = """b inc 5 if a > 1
 a inc 1 if b < 5
 c dec -10 if a >= 1
@@ -43,16 +45,19 @@ def parse_instructions(lines: str) -> List[Instruction]:
 
 
 def largest_register_value(instructions: List[Instruction]) -> int:
-    # get all distinct registers
-    registers = [instruction.register for instruction in instructions]
-    registers += [instruction.conditional_register
-                  for instruction in instructions]
-    distinct_registers = set(registers)
+    # # get all distinct registers
+    # registers = [instruction.register for instruction in instructions]
+    # registers += [instruction.conditional_register
+    #               for instruction in instructions]
+    # distinct_registers = set(registers)
 
-    # initialize register values
-    register_values = {}
-    for register in distinct_registers:
-        register_values[register] = 0
+    # # initialize register values
+    # register_values = {}
+    # for register in distinct_registers:
+    #     register_values[register] = 0
+    # ------------------------------------------------------------------------
+    # improvement ... could add a default dict here
+    register_values: Dict[str, int] = defaultdict(int)
 
     max_value = 0
 
@@ -72,14 +77,14 @@ def largest_register_value(instructions: List[Instruction]) -> int:
         if max(register_values.values()) >= max_value:
             max_value = max(register_values.values())
 
-    print(max_value)
+    print(f'Lifetime max value: {max_value}')
 
     return max(register_values.values())
 
 
 if __name__ == '__main__':
     instructions = parse_instructions(TEST_INPUT)
-    print(largest_register_value(instructions))
+    assert largest_register_value(instructions) == 1
 
     with open('08_input.txt', 'r') as f:
         instructions = parse_instructions(f.read())
