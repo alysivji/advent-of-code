@@ -76,10 +76,10 @@ def get_ending_level(center: Hexagon, moves: str) -> Tuple[int, int]:
 if __name__ == '__main__':
     center = create_hexagon_mosaic(15_000_000)
 
-    assert get_ending_level(center, "ne,ne,ne") == 3
-    assert get_ending_level(center, 'ne,ne,sw,sw') == 0
-    assert get_ending_level(center, 'ne,ne,s,s') == 2
-    assert get_ending_level(center, 'se,sw,se,sw,sw') == 3
+    assert get_ending_level(center, "ne,ne,ne")[0] == 3
+    assert get_ending_level(center, 'ne,ne,sw,sw')[0] == 0
+    assert get_ending_level(center, 'ne,ne,s,s')[0] == 2
+    assert get_ending_level(center, 'se,sw,se,sw,sw')[0] == 3
 
     with open('11_input.txt', 'r') as f:
         moves = f.readline().strip()
