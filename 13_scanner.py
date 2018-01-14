@@ -33,10 +33,9 @@ def build_firewall(layers: Dict[int, int]) -> Dict[int, List]:
     return firewall
 
 
-def calculate_penalty(
-        firewall: Dict[int, List],
-        delay: int=0,
-        early_exit: bool=False) -> int:
+def calculate_penalty(firewall: Dict[int, List],
+                      delay: int=0,
+                      early_exit: bool=False) -> int:
     packet_position = 0
     total_penalty = 0
     num_layers = max(firewall.keys())
@@ -94,7 +93,7 @@ def scanner_next_position(scanner: List) -> List:
 
         return scanner
 
-    raise
+    raise RuntimeError('should never get here')
 
 
 def assess_penalty(scanner: List) -> bool:
@@ -106,6 +105,8 @@ def assess_penalty(scanner: List) -> bool:
 
 
 def find_optimal_delay(firewall: Dict[int, List]) -> int:
+    """Not very efficient. Need to come up with a better way
+    """
     delay = 0
     while True:
         penalty = calculate_penalty(firewall, delay, early_exit=True)
@@ -115,13 +116,63 @@ def find_optimal_delay(firewall: Dict[int, List]) -> int:
             delay += 1
 
 
+class Scanner:
+    def __init__(self, range_, depth):
+        self.counter = range_
+        self.depth = depth
+
+    def increment_delay(self):
+        """True means it is safe to cross; False means caught
+        """
+        while True:
+            if self.depth == 0:
+                yield True
+            else:
+                if self.counter % ((self.depth - 1) * 2) == 0:
+                    yield False
+                else:
+                    yield True
+
+            self.counter += 1
+
+
+def find_delay(layers) -> int:
+    # Build Firewall
+    firewall = []
+
+    counter = 0
+    num_layers = max(layers.keys())
+    while counter <= num_layers:
+        if counter in layers:
+            scanner = Scanner(counter, layers[counter])
+        else:
+            scanner = Scanner(counter, 0)
+
+        scanner_iter = scanner.increment_delay()
+        firewall.append(scanner_iter)
+        counter += 1
+
+    # import pdb; pdb.set_trace()
+
+    delay = 0
+    while True:
+        delay_state = [next(scanner) for scanner in firewall]
+
+        if all(delay_state):
+            return delay
+
+        delay += 1
+
+    return firewall
+
+
 if __name__ == '__main__':
-    layers: Dict[int, int] = {}
+    test_layers: Dict[int, int] = {}
     for line in TEST_INPUT.split('\n'):
         range_, depth = line.split(': ')
-        layers[int(range_)] = int(depth)
+        test_layers[int(range_)] = int(depth)
 
-    test_firewall = build_firewall(layers)
+    test_firewall = build_firewall(test_layers)
     assert calculate_penalty(test_firewall) == 24
     assert find_optimal_delay(test_firewall) == 10
 
@@ -133,4 +184,9 @@ if __name__ == '__main__':
 
     firewall = build_firewall(layers)
     print(calculate_penalty(firewall))
-    print(find_optimal_delay(firewall))
+
+    # new method
+    assert find_delay(test_layers) == 10
+    print(find_delay(test_layers))
+    # find_delay(layers)
+
