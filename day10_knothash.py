@@ -37,6 +37,26 @@ def get_mutated_list(input_list, input_lengths, curr_index=0, step_size=0):
     return (circular_list, curr_index, step_size)
 
 
+def knot_hash(input_):
+    INPUT_LENGTHS2 = [ord(item) for item in input_]
+    INPUT_LENGTHS2.extend([17, 31, 73, 47, 23])
+
+    result = (list(range(256)), 0, 0)
+    for _ in range(64):
+        curr_list = result[0]
+        curr_index = result[1]
+        curr_step = result[2]
+        result = get_mutated_list(curr_list,
+                                  INPUT_LENGTHS2,
+                                  curr_index=curr_index,
+                                  step_size=curr_step)
+
+    slices = [slice(16*(x), 16*(x+1)) for x in range(16)]
+    blocks = [result[0][single_slice] for single_slice in slices]
+    xor_result = [reduce(xor, block) for block in blocks]
+    return ''.join([format(block, '2x') for block in xor_result])
+
+
 if __name__ == '__main__':
     TEST_INPUT_LENGTHS = [int(item) for item in "3 4 1 5".split()]
     my_ans = get_mutated_list(list(range(5)),
@@ -50,20 +70,5 @@ if __name__ == '__main__':
                               curr_index=0,
                               step_size=0)
 
-    INPUT_LENGTHS2 = [ord(item) for item in "206,63,255,131,65,80,238,157,254,24,133,2,16,0,1,3"]  # noqa
-    INPUT_LENGTHS2.extend([17, 31, 73, 47, 23])
-
-    result = (list(range(256)), 0, 0)
-    for _ in range(64):
-        curr_list = result[0]
-        curr_index = result[1]
-        curr_step = result[2]
-        result = get_mutated_list(curr_list,
-                                  INPUT_LENGTHS2,
-                                  curr_index=curr_index,
-                                  step_size=curr_step)
-
-    slices = [slice(16*(x),16*(x+1)) for x in range(16)]
-    blocks = [result[0][single_slice] for single_slice in slices]
-    xor_result = [reduce(xor, block) for block in blocks]
-    print(''.join([format(block, '2x') for block in xor_result]))
+    result = knot_hash("206,63,255,131,65,80,238,157,254,24,133,2,16,0,1,3")
+    print(result)
