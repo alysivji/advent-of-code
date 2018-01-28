@@ -60,6 +60,64 @@ def get_value_after_zero(upper_bound, num_steps):
     return value_after_zero
 
 
+# LinkedList solution
+class Node(object):
+    def __init__(self, data, next_=None):
+        self.data = data
+        self.next_ = next_
+
+
+class CircularList(object):
+    def __init__(self, value):
+        first_node = Node(value)
+        first_node.next_ = first_node
+        self.head = first_node
+        self.length = 1
+
+    def insert(self, value, curr_node):
+        node_to_insert = Node(value, curr_node.next_)
+        curr_node.next_ = node_to_insert
+        self.length += 1
+
+    def to_list(self):
+        faux_list = []
+        curr = self.head
+        for _ in range(self.length):
+            faux_list.append(curr.data)
+            curr = curr.next_
+        return faux_list
+
+    def get_value_after(self, value):
+        curr = self.head
+
+        while True:
+            if curr.data == value:
+                return curr.next_.data
+            curr = curr.next_
+
+        raise RuntimeError
+
+    def __repr__(self):
+        return str(self.to_list())
+
+
+def circular_linked_list_get_value_after(upper_bound, num_steps, after_value):
+    circular_buffer = CircularList(0)
+    curr = circular_buffer.head
+
+    for num_to_insert in range(1, upper_bound + 1):
+        for _ in range(num_steps):
+            curr = curr.next_
+
+        circular_buffer.insert(num_to_insert, curr)
+        curr = curr.next_
+
+    return circular_buffer.get_value_after(after_value)
+
+
+assert circular_linked_list_get_value_after(2017, 386, 2017) == 419
+
+
 if __name__ == '__main__':
     NUM_STEPS = 386
     starting_buffer = [0]
@@ -87,4 +145,8 @@ if __name__ == '__main__':
     # print(brute_force_deque(50000000, 386, 0))
 
     # Shortcut solution
-    print(get_value_after_zero(50000000, 386))
+    # print(get_value_after_zero(50000000, 386))
+
+    # Linked List solution
+    # 20 minutes in pypy... yikes!
+    print(circular_linked_list_get_value_after(50000000, 386, 0))
