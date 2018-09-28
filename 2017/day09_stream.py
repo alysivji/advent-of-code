@@ -102,7 +102,7 @@ assert count_garbage('<<<<>') == 3
 assert count_garbage('<{!>}>') == 2
 assert count_garbage('<!!>') == 0
 assert count_garbage('<!!!>>') == 0
-assert count_garbage('<{o"i!a,<{i<a>') ==10
+assert count_garbage('<{o"i!a,<{i<a>') == 10
 
 
 if __name__ == '__main__':
