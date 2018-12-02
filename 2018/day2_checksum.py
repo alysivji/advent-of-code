@@ -47,15 +47,15 @@ def find_similar_boxes(boxes: List[str]) -> Generator:
                 yield boxes[i], boxes[j]
 
 
-def find_prototype_boxes(boxes: List[str]) -> Optional[str]:
+def find_prototype_box_common_letters(boxes: List[str]) -> Optional[str]:
     for box1, box2 in find_similar_boxes(boxes):
         diff = 0
         same = ""
-        for iter1, iter2 in zip(list(box1), list(box2)):
-            if iter1 != iter2:
+        for letter1, letter2 in zip(list(box1), list(box2)):
+            if letter1 != letter2:
                 diff += 1
             else:
-                same += iter1
+                same += letter1
         if diff == 1:
             return same
     return None
@@ -68,10 +68,31 @@ pqrst
 fguij
 axcye
 wvxyz"""
-assert find_prototype_boxes(test_input_part_two.split()) == "fgij"
 
+assert find_prototype_box_common_letters(test_input_part_two.split()) == "fgij"
+
+
+def find_prototype_box_single_pass(boxes: List[str]) -> Optional[str]:
+    for i in range(len(boxes)):
+        for j in range(i, len(boxes)):
+            diff = 0
+            same = ""
+            for letter1, letter2 in zip(list(boxes[i]), list(boxes[j])):
+                if letter1 != letter2:
+                    diff += 1
+                    if diff > 1:
+                        continue
+                else:
+                    same += letter1
+            if diff == 1:
+                return same
+    return None
+
+
+assert find_prototype_box_single_pass(test_input_part_two.split()) == "fgij"
 
 if __name__ == "__main__":
     boxes = load_input("day2_input.txt")
     print(calculate_checksum(boxes))
-    print(find_prototype_boxes(boxes))
+    print(find_prototype_box_common_letters(boxes))
+    print(find_prototype_box_single_pass(boxes))
