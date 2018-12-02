@@ -81,7 +81,7 @@ def find_prototype_box_single_pass(boxes: List[str]) -> Optional[str]:
                 if letter1 != letter2:
                     diff += 1
                     if diff > 1:
-                        continue
+                        break
                 else:
                     same += letter1
             if diff == 1:

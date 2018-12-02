@@ -15,5 +15,5 @@ In [9]: %timeit find_prototype_box_common_letters(boxes)
 82.5 ms ± 1.19 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
 
 In [10]: %timeit find_prototype_box_single_pass(boxes)
-41.6 ms ± 782 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
+19.9 ms ± 191 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
 ```
