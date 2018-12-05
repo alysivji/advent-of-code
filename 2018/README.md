@@ -41,3 +41,14 @@ def load_input_improved(lines: List[str]) -> List[Claim]:
 Just got a PS4 with Red Dead and FIFA so I started Day 4 just before Day 5 came out. This was a very messy solution. I'm sure I could've done it with a better data structure. I used a default dict and appended each sleep record to that.
 
 TODO: Use a more optimized data structure. Instead of having a list for each sleep, have a combined list per guard.
+
+## [Day 5: Alchemical Reduction](https://adventofcode.com/2018/day/5)
+
+Finally a problem where we have to be conscious not not using a naive solution! My solution to part 1 wasn't the most efficient, but it got the job done. It definitely did not work out for part 2. The input string I got required me to think of an edge case as the number was coming in way too high.
+
+Achievement unlocked: did not import a single Python library. Straight up built-ins.
+
+```console
+In [3]: %timeit remove_unit_reaction(line)
+4.06 s ± 67.2 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+```
