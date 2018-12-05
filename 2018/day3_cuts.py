@@ -2,9 +2,7 @@ from collections import defaultdict
 import re
 from typing import Dict, List, NamedTuple, Tuple
 
-CUT = (
-    r"#(?P<num>\d+) @ (?P<left>\d+),(?P<top>\d+): (?P<width>\d+)+x(?P<height>\d+)"
-)  # noqa
+CUT = r"#(?P<num>\d+) @ (?P<left>\d+),(?P<top>\d+): (?P<width>\d+)+x(?P<height>\d+)"
 
 
 class Claim(NamedTuple):
@@ -71,9 +69,7 @@ def nonoverlapping_claim(claims: List[Claim]) -> int:
 
 test_input = """#1 @ 1,3: 4x4
 #2 @ 3,1: 4x4
-#3 @ 5,5: 2x2""".split(
-    "\n"
-)
+#3 @ 5,5: 2x2""".split("\n")
 test_claims = load_input_improved(test_input)
 assert find_overlap(test_claims) == 4
 assert nonoverlapping_claim(test_claims) == 3

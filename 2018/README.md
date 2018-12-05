@@ -12,6 +12,8 @@ My first pass thru this was messy as I used generators, but I cleaned it up by a
 
 TIL: Change `continue` to `break`
 
+TODO: [`difflib`](https://docs.python.org/3.7/library/difflib.html)
+
 ```console
 In [9]: %timeit find_prototype_box_common_letters(boxes)
 82.5 ms ± 1.19 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
@@ -34,8 +36,8 @@ def load_input_improved(lines: List[str]) -> List[Claim]:
     return claims
 ```
 
-## [Day 4: ](https://adventofcode.com/2018/day/4)
+## [Day 4: Repose Record](https://adventofcode.com/2018/day/4)
 
-[text]
+Just got a PS4 with Red Dead and FIFA so I started Day 4 just before Day 5 came out. This was a very messy solution. I'm sure I could've done it with a better data structure. I used a default dict and appended each sleep record to that.
 
-TIL [text]
+TODO: Use a more optimized data structure. Instead of having a list for each sleep, have a combined list per guard.
