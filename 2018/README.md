@@ -52,3 +52,9 @@ Achievement unlocked: did not import a single Python library. Straight up built-
 In [3]: %timeit remove_unit_reaction(line)
 4.06 s ± 67.2 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
 ```
+
+TODO: `string.ascii_lowercase`
+
+## [Day 6: Chronal Coordinates](https://adventofcode.com/2018/day/6)
+
+I brute forced it by working through the problem exactly as described. I'm sure there is a smarter way of doing it, but it worked.

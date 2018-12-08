@@ -27,7 +27,7 @@ def remove_unit_reaction(polymer: str) -> int:
     for ascii_char in range(ord("A"), ord("Z") + 1):
         ucase = chr(ascii_char)
         lcase = chr(ascii_char + ASCII_DIFFERENCE)
-        reduced_polymer = "".join(polymer.replace(ucase, lcase).split(lcase))
+        reduced_polymer = polymer.replace(ucase, "").replace(lcase, "")
         reduced_length = reaction(reduced_polymer)
 
         if reduced_length < min_length:
