@@ -76,7 +76,7 @@ assert nonoverlapping_claim(test_claims) == 3
 
 
 if __name__ == "__main__":
-    with open("day3_input.txt", "r") as f:
+    with open("day03_input.txt", "r") as f:
         lines = f.readlines()
     claims = load_input_improved(lines)
     print(find_overlap(claims))
