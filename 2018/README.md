@@ -61,7 +61,13 @@ I brute forced it by working through the problem exactly as described. I'm sure 
 
 ## Day 7
 
-Got part 1 using a PriorityQueue. Need to sit down and do part 2.
+Got part 1 using a PriorityQueue. I may have gone a bit over the top for my part 2 solution as I tried to think of a generalized way of concurrently running workers in a task queue. I have a deliverable at work in the coming week which will require me to formalize how I split up and send jobs to Airflow. Thinking through this problem in a bit more depth will hopefully help me explain it in a clearer way.
+
+TIL: [`PriorityQueue`](https://docs.python.org/3/library/queue.html#queue.PriorityQueue)
+
+I previousy used [`heapq`](https://docs.python.org/3/library/heapq.html) and found that interface hard to use. Even wrote a [class-based wrapper](https://github.com/alysivji/sivtools/blob/master/sivtools/data_structures/priority_queue.py) around it for [`sivtools`](https://github.com/alysivji/sivtools). Of course, there is something in the standard library that does the same thing, but a lot better. Really like the `max_size` parameter.
+
+Shoutout to Dan Bader for his [Priority Queues in Python article](https://dbader.org/blog/priority-queues-in-python) for helping me along.
 
 ## Day 8
 

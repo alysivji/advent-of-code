@@ -1,7 +1,7 @@
-from collections import defaultdict, deque
+from collections import defaultdict
 from queue import PriorityQueue
 import re
-from typing import Dict, List, Set
+from typing import Any, Dict, List, NamedTuple, Set
 
 
 STEP_PATTERN = r"Step (?P<curr>[A-Z]).*step (?P<next>[A-Z]).*."
@@ -30,7 +30,7 @@ def load_input(lines: List[str]):
 
 
 # @_print("part1")
-def process_steps(upstream, downstream) -> str:
+def process_steps_synchronous(upstream, downstream) -> str:
     # find the one that isn't in any of the descendents
     no_upstream = set(downstream.keys()) - set(upstream.keys())
 
@@ -60,61 +60,81 @@ def process_steps(upstream, downstream) -> str:
     return result
 
 
-def time_to_complete(letter: str, step_time) -> int:
+def time_to_complete(letter: str, task_constant) -> int:
     ASCII_DIFF = ord("A") - 1
-    return ord(letter) - ASCII_DIFF + step_time
+    return ord(letter) - ASCII_DIFF + task_constant
 
 
-assert time_to_complete("A", 0) == 1
-assert time_to_complete("B", 60) == 62
+assert time_to_complete("A", task_constant=0) == 1
+assert time_to_complete("B", task_constant=60) == 62
 
 
-def find_free_worker(workers):
-    return min(idx for idx in workers.keys() if workers[idx] is None)
+class Task(NamedTuple):
+    end_time: int
+    item: Any
 
 
-def process_time(steps, upstream, num_workers, step_time_constant) -> int:
-    completed_steps: Set[str] = set([])
-    queue = deque([step for step in steps])
-    processing: PriorityQueue = PriorityQueue()
-    elapsed_time = 0
-
-    workers = {idx: None for idx in range(num_workers)}
-    free_workers = num_workers
-
-    while len(queue):
-        # are the downstream steps complete?
-        dependencies_complete = True
-        prev_steps = upstream.get(queue[0], None)
-        if prev_steps is not None:
-            for step in prev_steps:
-                if step not in completed_steps:
-                    dependencies_complete = False
-
-        # assign to free worker
-        if dependencies_complete and free_workers > 0:
-            step = queue.popleft()
-            step_time = time_to_complete(step, step_time_constant)
-            free_workers -= 1
-
-            # assign to free worker
-            worker = find_free_worker(workers)
-            workers[worker] = step
-            processing.put(((elapsed_time + step_time), step))
-
-        # TODO loop thru each free worker
-        # TODO what to do when task is done?
-
-    return 0
+def peek(queue: PriorityQueue) -> Task:
+    item = queue.queue[0]
+    return Task(item[0], item[1])
 
 
-test_upstream, test_downstream = load_input(TEST_INPUT)
-test_steps = process_steps(test_upstream, test_downstream)
-assert test_steps == "CABDFE"
+def process_time_concurrent(upstream, downstream, num_workers, const) -> int:
+    job_queue: PriorityQueue = PriorityQueue()
+    workers: PriorityQueue = PriorityQueue(maxsize=num_workers)
+
+    # run initial set of tasks (-1 b/c we start at 0)
+    kickoff_tasks = set(downstream.keys()) - set(upstream.keys())
+    for task in kickoff_tasks:
+        task_time = time_to_complete(task, const)
+        workers.put((task_time - 1, task))
+    curr_time = peek(workers).end_time
+
+    completed_tasks = set()
+    queued_tasks = set()
+    all_tasks = set(list(downstream) + list(upstream))
+    while completed_tasks != all_tasks:
+        # process completed tasks
+        while not workers.empty():
+            if peek(workers).end_time != curr_time:
+                break
+
+            finished_task = workers.get()[1]
+            completed_tasks.add(finished_task)
+
+            # find tasks we can add to queue
+            for next_task in downstream[finished_task]:
+                upstream_complete = True
+                for dependency in upstream[next_task]:
+                    if dependency not in completed_tasks:
+                        upstream_complete = False
+                        break
+
+                if upstream_complete and next_task not in queued_tasks:
+                    queued_tasks.add(next_task)
+                    job_queue.put((ord(next_task), next_task))
+
+        # assign the workers tasks
+        while not job_queue.empty() and not workers.full():
+            # breakpoint()
+            next_task = job_queue.get()[1]
+            task_time = time_to_complete(next_task, const)
+            workers.put((curr_time + task_time, next_task))
+
+        # advance to time that next event is done
+        if not workers.empty():
+            curr_time = peek(workers).end_time
+    return curr_time + 1
+
+
+test_up, test_down = load_input(TEST_INPUT)
+assert process_steps_synchronous(test_up, test_down) == "CABDFE"
+assert process_time_concurrent(test_up, test_down, num_workers=2, const=0) == 15
 
 
 if __name__ == "__main__":
     with open("data/day07_input.txt") as f:
         lines = f.readlines()
     upstream, downstream = load_input(lines)
-    print(process_steps(upstream, downstream))
+    print(process_steps_synchronous(upstream, downstream))
+    print(process_time_concurrent(upstream, downstream, num_workers=5, const=60))
