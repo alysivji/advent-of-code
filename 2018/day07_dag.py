@@ -111,12 +111,11 @@ def process_time_concurrent(upstream, downstream, num_workers, const) -> int:
                         break
 
                 if upstream_complete and next_task not in queued_tasks:
-                    queued_tasks.add(next_task)
                     job_queue.put((ord(next_task), next_task))
+                    queued_tasks.add(next_task)
 
         # assign the workers tasks
         while not job_queue.empty() and not workers.full():
-            # breakpoint()
             next_task = job_queue.get()[1]
             task_time = time_to_complete(next_task, const)
             workers.put((curr_time + task_time, next_task))

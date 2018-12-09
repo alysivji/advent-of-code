@@ -59,7 +59,7 @@ TODO: `string.ascii_lowercase`
 
 I brute forced it by working through the problem exactly as described. I'm sure there is a smarter way of doing it, but it worked.
 
-## Day 7
+## [Day 7: The Sum of Its Parts](https://adventofcode.com/2018/day/7)
 
 Got part 1 using a PriorityQueue. I may have gone a bit over the top for my part 2 solution as I tried to think of a generalized way of concurrently running workers in a task queue. I have a deliverable at work in the coming week which will require me to formalize how I split up and send jobs to Airflow. Thinking through this problem in a bit more depth will hopefully help me explain it in a clearer way.
 
