@@ -81,7 +81,7 @@ for game in test_game_details:
 
 
 if __name__ == "__main__":
-    with open("day09_input.txt", "r") as f:
+    with open("data/day09_input.txt", "r") as f:
         problem_input = f.read().strip()
     deets = GameDetails(*map(int, re.findall(r"-?\d+", problem_input)))
     print(high_score(play_game(deets.num_players, deets.last_marble)))

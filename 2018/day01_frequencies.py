@@ -35,6 +35,6 @@ assert visited_twice([+7, +7, -2, -7, -4]) == 14
 
 
 if __name__ == "__main__":
-    values = load_input("day01_input.txt")
+    values = load_input("data/day01_input.txt")
     print(get_ending_frequency(values))
     print(visited_twice(values))

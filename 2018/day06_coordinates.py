@@ -120,7 +120,7 @@ assert num_square_safe(test_coordinates, max_distance=32) == 16
 
 
 if __name__ == "__main__":
-    with open("day06_input.txt") as f:
+    with open("data/day06_input.txt") as f:
         lines = f.readlines()
 
     coordinates = load_input(lines)

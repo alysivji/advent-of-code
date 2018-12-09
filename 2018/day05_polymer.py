@@ -39,7 +39,7 @@ assert remove_unit_reaction(TEST_INPUT) == 4
 
 
 if __name__ == "__main__":
-    with open("day05_input.txt", "r") as f:
+    with open("data/day05_input.txt", "r") as f:
         line = f.readline().split("\n")[0]
     print(reaction(line))
     print(remove_unit_reaction(line))

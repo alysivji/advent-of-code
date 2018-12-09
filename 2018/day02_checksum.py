@@ -92,7 +92,7 @@ def find_prototype_box_single_pass(boxes: List[str]) -> Optional[str]:
 assert find_prototype_box_single_pass(test_input_part_two.split()) == "fgij"
 
 if __name__ == "__main__":
-    boxes = load_input("day02_input.txt")
+    boxes = load_input("data/day02_input.txt")
     print(calculate_checksum(boxes))
     print(find_prototype_box_common_letters(boxes))
     print(find_prototype_box_single_pass(boxes))

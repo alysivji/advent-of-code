@@ -114,7 +114,7 @@ assert test_steps == "CABDFE"
 
 
 if __name__ == "__main__":
-    with open("day07_input.txt") as f:
+    with open("data/day07_input.txt") as f:
         lines = f.readlines()
     upstream, downstream = load_input(lines)
     print(process_steps(upstream, downstream))

@@ -111,7 +111,7 @@ assert minute_sleep_the_most_all(sleep_schedule) == 4455
 
 
 if __name__ == "__main__":
-    with open("day04_input.txt", "r") as f:
+    with open("data/day04_input.txt", "r") as f:
         lines = f.readlines()
     logs = sorted(load_input(lines), key=lambda x: x.timestamp)
 
