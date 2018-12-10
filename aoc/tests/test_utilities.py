@@ -1,4 +1,4 @@
-from utilities import print_
+from aoc.utilities import print_
 
 
 def test__print_decorator(capsys):
