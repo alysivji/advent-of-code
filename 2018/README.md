@@ -80,3 +80,5 @@ TIL: Always forget how array slicing works and have to try it in the REPL. In Py
 I misread the problem so I spent a lot of time debugging my code that was correct. Once I took a peek at Reddit, I realized that `last marble is worth 1618 points` means 1618 total marbles, not that placing the marble scores 1618 points.
 
 Part 1 ran without a hitch. Part 2 is taking a while to run, this is because I'm inserting / popping from the middle of a list which is an O(n) operation in Python. The strategy I should have employed is to use a [`deque`](https://docs.python.org/3/library/collections.html#collections.deque) and rotate so that we are always inserting / popping off from the ends [i.e. O(1)], which I did when I rewrote my code for part 2.
+
+## [Day 10: The Stars Align](https://adventofcode.com/2018/day/10)
