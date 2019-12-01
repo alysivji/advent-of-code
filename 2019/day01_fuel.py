@@ -14,7 +14,7 @@ def test_fuel_required_per_module():
 
 
 def fuel_required_for_all_modules(modules: List[int]) -> int:
-    return [fuel_required_per_module(module) for module in modules]
+    return sum(fuel_required_per_module(module) for module in modules)
 
 
 def fuel_required_for_fuel(total_fuel_required: int) -> int:
@@ -32,7 +32,7 @@ def total_fuel_required(modules: List[int]) -> int:
         fuel_for_module = fuel_required_per_module(module)
         fuel_for_fuel = fuel_required_for_fuel(fuel_for_module)
         total_fuel.append(fuel_for_module + fuel_for_fuel)
-    return total_fuel
+    return sum(total_fuel)
 
 
 def test_total_fuel_required():
@@ -48,7 +48,7 @@ if __name__ == "__main__":
             modules.append(int(line))
 
     fuel_for_modules = fuel_required_for_all_modules(modules)
-    print(f"Fuel required for modules: {sum(fuel_for_modules)}")
+    print(f"Fuel required for modules: {fuel_for_modules}")
 
     total_fuel = total_fuel_required(modules)
-    print(f"Fuel required for modules: {sum(total_fuel)}")
+    print(f"Fuel required for modules: {total_fuel}")
