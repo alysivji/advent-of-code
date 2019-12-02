@@ -1,6 +1,11 @@
-from typing import List
+from typing import List, NamedTuple
 
 import pytest
+
+
+class TunedParameters(NamedTuple):
+    noun: int
+    verb: int
 
 
 def process_intcode_program(intcode: List[int]) -> List[int]:
@@ -41,10 +46,30 @@ def restore_to_1202_state(intcode: List[int]) -> List[int]:
     return new_intcode
 
 
+def create_initial_memory_state(intcode: List[int], noun: int, verb: int) -> List[int]:
+    initial_memory_state = intcode[:]
+    initial_memory_state[1] = noun
+    initial_memory_state[2] = verb
+    return initial_memory_state
+
+
+def parameter_tuning(intcode, target=19690720):
+    for noun in range(100):
+        for verb in range(100):
+            initial_memory_state = create_initial_memory_state(intcode, noun, verb)
+            result = process_intcode_program(initial_memory_state)
+            if result[0] == 19690720:
+                return TunedParameters(noun, verb)
+    return TunedParameters(None, None)
+
+
 if __name__ == "__main__":
     with open("2019/data/day02_input.txt") as f:
         intcode = [int(val) for val in f.readline().strip().split(",")]
 
-    intcode = restore_to_1202_state(intcode)
-    processed_intcode = process_intcode_program(intcode)
+    memory_state_1202 = restore_to_1202_state(intcode)
+    processed_intcode = process_intcode_program(memory_state_1202)
     print(f"Value at position 0 is: {processed_intcode[0]}")
+
+    noun, verb = parameter_tuning(intcode)
+    print(f"Noun is {noun}, verb is {verb}, 100 * noun + verb = {100 * noun + verb}")
