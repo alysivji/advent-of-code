@@ -26,3 +26,15 @@ First part was built for Python so it wasn't too difficult.
 I tried to take a shortcut on the 2nd part by calculating on the fuel required for fuel and turns out that wasn't right. Did it the right way and got another answer, but the website said it wasn't right. Tried another person's solution, got the same answer as what I submitted. Tried submitting one more time, and it worked. 🤷
 
 Hopefully I have better luck copying and pasting going forward...
+
+### [Day 2: 1202 Program Alarm](https://adventofcode.com/2019/day/2)
+
+Fairly straightforward. Thinking about converting the `IntCode` computer function into a class as we will reuse.... will do that later.
+
+### [Day 3: Crossed Wires](https://adventofcode.com/2019/day/4)
+
+Solved this challenge with dictionaries, but changed it to sets once I saw I could do it a bit more simply. Then part 2 required a dictionary... oh well.
+
+### [Day 4: Secure Container](https://adventofcode.com/2019/day/4)
+
+Not really proud of the code, but this challenge was grindy so I don't really mind too much. Did have some fun using `zip` to do math with adjacent indices.
