@@ -38,3 +38,11 @@ Solved this challenge with dictionaries, but changed it to sets once I saw I cou
 ### [Day 4: Secure Container](https://adventofcode.com/2019/day/4)
 
 Not really proud of the code, but this challenge was grindy so I don't really mind too much. Did have some fun using `zip` to do math with adjacent indices.
+
+### [Day 5: Sunny with a Chance of Asteroids](https://adventofcode.com/2019/day/5)
+
+As they hinted at, `IntCodeComputer` was being reused so before starting the problem, I refactored my solution to change my implementation from a function to a class. This allowed me to replicate my conditional logic with objects versus `if` statements.
+
+Once that was done, adding new OP codes and tests was a breeze. This way of doing things makes it a lot easier to debug.
+
+A bit overkill? Probably. But then again... I am the guy who thinks that [if statements are a code smell](http://bit.ly/code-smell-if-statements).

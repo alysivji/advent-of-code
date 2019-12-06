@@ -13,7 +13,17 @@ class IntCodeComputer:
         self.program: List[int] = [int(val) for val in program.split(",")]
         self.instruction_pointer: int = 0
         self.input = input_value
-        self.OPERATIONS = [Add, Multiple, Terminate, Input, Output, JumpIfTrue, JumpIfFalse, LessThan, Equals]
+        self.OPERATIONS = [
+            Add,
+            Multiply,
+            Terminate,
+            Input,
+            Output,
+            JumpIfTrue,
+            JumpIfFalse,
+            LessThan,
+            Equals,
+        ]
 
     def process(self) -> List[int]:
         self.captured_output = []
@@ -47,12 +57,7 @@ class IntCodeComputer:
 
 class Operation:
     def __init__(
-        self,
-        program: List[int],
-        instruction_pointer: int,
-        modes: str,
-        *args,
-        **kwargs
+        self, program: List[int], instruction_pointer: int, modes: str, *args, **kwargs
     ):
         self.program = program
         self.instruction_pointer = instruction_pointer
@@ -60,6 +65,7 @@ class Operation:
         modes_reversed = modes.zfill(self.num_parameters)[::-1]
         self.modes: List[int] = [int(val) for val in modes_reversed]
 
+        # used for jumps
         self.instruction_pointer_changed = False
 
     @classmethod
@@ -80,7 +86,7 @@ class Add(Operation):
         code[code[idx + 3]] = val1 + val2
 
 
-class Multiple(Operation):
+class Multiply(Operation):
     OP_CODE = 2
     num_parameters = 3
 
