@@ -13,7 +13,7 @@ class IntCodeComputer:
         self.program: List[int] = [int(val) for val in program.split(",")]
         self.instruction_pointer: int = 0
         self.input = input_value
-        self.OPERATIONS = [Add, Multiple, Terminate, Input, Output]
+        self.OPERATIONS = [Add, Multiple, Terminate, Input, Output, JumpIfTrue, JumpIfFalse, LessThan, Equals]
 
     def process(self) -> List[int]:
         self.captured_output = []
@@ -37,7 +37,10 @@ class IntCodeComputer:
                     self.captured_output.append(output)
             except Halt:
                 break
-            self.instruction_pointer += operation.num_parameters + 1
+            if operation.instruction_pointer_changed:
+                self.instruction_pointer = operation.instruction_pointer
+            else:
+                self.instruction_pointer += operation.num_parameters + 1
 
         return self.program
 
@@ -56,6 +59,8 @@ class Operation:
         # reverse modes as it goes from right to left
         modes_reversed = modes.zfill(self.num_parameters)[::-1]
         self.modes: List[int] = [int(val) for val in modes_reversed]
+
+        self.instruction_pointer_changed = False
 
     @classmethod
     def match(cls, code) -> bool:
@@ -95,7 +100,7 @@ class Input(Operation):
 
     def __init__(self, *args, **kwargs):
         input_value = kwargs.pop("input_value", None)
-        if not input_value:
+        if input_value is None:
             raise ValueError("Input requires input_value")
         self.input = input_value
         super().__init__(*args, **kwargs)
@@ -114,6 +119,68 @@ class Output(Operation):
         code = self.program
         idx = self.instruction_pointer
         return calculate_value_given_mode(code, idx, self.modes, 1)
+
+
+class JumpIfTrue(Operation):
+    OP_CODE = 5
+    num_parameters = 2
+
+    def execute(self) -> int:
+        code = self.program
+        idx = self.instruction_pointer
+        val1 = calculate_value_given_mode(code, idx, self.modes, 1)
+        val2 = calculate_value_given_mode(code, idx, self.modes, 2)
+
+        if val1 != 0:
+            self.instruction_pointer_changed = True
+            self.instruction_pointer = val2
+
+
+class JumpIfFalse(Operation):
+    OP_CODE = 6
+    num_parameters = 2
+
+    def execute(self) -> int:
+        code = self.program
+        idx = self.instruction_pointer
+        val1 = calculate_value_given_mode(code, idx, self.modes, 1)
+        val2 = calculate_value_given_mode(code, idx, self.modes, 2)
+
+        if val1 == 0:
+            self.instruction_pointer_changed = True
+            self.instruction_pointer = val2
+
+
+class LessThan(Operation):
+    OP_CODE = 7
+    num_parameters = 3
+
+    def execute(self) -> int:
+        code = self.program
+        idx = self.instruction_pointer
+        val1 = calculate_value_given_mode(code, idx, self.modes, 1)
+        val2 = calculate_value_given_mode(code, idx, self.modes, 2)
+
+        if val1 < val2:
+            code[code[idx + 3]] = 1
+        else:
+            code[code[idx + 3]] = 0
+
+
+class Equals(Operation):
+    OP_CODE = 8
+    num_parameters = 3
+
+    def execute(self) -> int:
+        code = self.program
+        idx = self.instruction_pointer
+        val1 = calculate_value_given_mode(code, idx, self.modes, 1)
+        val2 = calculate_value_given_mode(code, idx, self.modes, 2)
+
+        if val1 == val2:
+            code[code[idx + 3]] = 1
+        else:
+            code[code[idx + 3]] = 0
 
 
 class Terminate(Operation):

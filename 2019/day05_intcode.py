@@ -7,4 +7,8 @@ if __name__ == "__main__":
 
     cpu = IntCodeComputer(intcode_program, input_value=1)
     cpu.process()
-    print(cpu)
+    print(cpu.captured_output)
+
+    cpu = IntCodeComputer(intcode_program, input_value=5)
+    cpu.process()
+    print(cpu.captured_output)
