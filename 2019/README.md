@@ -46,3 +46,9 @@ As they hinted at, `IntCodeComputer` was being reused so before starting the pro
 Once that was done, adding new OP codes and tests was a breeze. This way of doing things makes it a lot easier to debug.
 
 A bit overkill? Probably. But then again... I am the guy who thinks that [if statements are a code smell](http://bit.ly/code-smell-if-statements).
+
+### [Day 6: Universal Orbit Map](https://adventofcode.com/2019/day/6)
+
+I stumbled into using trees with path calcutions. Had to backtrack and re-learn about graphs and path finding.
+
+Python `dict` make graph data structures a breeze.
