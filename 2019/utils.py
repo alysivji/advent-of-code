@@ -12,7 +12,10 @@ class IntCodeComputer:
     def __init__(self, program: str, *, input_value: int = None):
         self.program: List[int] = [int(val) for val in program.split(",")]
         self.instruction_pointer: int = 0
-        self.input = input_value
+        if isinstance(input_value, list):
+            self.input = input_value[::-1]
+        else:
+            self.input = input_value
         self.OPERATIONS = [
             Add,
             Multiply,
@@ -108,13 +111,16 @@ class Input(Operation):
         input_value = kwargs.pop("input_value", None)
         if input_value is None:
             raise ValueError("Input requires input_value")
-        self.input = input_value
+        if isinstance(input_value, int):
+            self.input = [input_value]
+        else:
+            self.input = input_value
         super().__init__(*args, **kwargs)
 
     def execute(self) -> None:
         code = self.program
         idx = self.instruction_pointer
-        code[code[idx + 1]] = self.input
+        code[code[idx + 1]] = self.input.pop()
 
 
 class Output(Operation):
