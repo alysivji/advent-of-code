@@ -9,29 +9,35 @@ class IntCodeComputer:
     def __str__(self):
         return ",".join([str(val) for val in self.program])
 
-    @staticmethod
-    def _generate_input(phase, input_value):
+    def _generate_input(self, phase):
         if phase is not None:
             yield phase
         while True:
-            yield input_value
+            yield self.input_value
 
     def __init__(
-        self, program: str, *, input_value: int = None, phase: int = None
+        self,
+        program: str,
+        *,
+        input_value: int = None,
+        phase: int = None,
+        pause_on_output: bool = False
     ):
         self.program: List[int] = [int(val) for val in program.split(",")]
         self.instruction_pointer: int = 0
-        self.input = iter(self._generate_input(phase, input_value))
+        self.input_value = input_value
+        self.input = iter(self._generate_input(phase))
+        self.pause_on_output = pause_on_output
         self.OPERATIONS = [
             Add,
             Multiply,
-            Terminate,
             Input,
             Output,
             JumpIfTrue,
             JumpIfFalse,
             LessThan,
             Equals,
+            Terminate,
         ]
 
     def process(self) -> List[int]:
@@ -63,6 +69,9 @@ class IntCodeComputer:
                 self.instruction_pointer = operation.instruction_pointer
             else:
                 self.instruction_pointer += operation.num_parameters + 1
+
+            if self.captured_output and self.pause_on_output:
+                break
 
         return self.program
 
