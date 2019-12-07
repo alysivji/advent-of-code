@@ -107,24 +107,24 @@ def test_multiple_operations(input_value, expected_output):
     ],
 )
 def test_multiple_inputs(intcode_program, phase, expected_output):
-    amplifer_a = IntCodeComputer(intcode_program, input_value=0, phase=phase[0])
-    amplifer_a.process()
-    output_a = amplifer_a.captured_output[-1]
+    amplifier_a = IntCodeComputer(intcode_program, input_value=0, phase=phase[0])
+    amplifier_a.process()
+    output_a = amplifier_a.captured_output[-1]
 
-    amplifer_b = IntCodeComputer(intcode_program, input_value=output_a, phase=phase[1])
-    amplifer_b.process()
-    output_b = amplifer_b.captured_output[-1]
+    amplifier_b = IntCodeComputer(intcode_program, input_value=output_a, phase=phase[1])
+    amplifier_b.process()
+    output_b = amplifier_b.captured_output[-1]
 
-    amplifer_c = IntCodeComputer(intcode_program, input_value=output_b, phase=phase[2])
-    amplifer_c.process()
-    output_c = amplifer_c.captured_output[-1]
+    amplifier_c = IntCodeComputer(intcode_program, input_value=output_b, phase=phase[2])
+    amplifier_c.process()
+    output_c = amplifier_c.captured_output[-1]
 
-    amplifer_d = IntCodeComputer(intcode_program, input_value=output_c, phase=phase[3])
-    amplifer_d.process()
-    output_d = amplifer_d.captured_output[-1]
+    amplifier_d = IntCodeComputer(intcode_program, input_value=output_c, phase=phase[3])
+    amplifier_d.process()
+    output_d = amplifier_d.captured_output[-1]
 
-    amplifer_e = IntCodeComputer(intcode_program, input_value=output_d, phase=phase[4])
-    amplifer_e.process()
-    output_e = amplifer_e.captured_output[-1]
+    amplifier_e = IntCodeComputer(intcode_program, input_value=output_d, phase=phase[4])
+    amplifier_e.process()
+    output_e = amplifier_e.captured_output[-1]
 
     assert output_e == expected_output

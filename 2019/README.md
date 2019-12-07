@@ -52,3 +52,11 @@ A bit overkill? Probably. But then again... I am the guy who thinks that [if sta
 I stumbled into using trees with path calcutions. Had to backtrack and re-learn about graphs and path finding.
 
 Python `dict` make graph data structures a breeze.
+
+### [Day 7: Amplification Circuit](https://adventofcode.com/2019/day/7)
+
+Day 7 was super grindy and process heavy. I had to add a couple of variables to my `IntCodeComputer` class to get things working for today's challenge.
+
+First solution was hacking together a series of 5 `IntCodeComptuer`. It did the job, but when we started having to feed outputs in a loop, this was not the right way of doing things. By adding an instance variable that breaks when an output is generate, we can get the `IntCodeComputer` to function in a way that can solve the problem.
+
+I used a generator to create inputs given outputs from the previous step. TIL: you can modify instance methods and generators will output terms given the updated value.
