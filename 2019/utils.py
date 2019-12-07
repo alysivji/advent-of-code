@@ -9,13 +9,19 @@ class IntCodeComputer:
     def __str__(self):
         return ",".join([str(val) for val in self.program])
 
-    def __init__(self, program: str, *, input_value: int = None):
+    @staticmethod
+    def _generate_input(phase, input_value):
+        if phase is not None:
+            yield phase
+        while True:
+            yield input_value
+
+    def __init__(
+        self, program: str, *, input_value: int = None, phase: int = None
+    ):
         self.program: List[int] = [int(val) for val in program.split(",")]
         self.instruction_pointer: int = 0
-        if isinstance(input_value, list):
-            self.input = input_value[::-1]
-        else:
-            self.input = input_value
+        self.input = iter(self._generate_input(phase, input_value))
         self.OPERATIONS = [
             Add,
             Multiply,
@@ -42,7 +48,10 @@ class IntCodeComputer:
                 raise ValueError("Invalid op code")
 
             operation = op(
-                self.program, self.instruction_pointer, mode, input_value=self.input
+                self.program,
+                self.instruction_pointer,
+                mode,
+                input_value=next(self.input),
             )
             try:
                 output = operation.execute()  # not all operations return output
@@ -111,16 +120,13 @@ class Input(Operation):
         input_value = kwargs.pop("input_value", None)
         if input_value is None:
             raise ValueError("Input requires input_value")
-        if isinstance(input_value, int):
-            self.input = [input_value]
-        else:
-            self.input = input_value
+        self.input = input_value
         super().__init__(*args, **kwargs)
 
     def execute(self) -> None:
         code = self.program
         idx = self.instruction_pointer
-        code[code[idx + 1]] = self.input.pop()
+        code[code[idx + 1]] = self.input
 
 
 class Output(Operation):
