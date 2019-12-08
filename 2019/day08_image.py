@@ -88,8 +88,9 @@ if __name__ == "__main__":
     print(f"Result is {result}")
 
     result = min_image(layers)
+    result_scrubbed = [' ' if item == 0 else str(item) for item in result]
 
     for line in range(img.h):
         start_idx = line * img.w
         end_idx = (line + 1) * img.w
-        print(result[start_idx:end_idx])
+        print(result_scrubbed[start_idx:end_idx])
