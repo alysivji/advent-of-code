@@ -60,3 +60,7 @@ Day 7 was super grindy and process heavy. I had to add a couple of variables to 
 First solution was hacking together a series of 5 `IntCodeComptuer`. It did the job, but when we started having to feed outputs in a loop, this was not the right way of doing things. By adding an instance variable that breaks when an output is generate, we can get the `IntCodeComputer` to function in a way that can solve the problem.
 
 I used a generator to create inputs given outputs from the previous step. TIL: you can modify instance methods and generators will output terms given the updated value.
+
+### [Day 7: Space Image Format](https://adventofcode.com/2019/day/8)
+
+Day 8 was a nice change from all the `IntCodeCalcualtor` challenges. Even though Day 7 was straight-forward, it took me a while. Then again... I am also doing it at 2am while eating Taco Bell.
