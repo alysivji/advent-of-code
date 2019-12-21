@@ -7,7 +7,7 @@ class Halt(Exception):
 
 class IntCodeComputer:
     def __str__(self):
-        return ",".join([str(val) for val in self.program])
+        return ",".join([str(val) for val in self.program[:self.original_program_size]])
 
     def __init__(
         self,
@@ -17,8 +17,9 @@ class IntCodeComputer:
         phase: int = None,
         pause_on_output: bool = False,
         relative_base: int = 0,
+        memory_size: int = None,
     ):
-        self.program: List[int] = [int(val) for val in program.split(",")]
+        self.program: List[int] = self._write_program_to_memory(program, memory_size=memory_size)
         self.instruction_pointer: int = 0
         self.input = iter(self._generate_input(phase, input_value))
         self.pause_on_output = pause_on_output
@@ -71,6 +72,19 @@ class IntCodeComputer:
                 break
 
         return self.program
+
+    def _write_program_to_memory(self, program: str, memory_size: int = None) -> List[int]:
+        program = [int(val) for val in program.split(",")]
+        self.original_program_size = len(program)
+
+        if not memory_size:
+            memory_size = len(program)
+
+        empty_blocks_to_add = memory_size - len(program)
+        for _ in range(empty_blocks_to_add):
+            program.append(0)
+
+        return program
 
     def _generate_input(self, phase, input_value):
         if phase is not None:
@@ -128,7 +142,8 @@ class Add(Operation):
 
         val1 = calculate_value_given_mode(code, idx, self.modes, 1, self.relative_base)
         val2 = calculate_value_given_mode(code, idx, self.modes, 2, self.relative_base)
-        code[code[idx + 3]] = val1 + val2
+        index_to_update = calculate_index_given_mode(code, idx, self.modes, 3, self.relative_base)
+        code[index_to_update] = val1 + val2
 
 
 class Multiply(Operation):
@@ -142,7 +157,8 @@ class Multiply(Operation):
         # first parameter is in position mode
         val1 = calculate_value_given_mode(code, idx, self.modes, 1, self.relative_base)
         val2 = calculate_value_given_mode(code, idx, self.modes, 2, self.relative_base)
-        code[code[idx + 3]] = val1 * val2
+        index_to_update = calculate_index_given_mode(code, idx, self.modes, 3, self.relative_base)
+        code[index_to_update] = val1 * val2
 
 
 class Input(Operation):
@@ -159,7 +175,9 @@ class Input(Operation):
     def execute(self) -> None:
         code = self.program
         idx = self.instruction_pointer
-        code[code[idx + 1]] = self.input
+        index_to_update = calculate_index_given_mode(code, idx, self.modes, 1, self.relative_base)
+
+        code[index_to_update] = self.input
 
 
 class Output(Operation):
@@ -211,11 +229,12 @@ class LessThan(Operation):
         idx = self.instruction_pointer
         val1 = calculate_value_given_mode(code, idx, self.modes, 1, self.relative_base)
         val2 = calculate_value_given_mode(code, idx, self.modes, 2, self.relative_base)
+        index_to_update = calculate_index_given_mode(code, idx, self.modes, 3, self.relative_base)
 
         if val1 < val2:
-            code[code[idx + 3]] = 1
+            code[index_to_update] = 1
         else:
-            code[code[idx + 3]] = 0
+            code[index_to_update] = 0
 
 
 class Equals(Operation):
@@ -227,16 +246,17 @@ class Equals(Operation):
         idx = self.instruction_pointer
         val1 = calculate_value_given_mode(code, idx, self.modes, 1, self.relative_base)
         val2 = calculate_value_given_mode(code, idx, self.modes, 2, self.relative_base)
+        index_to_update = calculate_index_given_mode(code, idx, self.modes, 3, self.relative_base)
 
         if val1 == val2:
-            code[code[idx + 3]] = 1
+            code[index_to_update] = 1
         else:
-            code[code[idx + 3]] = 0
+            code[index_to_update] = 0
 
 
 class ModifyRelativeBase(Operation):
     OP_CODE = 9
-    num_parameters = 2
+    num_parameters = 1
 
     def execute(self) -> int:
         code = self.program
@@ -266,3 +286,12 @@ def calculate_value_given_mode(
         return code[relative_base + code[index + offset]]
     else:
         raise ValueError("Invalid mode value")
+
+
+def calculate_index_given_mode(
+    code: List[int], index: int, modes: List[int], offset: int, relative_base: int,
+):
+    if modes[offset - 1] == 2:  # relative mode
+        return relative_base + code[index + offset]
+    else:
+        return code[index + offset]

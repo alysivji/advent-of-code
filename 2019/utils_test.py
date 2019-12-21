@@ -3,7 +3,7 @@ from utils import IntCodeComputer
 
 
 @pytest.mark.parametrize(
-    "incode_program, expected_output",
+    "intcode_program, expected_output",
     [
         ("1,9,10,3,2,3,11,0,99,30,40,50", "3500,9,10,70,2,3,11,0,99,30,40,50"),
         ("1,0,0,0,99", "2,0,0,0,99"),
@@ -14,8 +14,8 @@ from utils import IntCodeComputer
         ("1101,100,-1,4,0", "1101,100,-1,4,99"),
     ],
 )
-def test_process_intcode_program(incode_program, expected_output):
-    cpu = IntCodeComputer(incode_program)
+def test_process_intcode_program(intcode_program, expected_output):
+    cpu = IntCodeComputer(intcode_program)
     cpu.process()
     assert str(cpu) == expected_output
 
@@ -128,3 +128,16 @@ def test_multiple_inputs(intcode_program, phase, expected_output):
     output_e = amplifier_e.captured_output[-1]
 
     assert output_e == expected_output
+
+
+def test_update_relative_base():
+    relative_base = 2000
+    instructions = "109,19"
+
+    cpu = IntCodeComputer(program=instructions, relative_base=relative_base)
+
+    try:
+        cpu.process()
+    except Exception:
+        assert cpu.relative_base == 2019
+        relative_base = cpu.relative_base
