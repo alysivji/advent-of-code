@@ -9,12 +9,6 @@ class IntCodeComputer:
     def __str__(self):
         return ",".join([str(val) for val in self.program])
 
-    def _generate_input(self, phase):
-        if phase is not None:
-            yield phase
-        while True:
-            yield self.input_value
-
     def __init__(
         self,
         program: str,
@@ -25,9 +19,9 @@ class IntCodeComputer:
     ):
         self.program: List[int] = [int(val) for val in program.split(",")]
         self.instruction_pointer: int = 0
-        self.input_value = input_value
-        self.input = iter(self._generate_input(phase))
+        self.input = iter(self._generate_input(phase, input_value))
         self.pause_on_output = pause_on_output
+        self.relative_base = 0
         self.OPERATIONS = [
             Add,
             Multiply,
@@ -37,8 +31,15 @@ class IntCodeComputer:
             JumpIfFalse,
             LessThan,
             Equals,
+            # ModifyRelativeBase,
             Terminate,
         ]
+
+    def _generate_input(self, phase, input_value):
+        if phase is not None:
+            yield phase
+        while True:
+            yield input_value
 
     def process(self) -> List[int]:
         self.captured_output = []
@@ -61,20 +62,33 @@ class IntCodeComputer:
             )
             try:
                 output = operation.execute()  # not all operations return output
-                if output is not None:
-                    self.captured_output.append(output)
             except Halt:
                 break
-            if operation.instruction_pointer_changed:
-                self.instruction_pointer = operation.instruction_pointer
-            else:
-                self.instruction_pointer += operation.num_parameters + 1
+
+            # update relative counter
+            # if operation.relative_base_changed:
+            #     self.relative_base = operation.relative_base
+
+            self._capture_output(output)
+            self.instruction_pointer = self._next_instruction(operation)
 
             if self.captured_output and self.pause_on_output:
                 break
 
         return self.program
 
+    def _next_instruction(self, operation) -> int:
+        if operation.instruction_pointer_changed:
+            return operation.instruction_pointer
+        return self.instruction_pointer + operation.num_parameters + 1
+
+    def _update_relative_base(self, output: int) -> None:
+        if operation.relative_base_changed:
+            self.captured_output.append(output)
+
+    def _capture_output(self, output: int) -> None:
+        if output is not None:
+            self.captured_output.append(output)
 
 class Operation:
     def __init__(
@@ -86,8 +100,9 @@ class Operation:
         modes_reversed = modes.zfill(self.num_parameters)[::-1]
         self.modes: List[int] = [int(val) for val in modes_reversed]
 
-        # used for jumps
+        # parameters that inform
         self.instruction_pointer_changed = False
+        self.relative_base_changed = False
 
     @classmethod
     def match(cls, code) -> bool:
@@ -152,7 +167,7 @@ class JumpIfTrue(Operation):
     OP_CODE = 5
     num_parameters = 2
 
-    def execute(self) -> int:
+    def execute(self) -> None:
         code = self.program
         idx = self.instruction_pointer
         val1 = calculate_value_given_mode(code, idx, self.modes, 1)
@@ -167,7 +182,7 @@ class JumpIfFalse(Operation):
     OP_CODE = 6
     num_parameters = 2
 
-    def execute(self) -> int:
+    def execute(self) -> None:
         code = self.program
         idx = self.instruction_pointer
         val1 = calculate_value_given_mode(code, idx, self.modes, 1)
@@ -182,7 +197,7 @@ class LessThan(Operation):
     OP_CODE = 7
     num_parameters = 3
 
-    def execute(self) -> int:
+    def execute(self) -> None:
         code = self.program
         idx = self.instruction_pointer
         val1 = calculate_value_given_mode(code, idx, self.modes, 1)
@@ -198,7 +213,7 @@ class Equals(Operation):
     OP_CODE = 8
     num_parameters = 3
 
-    def execute(self) -> int:
+    def execute(self) -> None:
         code = self.program
         idx = self.instruction_pointer
         val1 = calculate_value_given_mode(code, idx, self.modes, 1)
@@ -210,11 +225,26 @@ class Equals(Operation):
             code[code[idx + 3]] = 0
 
 
+class ModifyRelativeBase(Operation):
+    OP_CODE = 9
+    num_parameters = 2
+
+    def __init__(self):
+        pass
+        self.relative_base = relative_base
+
+    def execute(self) -> int:
+        code = self.program
+        idx = self.instruction_pointer
+        val1 = calculate_value_given_mode(code, idx, self.modes, 1)
+        self.relative_base_changed = True
+
+
 class Terminate(Operation):
     OP_CODE = 99
     num_parameters = 0
 
-    def execute(self) -> bool:
+    def execute(self) -> None:
         raise Halt
 
 
@@ -225,5 +255,7 @@ def calculate_value_given_mode(
         return code[code[index + offset]]
     elif modes[offset - 1] == 1:  # immediate mode
         return code[index + offset]
+    elif modes[offset - 1] == 2:  # relative mode
+        return code[relative_base + index + offset]
     else:
         raise ValueError("Invalid mode value")
