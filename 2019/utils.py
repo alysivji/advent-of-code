@@ -6,6 +6,7 @@ class Halt(Exception):
 
 
 class IntCodeComputer:
+
     def __str__(self):
         return ",".join([str(val) for val in self.program[:self.original_program_size]])
 
@@ -24,7 +25,7 @@ class IntCodeComputer:
         self.input = iter(self._generate_input(phase, input_value))
         self.pause_on_output = pause_on_output
         self.relative_base = relative_base
-        self.OPERATIONS = [
+        ALL_OPERATIONS = [
             Add,
             Multiply,
             Input,
@@ -36,6 +37,7 @@ class IntCodeComputer:
             ModifyRelativeBase,
             Terminate,
         ]
+        self.operations_map = {op.OP_CODE: op for op in ALL_OPERATIONS}
 
     def process(self) -> List[int]:
         self.captured_output = []
@@ -44,10 +46,9 @@ class IntCodeComputer:
             op_code = int(instruction_op_code[-2:])
             mode = instruction_op_code[: len(instruction_op_code) - 2]
 
-            for op in self.OPERATIONS:
-                if op.match(op_code):
-                    break
-            else:
+            try:
+                op = self.operations_map[op_code]
+            except IndexError:
                 raise ValueError("Invalid op code")
 
             operation = op(

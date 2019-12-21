@@ -9,3 +9,15 @@ def print_(func):
         return result
 
     return wrapper
+
+
+class Stack:
+    pass
+
+
+class Queue:
+    pass
+
+
+def binary_search():
+    pass
