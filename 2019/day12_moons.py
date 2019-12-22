@@ -61,6 +61,47 @@ class Moon(NamedTuple):
     velocity: Vector
 
 
+class State:
+    def __init__(self):
+        self._state = {}
+
+    def __getitem__(self, key):
+        return self._state[key]
+
+    def __setitem__(self, key, value):
+        self._state[key] = value
+
+    def __iter__(self):
+        return iter(self._state)
+
+    def __eq__(self, other):
+        if isinstance(other, State):
+            return self._state == other._state
+        raise NotImplementedError("Not supported")
+
+    def __hash__(self):
+        hash_value = 0
+        for key, value in self.items():
+            hash_value ^= hash(key) ^ hash(value)
+        return hash_value
+
+    def __repr__(self):
+        return repr(self._state)
+
+    def items(self):
+        return self._state.items()
+
+    def keys(self):
+        return self._state.keys()
+
+    @classmethod
+    def from_moons(cls, moons: List[Moon]):
+        self = cls()
+        for index, moon_details in enumerate(moons):
+            self[index] = moon_details
+        return self
+
+
 def load_positions(lines: List[str]) -> List[Moon]:
     """TODO abstract this into a generator"""
     p = re.compile(POSITIONS)
@@ -74,12 +115,13 @@ def load_positions(lines: List[str]) -> List[Moon]:
     return moons
 
 
-def progress_time(initial_state: List[Moon], timesteps: int) -> List[Moon]:
-    current_state = {index: moon for index, moon in enumerate(initial_state)}
-
-    for timestep in range(1, timesteps + 1):
+def simulate(initial_state: State, num_timesteps: int) -> State:
+    """Given initial state, increment by timesteps, return state"""
+    timestep = 0
+    current_state = initial_state
+    while True:
         motion_tracker = {key: Position(x=0, y=0, z=0) for key in current_state.keys()}
-        for m1, m2 in itertools.combinations(current_state, r=2):
+        for m1, m2 in itertools.combinations(current_state.keys(), r=2):
             moon1 = current_state[m1].position
             moon2 = current_state[m2].position
 
@@ -95,10 +137,14 @@ def progress_time(initial_state: List[Moon], timesteps: int) -> List[Moon]:
             new_position = current_state[key].position + motion_tracker[key]
             current_state[key] = Moon(position=new_position, velocity=new_velocity)
 
+        timestep += 1
+        if timestep >= num_timesteps:
+            break
+
     return current_state
 
 
-def calculate_energy(current_state: Dict[int, Moon]) -> int:
+def calculate_energy(current_state: State) -> int:
     total_energy = 0
     for key, state_details in current_state.items():
         potential_energy = sum(abs(val) for val in list(state_details.position))
@@ -106,6 +152,22 @@ def calculate_energy(current_state: Dict[int, Moon]) -> int:
         total_energy += potential_energy * kinect_energy
 
     return total_energy
+
+
+def timesteps_before_repeat(initial_state: State) -> int:
+    current_state = initial_state
+    observed_configurations = set()
+    timesteps = 0
+
+    while True:
+        if current_state in observed_configurations:
+            break
+
+        observed_configurations.add(current_state)
+        current_state = simulate(current_state, num_timesteps=1)
+        timesteps += 1
+
+    return timesteps
 
 
 TEST_INPUT1 = """<x=-1, y=0, z=2>
@@ -121,16 +183,23 @@ TEST_INPUT2 = """<x=-8, y=-10, z=0>
 
 @pytest.mark.parametrize(
     "positions, timesteps, expected_total_energy",
-    [
-        (TEST_INPUT1, 10, 179),
-        (TEST_INPUT2, 100, 1940),
-    ],
+    [(TEST_INPUT1, 10, 179), (TEST_INPUT2, 100, 1940)],
 )
 def test_calculate_total_energy(positions, timesteps, expected_total_energy):
     moons = load_positions(positions.split("\n"))
-    state = progress_time(moons, timesteps=timesteps)
-    assert calculate_energy(state) == expected_total_energy
+    initial_state = State.from_moons(moons)
+    final_state = simulate(initial_state, num_timesteps=timesteps)
+    assert calculate_energy(final_state) == expected_total_energy
 
+
+@pytest.mark.parametrize(
+    "positions, expected_timesteps", [(TEST_INPUT1, 2772),]
+    #  (TEST_INPUT2, 4686774924)
+)
+def test_timesteps_before_repeat(positions, expected_timesteps):
+    moons = load_positions(positions.split("\n"))
+    initial_state = State.from_moons(moons)
+    assert timesteps_before_repeat(initial_state) == expected_timesteps
 
 
 if __name__ == "__main__":
@@ -140,6 +209,11 @@ if __name__ == "__main__":
             lines.append(line.strip())
 
     moons = load_positions(lines)
-    state = progress_time(moons, timesteps=1000)
-    energy = calculate_energy(state)
+    initial_state = State.from_moons(moons)
+    final_state = simulate(initial_state, num_timesteps=1000)
+    energy = calculate_energy(final_state)
     print(f"Total energy in the system is: {energy}")
+
+    initial_state = State.from_moons(moons)
+    timesteps = timesteps_before_repeat(initial_state)
+    print(f"Num timesteps before repeating is: {timesteps}")

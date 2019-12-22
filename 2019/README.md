@@ -80,3 +80,9 @@ Useful StackOverflow post: [Getting key of dict with maximum value](https://stac
 Another puzzle using the `IntCodeCalculator`. I added the ability to propagate exceptions up to allow higher order abstractions to control flow. Also allowed driver programs to control how much output to break on.
 
 Thinking about refactoring `IntCodeCalculator` before the next go around. Also added a test file to ensure changes don't break existing functionality.
+
+### [Day 12: The N-Body Problem](https://adventofcode.com/2019/day/12)
+
+I wanted to practice my Python skills for this one. Fun with magic methods! I modified my simulate function to function as more of a driver. It takes a state, runs thru timesteps, returns the final stste back. This makes it more general and easier to use in other places.
+
+I feel that part 2 is going to involve figuring out the pattern for each of the moons. I'm going to take a break with the next day's challenge before coming back to this.
