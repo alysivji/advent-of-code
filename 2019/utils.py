@@ -19,6 +19,7 @@ class IntCodeComputer:
         pause_on_output: bool = False,
         relative_base: int = 0,
         memory_size: int = None,
+        propogate_exceptions: bool = False,
     ):
         self.program: List[int] = self._write_program_to_memory(program, memory_size=memory_size)
         self.instruction_pointer: int = 0
@@ -26,6 +27,7 @@ class IntCodeComputer:
         self.input = iter(self._generate_input(phase))
         self.pause_on_output = pause_on_output
         self.relative_base = relative_base
+        self.propogate_exceptions = propogate_exceptions
         ALL_OPERATIONS = [
             Add,
             Multiply,
@@ -62,6 +64,8 @@ class IntCodeComputer:
             try:
                 output = operation.execute()  # not all operations return output
             except Halt:
+                if self.propogate_exceptions:
+                    raise Halt
                 break
 
             if self.relative_base != operation.relative_base:
@@ -74,6 +78,10 @@ class IntCodeComputer:
                 break
 
         return self.program
+
+    def set_input_value(self, input_value):
+        self.input_value = input_value
+        self.input = iter(self._generate_input())
 
     def _write_program_to_memory(self, program: str, memory_size: int = None) -> List[int]:
         program = [int(val) for val in program.split(",")]
