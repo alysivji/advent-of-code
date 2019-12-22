@@ -68,3 +68,9 @@ Day 8 was a nice change from all the `IntCodeCalcualtor` challenges. Even though
 ### [Day 9: Sensor Boost](https://adventofcode.com/2019/day/9)
 
 After a couple of weeks off, I'm picking this back up. Took some time to remember how the `IntCodeComputer` works. This wasn't too difficult once I remembered some details of work from 2-3 weeks back. Luckily the code isn't TOO TOO messy. I think there are a few more puzzles coming up that will use the `IntCodeComputer`. Might clean it up before the next set of challenges.
+
+### [Day 10: MOnitoring Station](https://adventofcode.com/2019/day/10)
+
+Had to hack `_within_map_boundary()` to get the right answer. Not sure what's going on, but was able to hack things together to get the test case to pass. Had to review radians and degrees for part 2; used paper to figure out a formula and got things working.
+
+Useful StackOverflow post: [Getting key of dict with maximum value](https://stackoverflow.com/questions/268272/getting-key-with-maximum-value-in-dictionary)
