@@ -93,6 +93,9 @@ class IntCodeComputer:
         self.input_value = input_value
         self.input = iter(self._generate_input())
 
+    def update_memory_address(self, position, value):
+        self.program[position] = value
+
     def _write_program_to_memory(
         self, program: str, memory_size: int = None
     ) -> List[int]:

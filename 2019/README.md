@@ -91,4 +91,8 @@ I feel that part 2 is going to involve figuring out the pattern for each of the 
 
 All the work I did to make my `IntCodeCalculator` easy-to-use was work it as I was able to quickly complete Part 1.
 
-Part 2 seems challenging, think the best plan of attack is to build a decision tree that has 3 inputs... keep track of score and/or how many blocks we broke.
+Part 2 seemed challenging, but after using matplotlib to draw out the game field, I decided it would be easy to just have the paddle follow the ball at each point in the game loop where I can put in an action. Brute force it.
+
+Have enjoyed having to mess with underlying implementations while keeping all higher level code working. Fortunately I have been refactoring at the right times. This is great practice!
+
+Very impressed with the IntCode language. Makes me want to dig into compilers.

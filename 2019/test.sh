@@ -10,4 +10,5 @@ pytest 2019/day08_image.py
 pytest 2019/day09_boost.py
 pytest 2019/day10_asteroids.py
 pytest 2019/day11_painting.py
-
+pytest 2019/day12_moons.py
+pytest 2019/day13_arcade.py
