@@ -22,7 +22,8 @@ class IntCodeComputer:
     ):
         self.program: List[int] = self._write_program_to_memory(program, memory_size=memory_size)
         self.instruction_pointer: int = 0
-        self.input = iter(self._generate_input(phase, input_value))
+        self.input_value = input_value
+        self.input = iter(self._generate_input(phase))
         self.pause_on_output = pause_on_output
         self.relative_base = relative_base
         ALL_OPERATIONS = [
@@ -87,11 +88,11 @@ class IntCodeComputer:
 
         return program
 
-    def _generate_input(self, phase, input_value):
+    def _generate_input(self, phase=None):
         if phase is not None:
             yield phase
         while True:
-            yield input_value
+            yield self.input_value
 
     def _next_instruction(self, operation) -> int:
         if operation.instruction_pointer_changed:

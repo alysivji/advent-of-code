@@ -29,8 +29,8 @@ if __name__ == "__main__":
 
     cpu = IntCodeComputer(intcode_program, memory_size=1_000_000, input_value=1)
     cpu.process()
-    print(f"Test program output: {cpu.captured_output[0]})
+    print(f"Test program output: {cpu.captured_output[0]}")
 
     cpu = IntCodeComputer(intcode_program, memory_size=1_000_000, input_value=2)
     cpu.process()
-    print(f"Boost program output: {cpu.captured_output[0]})
+    print(f"Boost program output: {cpu.captured_output[0]}")
