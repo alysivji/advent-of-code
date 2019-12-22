@@ -2,6 +2,8 @@ from collections import defaultdict
 from enum import IntEnum
 from typing import NamedTuple
 
+import matplotlib.pyplot as plt
+
 from utils import Halt, IntCodeComputer
 
 
@@ -35,9 +37,13 @@ advance_direction = {
 
 
 class HullPaintingRobot:
-    def __init__(self, program):
+    def __init__(self, program, input_value):
         self.cpu = IntCodeComputer(
-            program, input_value=0, pause_on_output=True, memory_size=1024, propogate_exceptions=True
+            program,
+            input_value=input_value,
+            pause_on_output=True,
+            memory_size=1024,
+            propogate_exceptions=True,
         )
 
     def __repr__(self):
@@ -68,13 +74,27 @@ class HullPaintingRobot:
 
         return panels
 
+def draw(positions):
+    points = []
+    for position, color in positions.items():
+        if color == Panel.WHITE:
+            points.append(position)
+
+    xs = [point.x for point in points]
+    ys = [point.y for point in points]
+    plt.scatter(xs, ys, s=10)
+    plt.show()
+
 
 if __name__ == "__main__":
     with open("2019/data/day11_input.txt", "r") as f:
         intcode_program = f.readline().strip()
 
-    robot = HullPaintingRobot(intcode_program)
-    result = robot.process()
-    num_panels_painted = len(result)
-
+    robot = HullPaintingRobot(intcode_program, input_value=Panel.BLACK)
+    paint_job = robot.process()
+    num_panels_painted = len(paint_job)
     print(f"Painted {num_panels_painted} panels at least once.")
+
+    robot = HullPaintingRobot(intcode_program, input_value=Panel.WHITE)
+    paint_job = robot.process()
+    draw(paint_job)
