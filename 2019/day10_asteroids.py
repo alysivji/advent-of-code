@@ -19,9 +19,9 @@ class AsteroidMap:
     def __init__(self, asteroids: List[Asteroid]):
         self._asteroids: Set[Asteroid] = set(coordinates for coordinates in asteroids)
         self.x_min = 0
-        self.x_max = 10  # max(x for x, y in asteroids)
+        self.x_max = max(x for x, y in asteroids)
         self.y_min = 0
-        self.y_max = 9  # max(y for x, y in asteroids)
+        self.y_max = max(y for x, y in asteroids)
 
     def __repr__(self):
         return repr(self._asteroids)
@@ -139,10 +139,7 @@ class AsteroidMap:
         }
 
     def _within_map_boundary(self, x, y) -> bool:
-        # TODO not sure why i need to offset my x_mas and y_max... but it works
-        return (self.x_min <= x <= (self.x_max + 100)) and (
-            self.y_min <= y <= (self.y_max + 100)
-        )
+        return (self.x_min <= x <= self.x_max) and (self.y_min <= y <= self.y_max)
 
 
 def find_all_asteroids(grid: List[str]) -> List[Asteroid]:
