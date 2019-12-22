@@ -6,9 +6,10 @@ class Halt(Exception):
 
 
 class IntCodeComputer:
-
     def __str__(self):
-        return ",".join([str(val) for val in self.program[:self.original_program_size]])
+        return ",".join(
+            [str(val) for val in self.program[: self.original_program_size]]
+        )
 
     def __init__(
         self,
@@ -17,15 +18,19 @@ class IntCodeComputer:
         input_value: int = None,
         phase: int = None,
         pause_on_output: bool = False,
+        num_output_to_capture: int = 1,
         relative_base: int = 0,
         memory_size: int = None,
         propogate_exceptions: bool = False,
     ):
-        self.program: List[int] = self._write_program_to_memory(program, memory_size=memory_size)
+        self.program: List[int] = self._write_program_to_memory(
+            program, memory_size=memory_size
+        )
         self.instruction_pointer: int = 0
         self.input_value = input_value
         self.input = iter(self._generate_input(phase))
         self.pause_on_output = pause_on_output
+        self.num_output_to_capture = num_output_to_capture
         self.relative_base = relative_base
         self.propogate_exceptions = propogate_exceptions
         ALL_OPERATIONS = [
@@ -74,7 +79,12 @@ class IntCodeComputer:
             self._capture_output(output)
             self.instruction_pointer = self._next_instruction(operation)
 
-            if self.captured_output and self.pause_on_output:
+            pause_process = (
+                self.captured_output
+                and self.pause_on_output
+                and len(self.captured_output) == self.num_output_to_capture
+            )
+            if pause_process:
                 break
 
         return self.program
@@ -83,7 +93,9 @@ class IntCodeComputer:
         self.input_value = input_value
         self.input = iter(self._generate_input())
 
-    def _write_program_to_memory(self, program: str, memory_size: int = None) -> List[int]:
+    def _write_program_to_memory(
+        self, program: str, memory_size: int = None
+    ) -> List[int]:
         program = [int(val) for val in program.split(",")]
         self.original_program_size = len(program)
 
@@ -152,7 +164,9 @@ class Add(Operation):
 
         val1 = calculate_value_given_mode(code, idx, self.modes, 1, self.relative_base)
         val2 = calculate_value_given_mode(code, idx, self.modes, 2, self.relative_base)
-        index_to_update = calculate_index_given_mode(code, idx, self.modes, 3, self.relative_base)
+        index_to_update = calculate_index_given_mode(
+            code, idx, self.modes, 3, self.relative_base
+        )
         code[index_to_update] = val1 + val2
 
 
@@ -167,7 +181,9 @@ class Multiply(Operation):
         # first parameter is in position mode
         val1 = calculate_value_given_mode(code, idx, self.modes, 1, self.relative_base)
         val2 = calculate_value_given_mode(code, idx, self.modes, 2, self.relative_base)
-        index_to_update = calculate_index_given_mode(code, idx, self.modes, 3, self.relative_base)
+        index_to_update = calculate_index_given_mode(
+            code, idx, self.modes, 3, self.relative_base
+        )
         code[index_to_update] = val1 * val2
 
 
@@ -185,7 +201,9 @@ class Input(Operation):
     def execute(self) -> None:
         code = self.program
         idx = self.instruction_pointer
-        index_to_update = calculate_index_given_mode(code, idx, self.modes, 1, self.relative_base)
+        index_to_update = calculate_index_given_mode(
+            code, idx, self.modes, 1, self.relative_base
+        )
 
         code[index_to_update] = self.input
 
@@ -239,7 +257,9 @@ class LessThan(Operation):
         idx = self.instruction_pointer
         val1 = calculate_value_given_mode(code, idx, self.modes, 1, self.relative_base)
         val2 = calculate_value_given_mode(code, idx, self.modes, 2, self.relative_base)
-        index_to_update = calculate_index_given_mode(code, idx, self.modes, 3, self.relative_base)
+        index_to_update = calculate_index_given_mode(
+            code, idx, self.modes, 3, self.relative_base
+        )
 
         if val1 < val2:
             code[index_to_update] = 1
@@ -256,7 +276,9 @@ class Equals(Operation):
         idx = self.instruction_pointer
         val1 = calculate_value_given_mode(code, idx, self.modes, 1, self.relative_base)
         val2 = calculate_value_given_mode(code, idx, self.modes, 2, self.relative_base)
-        index_to_update = calculate_index_given_mode(code, idx, self.modes, 3, self.relative_base)
+        index_to_update = calculate_index_given_mode(
+            code, idx, self.modes, 3, self.relative_base
+        )
 
         if val1 == val2:
             code[index_to_update] = 1
@@ -286,7 +308,7 @@ class Terminate(Operation):
 
 
 def calculate_value_given_mode(
-    code: List[int], index: int, modes: List[int], offset: int, relative_base: int,
+    code: List[int], index: int, modes: List[int], offset: int, relative_base: int
 ) -> int:
     if modes[offset - 1] == 0:  # parameter mode
         return code[code[index + offset]]
@@ -299,7 +321,7 @@ def calculate_value_given_mode(
 
 
 def calculate_index_given_mode(
-    code: List[int], index: int, modes: List[int], offset: int, relative_base: int,
+    code: List[int], index: int, modes: List[int], offset: int, relative_base: int
 ):
     if modes[offset - 1] == 2:  # relative mode
         return relative_base + code[index + offset]

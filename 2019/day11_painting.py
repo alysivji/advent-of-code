@@ -42,6 +42,7 @@ class HullPaintingRobot:
             program,
             input_value=input_value,
             pause_on_output=True,
+            num_output_to_capture=2,
             memory_size=1024,
             propogate_exceptions=True,
         )
@@ -55,15 +56,12 @@ class HullPaintingRobot:
         curr_position = Position(0, 0)
         direction = "^"
         while True:
-            captured_output = []
             try:
-                while len(captured_output) < 2:
-                    self.cpu.process()
-                    captured_output.extend(self.cpu.captured_output)
+                self.cpu.process()
             except Halt:
                 break
 
-            output = HullPaintingRobotOutput(*captured_output)
+            output = HullPaintingRobotOutput(*self.cpu.captured_output)
             old_color = panels[curr_position]
             panels[curr_position] = output.color
             if panels[curr_position] != old_color:
