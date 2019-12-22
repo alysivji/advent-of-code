@@ -86,3 +86,9 @@ Thinking about refactoring `IntCodeCalculator` before the next go around. Also a
 I wanted to practice my Python skills for this one. Fun with magic methods! I modified my simulate function to function as more of a driver. It takes a state, runs thru timesteps, returns the final stste back. This makes it more general and easier to use in other places.
 
 I feel that part 2 is going to involve figuring out the pattern for each of the moons. I'm going to take a break with the next day's challenge before coming back to this.
+
+### [Day 13: Care Package](https://adventofcode.com/2019/day/13)
+
+All the work I did to make my `IntCodeCalculator` easy-to-use was work it as I was able to quickly complete Part 1.
+
+Part 2 seems challenging, think the best plan of attack is to build a decision tree that has 3 inputs... keep track of score and/or how many blocks we broke.
