@@ -1,11 +1,18 @@
 from collections import defaultdict
+import functools
 import itertools
+import math
 import re
 from typing import Dict, List, NamedTuple
 
 import pytest
 
 POSITIONS = r"<x=(?P<x>-*\d+), y=(?P<y>-*\d+), z=(?P<z>-*\d+)>"
+
+
+def lcm(denominators):
+    """https://stackoverflow.com/a/49816058/4326704"""
+    return functools.reduce(lambda a,b: a*b // math.gcd(a,b), denominators)
 
 
 class Position(NamedTuple):
@@ -74,17 +81,6 @@ class State:
     def __iter__(self):
         return iter(self._state)
 
-    def __eq__(self, other):
-        if isinstance(other, State):
-            return self._state == other._state
-        raise NotImplementedError("Not supported")
-
-    def __hash__(self):
-        hash_value = 0
-        for key, value in self.items():
-            hash_value ^= hash(key) ^ hash(value)
-        return hash_value
-
     def __repr__(self):
         return repr(self._state)
 
@@ -117,7 +113,7 @@ def load_positions(lines: List[str]) -> List[Moon]:
 
 def simulate(initial_state: State, num_timesteps: int) -> State:
     """Given initial state, increment by timesteps, return state"""
-    timestep = 0
+    step = 0
     current_state = initial_state
     while True:
         motion_tracker = {key: Position(x=0, y=0, z=0) for key in current_state.keys()}
@@ -137,8 +133,8 @@ def simulate(initial_state: State, num_timesteps: int) -> State:
             new_position = current_state[key].position + motion_tracker[key]
             current_state[key] = Moon(position=new_position, velocity=new_velocity)
 
-        timestep += 1
-        if timestep >= num_timesteps:
+        step += 1
+        if step >= num_timesteps:
             break
 
     return current_state
@@ -154,20 +150,37 @@ def calculate_energy(current_state: State) -> int:
     return total_energy
 
 
-def timesteps_before_repeat(initial_state: State) -> int:
+def find_orbit_pattern(initial_state: State):
     current_state = initial_state
-    observed_configurations = set()
-    timesteps = 0
+    timestep = 0
+
+    seen_xs = set()
+    seen_ys = set()
+    seen_zs = set()
 
     while True:
-        if current_state in observed_configurations:
-            break
-
-        observed_configurations.add(current_state)
+        timestep += 1
         current_state = simulate(current_state, num_timesteps=1)
-        timesteps += 1
 
-    return timesteps
+        x = []
+        y = []
+        z = []
+        for key in current_state.keys():
+            pos = current_state[key].position
+            vel = current_state[key].velocity
+            x.extend([key, pos.x, vel.x])
+            y.extend([key, pos.y, vel.y])
+            z.extend([key, pos.z, vel.z])
+
+        x = tuple(x)
+        y = tuple(y)
+        z = tuple(z)
+        if x in seen_xs and y in seen_ys and z in seen_zs:
+            return (len(seen_xs), len(seen_ys), len(seen_zs))
+
+        seen_xs.add(x)
+        seen_ys.add(y)
+        seen_zs.add(z)
 
 
 TEST_INPUT1 = """<x=-1, y=0, z=2>
@@ -193,13 +206,14 @@ def test_calculate_total_energy(positions, timesteps, expected_total_energy):
 
 
 @pytest.mark.parametrize(
-    "positions, expected_timesteps", [(TEST_INPUT1, 2772),]
-    #  (TEST_INPUT2, 4686774924)
+    "positions, expected_timesteps", [(TEST_INPUT2, 4686774924)]
 )
 def test_timesteps_before_repeat(positions, expected_timesteps):
     moons = load_positions(positions.split("\n"))
     initial_state = State.from_moons(moons)
-    assert timesteps_before_repeat(initial_state) == expected_timesteps
+
+    periodic_orbit = find_orbit_pattern(initial_state)
+    assert lcm(periodic_orbit) == expected_timesteps
 
 
 if __name__ == "__main__":
@@ -215,5 +229,6 @@ if __name__ == "__main__":
     print(f"Total energy in the system is: {energy}")
 
     initial_state = State.from_moons(moons)
-    timesteps = timesteps_before_repeat(initial_state)
+    periodic_orbit = find_orbit_pattern(initial_state)
+    timesteps = lcm(periodic_orbit)
     print(f"Num timesteps before repeating is: {timesteps}")

@@ -87,6 +87,16 @@ I wanted to practice my Python skills for this one. Fun with magic methods! I mo
 
 I feel that part 2 is going to involve figuring out the pattern for each of the moons. I'm going to take a break with the next day's challenge before coming back to this.
 
+#### Update
+
+I was wrong about this earlier. In order to find a repeating pattern, we find out if the x-values, y-values, and z-values for position and velocity repeat. Once we find the period of repetitions, we can find the Lowest Common Multiple of our period to find out when the pattern repeats.
+
+Thanks to [Joel Grus' Day 12 on YouTube](https://www.youtube.com/watch?v=O68lYbvrwoQ) for helping me figure it out.
+
+#### TIL
+
+- [Fancy way to do LCM in Python for an iterable](https://stackoverflow.com/a/49816058/4326704) (h/t StackOverflow)
+
 ### [Day 13: Care Package](https://adventofcode.com/2019/day/13)
 
 All the work I did to make my `IntCodeCalculator` easy-to-use was work it as I was able to quickly complete Part 1.
