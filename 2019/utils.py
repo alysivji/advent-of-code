@@ -5,6 +5,19 @@ class Halt(Exception):
     pass
 
 
+class IntCodeComputerState(NamedTuple):
+    program: List[int]
+    instruction_pointer: int
+    relative_base: int
+
+    @classmethod
+    def from_cpu(cls, cpu):
+        program = cpu.program[:]
+        instruction_pointer = cpu.instruction_pointer
+        relative_base = cpu.relative_base
+        return cls(program, instruction_pointer, relative_base)
+
+
 class IntCodeComputer:
     def __str__(self):
         return ",".join(
@@ -27,8 +40,9 @@ class IntCodeComputer:
             program, memory_size=memory_size
         )
         self.instruction_pointer: int = 0
-        self.input_value = input_value
-        self.input = iter(self._generate_input(phase))
+        self._input_value = input_value
+        self.phase = phase
+        self.input = iter(self._generate_input())
         self.pause_on_output = pause_on_output
         self.num_output_to_capture = num_output_to_capture
         self.relative_base = relative_base
@@ -46,6 +60,15 @@ class IntCodeComputer:
             Terminate,
         ]
         self.operations_map = {op.OP_CODE: op for op in ALL_OPERATIONS}
+
+    @property
+    def input_value(self):
+        return self._input_value
+
+    @input_value.setter
+    def input_value(self, value):
+        self._input_value = value
+        self.input = iter(self._generate_input())
 
     def process(self) -> List[int]:
         self.captured_output = []
@@ -89,9 +112,13 @@ class IntCodeComputer:
 
         return self.program
 
-    def set_input_value(self, input_value):
-        self.input_value = input_value
-        self.input = iter(self._generate_input())
+    def export_state(self) -> IntCodeComputerState:
+        return IntCodeComputerState.from_cpu(self)
+
+    def import_state(self, state: IntCodeComputerState):
+        self.program = state.program
+        self.instruction_pointer = state.instruction_pointer
+        self.relative_base = state.relative_base
 
     def update_memory_address(self, position, value):
         self.program[position] = value
@@ -111,11 +138,11 @@ class IntCodeComputer:
 
         return program
 
-    def _generate_input(self, phase=None):
-        if phase is not None:
-            yield phase
+    def _generate_input(self):
+        if self.phase is not None:
+            yield self.phase
         while True:
-            yield self.input_value
+            yield self._input_value
 
     def _next_instruction(self, operation) -> int:
         if operation.instruction_pointer_changed:

@@ -57,7 +57,7 @@ class ArcadeCabinet:
     def move_joystick(self, direction):
         for possible_direction in JoystickDirection:
             if dirrection == possible_direction:
-                self.cpu.set_input_value = direction
+                self.cpu.input_value = direction
 
     def execute(self):
         screen = {}
@@ -84,11 +84,11 @@ class ArcadeCabinet:
             # have paddle follow ball
             if ball_position is not None and paddle_position is not None:
                 if ball_position[0] > paddle_position[0]:
-                    self.cpu.set_input_value(JoystickDirection.RIGHT)
+                    self.cpu.input_value = JoystickDirection.RIGHT
                 elif ball_position[0] == paddle_position[0]:
-                    self.cpu.set_input_value(JoystickDirection.NEUTRAL)
+                    self.cpu.input_value = JoystickDirection.NEUTRAL
                 elif ball_position[0] < paddle_position[0]:
-                    self.cpu.set_input_value(JoystickDirection.LEFT)
+                    self.cpu.input_value = JoystickDirection.LEFT
 
         return screen
 

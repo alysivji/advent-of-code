@@ -68,7 +68,7 @@ class HullPaintingRobot:
                 panels_colored += 1
             direction = direction_mapper[output.direction][direction]
             curr_position += advance_direction[direction]
-            self.cpu.set_input_value(panels[curr_position])
+            self.cpu.input_value = panels[curr_position]
 
         return panels
 
