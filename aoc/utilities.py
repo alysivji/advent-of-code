@@ -21,3 +21,8 @@ class Queue:
 
 def binary_search():
     pass
+
+
+def draw_grid():
+    # given a dictionary, we need to draw a grid
+    pass
