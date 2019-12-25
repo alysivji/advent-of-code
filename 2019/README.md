@@ -117,7 +117,7 @@ Implementing both Breadth First Search and Depth First Search. I was having a bi
 
 While completing Day 15, I added the ability to `import` and `export` the state of the `IntCodeComputer`.
 
-Maybe a fun exercise would be to do A* versus BFS in part 1.
+Learned about the [A* Search Algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm) and implemented it because I was bored.
 
 ### [Day 16: Flawed Frequency Transmission](https://adventofcode.com/2019/day/16)
 

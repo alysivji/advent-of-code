@@ -1,5 +1,6 @@
 from collections import defaultdict, deque
 from enum import IntEnum
+from queue import PriorityQueue
 from typing import NamedTuple
 
 import matplotlib.pyplot as plt
@@ -72,7 +73,6 @@ class RepairDroid:
 
     def map_out_floor_plan(self):
         floor_plan = {}
-        path = []
         frontier = deque()
 
         initial_position = XY(0, 0)
@@ -148,7 +148,6 @@ def locate_oxygen_system(floor_plan):
 
 
 def steps_to_goal(graph, end, start=XY(0, 0)) -> int:
-    path = []
     seen = set()
     frontier = deque()
     frontier.append((0, start))
@@ -168,6 +167,40 @@ def steps_to_goal(graph, end, start=XY(0, 0)) -> int:
             frontier.append((num_steps + 1, xy_to_search))
 
     raise ValueError("Goal not found")
+
+
+def astar(graph, end, heuristic=None, start=XY(0, 0)):
+    if heuristic is None:
+        heuristic = manhattan_distance
+
+    seen = set()
+    frontier = PriorityQueue()
+    frontier.put((0, (0, start)))
+
+    while not frontier.empty():
+        priority, item = frontier.get()
+        num_steps, curr_position = item
+
+        if curr_position == end:
+            return num_steps
+
+        for movement_command, xy_delta in move_to_xy.items():
+            xy_to_search = curr_position + xy_delta
+
+            if xy_to_search not in graph or xy_to_search in seen:
+                continue
+
+            seen.add((xy_to_search))
+            g = num_steps  # sum of current path
+            h = heuristic(curr_position, xy_to_search)  # heuristic
+            f = g + h
+            frontier.put((f ,(num_steps + 1, xy_to_search)))
+
+    raise ValueError("Goal not found")
+
+
+def manhattan_distance(self, other):
+    return abs(self.x - other.x) + abs(self.y - other.y)
 
 
 def max_depth_from_location(graph, location):
