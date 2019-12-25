@@ -70,39 +70,6 @@ class RepairDroid:
     def __repr__(self):
         return "<RepairDroid>"
 
-    def locate_oxygen_system(self):
-        floor_plan = {}
-        path = []
-        frontier = deque()
-
-        initial_position = XY(0, 0)
-        frontier.append((0, self.cpu.export_state(), initial_position))
-        floor_plan[initial_position] = Tile.EMPTY
-
-        while frontier:
-            num_steps, state, curr_position = frontier.popleft()
-            self.cpu.import_state(state)
-
-            for movement_command, xy_delta in move_to_xy.items():
-                xy_to_search = curr_position + xy_delta
-                if xy_to_search in floor_plan:
-                    continue
-
-                status_code = self._run(movement_command.value)[0]
-                if status_code == StatusCode.WALL:
-                    floor_plan[xy_to_search] = Tile.WALL
-                    continue
-                elif status_code == StatusCode.MOVED:
-                    floor_plan[xy_to_search] = Tile.EMPTY
-                    next_state = self.cpu.export_state()
-                    frontier.append((num_steps + 1, next_state, xy_to_search))
-                    self._run(reverse_move[movement_command])
-                elif status_code == StatusCode.FOUND:
-                    floor_plan[xy_to_search] = Tile.OXYGEN_SYSTEM
-                    return (xy_to_search, num_steps + 1, floor_plan)
-
-        raise ValueError("Unreachable; nothing to find")
-
     def map_out_floor_plan(self):
         floor_plan = {}
         path = []
@@ -173,6 +140,35 @@ def floor_plan_to_graph(floor_plan):
                 graph[new_position].append(position)
     return graph
 
+def locate_oxygen_system(floor_plan):
+    for position, tile in floor_plan.items():
+        if tile == Tile.OXYGEN_SYSTEM:
+            return position
+    raise ValueError("Did not find oxygen system... did you submit a valid floor plan?")
+
+
+def steps_to_goal(graph, end, start=XY(0, 0)) -> int:
+    path = []
+    seen = set()
+    frontier = deque()
+    frontier.append((0, start))
+
+    while frontier:
+        num_steps, curr_position = frontier.popleft()
+        if curr_position == end:
+            return num_steps
+
+        for movement_command, xy_delta in move_to_xy.items():
+            xy_to_search = curr_position + xy_delta
+
+            if xy_to_search not in graph or xy_to_search in seen:
+                continue
+
+            seen.add((xy_to_search))
+            frontier.append((num_steps + 1, xy_to_search))
+
+    raise ValueError("Goal not found")
+
 
 def max_depth_from_location(graph, location):
     max_depth = 0
@@ -197,12 +193,15 @@ if __name__ == "__main__":
         intcode_program = f.readline().strip()
 
     robot = RepairDroid(intcode_program)
-    result = robot.locate_oxygen_system()
-    goal, steps, floor_plan = result
+    floor_plan = robot.map_out_floor_plan()
+    g = floor_plan_to_graph(floor_plan)
+
+    oxygen_system_position = locate_oxygen_system(floor_plan)
+    steps = steps_to_goal(g, oxygen_system_position, start=XY(0, 0))
     print(f"Number of steps until the robot finds the oxygen system: {steps}")
 
     robot = RepairDroid(intcode_program)
     floor_plan = robot.map_out_floor_plan()
     g = floor_plan_to_graph(floor_plan)
-    max_depth = max_depth_from_location(g, goal)
+    max_depth = max_depth_from_location(g, oxygen_system_position)
     print(f"Number of seconds for oxygen to fill: {max_depth}")
