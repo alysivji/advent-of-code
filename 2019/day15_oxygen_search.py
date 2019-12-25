@@ -98,11 +98,43 @@ class RepairDroid:
                     frontier.append((num_steps + 1, next_state, xy_to_search))
                     self._run(reverse_move[movement_command])
                 elif status_code == StatusCode.FOUND:
-                    import pdb; pdb.set_trace()
                     floor_plan[xy_to_search] = Tile.OXYGEN_SYSTEM
-                    return (num_steps + 1, floor_plan)
+                    return (xy_to_search, num_steps + 1, floor_plan)
 
         raise ValueError("Unreachable; nothing to find")
+
+    def map_out_floor_plan(self):
+        floor_plan = {}
+        path = []
+        frontier = deque()
+
+        initial_position = XY(0, 0)
+        frontier.append((0, self.cpu.export_state(), initial_position))
+        floor_plan[initial_position] = Tile.EMPTY
+
+        while frontier:
+            num_steps, state, curr_position = frontier.popleft()
+            self.cpu.import_state(state)
+
+            for movement_command, xy_delta in move_to_xy.items():
+                xy_to_search = curr_position + xy_delta
+                if xy_to_search in floor_plan:
+                    continue
+
+                status_code = self._run(movement_command.value)[0]
+                if status_code == StatusCode.WALL:
+                    floor_plan[xy_to_search] = Tile.WALL
+                    continue
+
+                if status_code == StatusCode.MOVED:
+                    floor_plan[xy_to_search] = Tile.EMPTY
+                elif status_code == StatusCode.FOUND:
+                    floor_plan[xy_to_search] = Tile.OXYGEN_SYSTEM
+                next_state = self.cpu.export_state()
+                frontier.append((num_steps + 1, next_state, xy_to_search))
+                self._run(reverse_move[movement_command])
+
+        return floor_plan
 
     def _run(self, movement_command):
         self.cpu.input_value = movement_command
@@ -127,13 +159,50 @@ def draw(floor_plan):
     plt.show()
 
 
+def floor_plan_to_graph(floor_plan):
+    graph = defaultdict(list)
+
+    for position, tile in floor_plan.items():
+        if tile == Tile.WALL:
+            continue
+
+        for xy_delta in move_to_xy.values():
+            new_position = position + xy_delta
+            if floor_plan[new_position] != Tile.WALL:
+                graph[position].append(new_position)
+                graph[new_position].append(position)
+    return graph
+
+
+def max_depth_from_location(graph, location):
+    max_depth = 0
+    seen = set()
+    frontier = [(max_depth, location)]
+
+    while frontier:
+        current_depth, position = frontier.pop()
+        seen.add(position)
+        if current_depth > max_depth:
+            max_depth = current_depth
+
+        for neighbour in graph[position]:
+            if neighbour not in seen:
+                frontier.append((current_depth + 1, neighbour))
+
+    return max_depth
+
+
 if __name__ == "__main__":
     with open("2019/data/day15_input.txt", "r") as f:
         intcode_program = f.readline().strip()
 
     robot = RepairDroid(intcode_program)
     result = robot.locate_oxygen_system()
-    steps, floor_plan = result
-    # g = floor_plan_to_graph(floor_plan)
+    goal, steps, floor_plan = result
+    print(f"Number of steps until the robot finds the oxygen system: {steps}")
 
-    start = XY(0, 0)
+    robot = RepairDroid(intcode_program)
+    floor_plan = robot.map_out_floor_plan()
+    g = floor_plan_to_graph(floor_plan)
+    max_depth = max_depth_from_location(g, goal)
+    print(f"Number of seconds for oxygen to fill: {max_depth}")
