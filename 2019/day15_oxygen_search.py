@@ -177,7 +177,7 @@ def floor_plan_to_graph(floor_plan):
 def max_depth_from_location(graph, location):
     max_depth = 0
     seen = set()
-    frontier = [(max_depth, location)]
+    frontier = [(0, location)]
 
     while frontier:
         current_depth, position = frontier.pop()

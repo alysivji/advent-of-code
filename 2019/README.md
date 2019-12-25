@@ -106,3 +106,15 @@ Part 2 seemed challenging, but after using matplotlib to draw out the game field
 Have enjoyed having to mess with underlying implementations while keeping all higher level code working. Fortunately I have been refactoring at the right times. This is great practice!
 
 Very impressed with the IntCode language. Makes me want to dig into compilers.
+
+### [Day 14: Space Stoichiometry](https://adventofcode.com/2019/day/14)
+
+Still need to complete
+
+### [Day 15: Oxygen System](https://adventofcode.com/2019/day/15)
+
+Implementing both Breadth First Search and Depth First Search. I was having a bit of trouble getting the right answer, but that's because I was not saving / loading the state of the `IntCodeComputer`.
+
+While completing Day 15, I added the ability to `import` and `export` the state of the `IntCodeComputer`.
+
+Maybe a fun exercise would be to do A* versus BFS in part 1.
