@@ -118,3 +118,13 @@ Implementing both Breadth First Search and Depth First Search. I was having a bi
 While completing Day 15, I added the ability to `import` and `export` the state of the `IntCodeComputer`.
 
 Maybe a fun exercise would be to do A* versus BFS in part 1.
+
+### [Day 16: Flawed Frequency Transmission](https://adventofcode.com/2019/day/16)
+
+Still need to complete
+
+### [Day 17: Set and Forget](https://adventofcode.com/2019/day/17)
+
+Part 1 was fairly straightforward. I usually convert array questions into dictionaries, but this time I left it as arrays.
+
+Part b sounds like we want to find max spanning trees along with substrings. I'm reading a couple of books and will come back to this.
