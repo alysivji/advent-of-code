@@ -30,3 +30,9 @@ Hope to set it up tonight (2020-12-01) or this weekend.
 
 Fell back to Python... hacked together a solution with tests.
 Once submitted, when back and generalized it.
+
+### [Day 2: Password Philosophy](https://adventofcode.com/2020/day/2)
+
+It's been a while since I've done RegEx so I decided to use that module.
+
+Used `collections.Counter` to count letters, but apparently strings have a `str.count` method built-in.
