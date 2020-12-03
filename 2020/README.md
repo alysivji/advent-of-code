@@ -36,3 +36,7 @@ Once submitted, when back and generalized it.
 It's been a while since I've done RegEx so I decided to use that module.
 
 Used `collections.Counter` to count letters, but apparently strings have a `str.count` method built-in.
+
+### [Day 3: Toboggan Trajectory](https://adventofcode.com/2020/day/3)
+
+This wasn't too bad. Was able to take advantage of the `math.prod` function I learned about while reading other people's solution for Day 1.
