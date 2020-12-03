@@ -51,10 +51,8 @@ def test_number_of_trees_hit():
     .#........#
     #.##...#...
     #...##....#
-    .#..#...#.#""".split(
-        "\n"
-    )
-    grid = create_grid(TEST_INPUT)
+    .#..#...#.#"""
+    grid = create_grid(TEST_INPUT.split("\n"))
 
     trees_hit = number_of_trees_hit(grid, right=3, down=1)
 
@@ -72,10 +70,8 @@ def test_part_two():
     .#........#
     #.##...#...
     #...##....#
-    .#..#...#.#""".split(
-        "\n"
-    )
-    grid = create_grid(TEST_INPUT)
+    .#..#...#.#"""
+    grid = create_grid(TEST_INPUT.split("\n"))
 
     trees_hit = []
     for (right, left) in [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]:
