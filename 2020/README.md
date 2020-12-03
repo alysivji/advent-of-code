@@ -1,4 +1,4 @@
-# Advent of Code 2019
+# Advent of Code 2020
 
 [AoC 2020](https://adventofcode.com/2020)
 
@@ -8,14 +8,12 @@
 
 ```console
 $ ipython
-%run 2020/day01_fuel.py
 %run 2020/day01_expense_report.py
 ```
 
 ## Test
 
 ```console
-pytest 2019/day01_fuel.py
 pytest 2020/day01_expense_report.py
 ```
 
