@@ -74,8 +74,8 @@ def test_part_two():
     grid = create_grid(TEST_INPUT.split("\n"))
 
     trees_hit = []
-    for (right, left) in [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]:
-        hit = number_of_trees_hit(grid, right, left)
+    for (right, down) in [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]:
+        hit = number_of_trees_hit(grid, right, down)
         trees_hit.append(hit)
 
     return math.prod(trees_hit) == 336
@@ -89,8 +89,8 @@ if __name__ == "__main__":
     print(f"Part 1 answer is {trees_hit}")
 
     trees_hit = []
-    for (right, left) in [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]:
-        hit = number_of_trees_hit(grid, right, left)
+    for (right, down) in [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]:
+        hit = number_of_trees_hit(grid, right, down)
         trees_hit.append(hit)
     result = math.prod(trees_hit)
     print(f"Part 2 answer is {result}")
