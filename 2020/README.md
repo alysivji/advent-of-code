@@ -35,6 +35,14 @@ It's been a while since I've done RegEx so I decided to use that module.
 
 Used `collections.Counter` to count letters, but apparently strings have a `str.count` method built-in.
 
+TIL: `str.count`
+
 ### [Day 3: Toboggan Trajectory](https://adventofcode.com/2020/day/3)
 
 This wasn't too bad. Was able to take advantage of the `math.prod` function I learned about while reading other people's solution for Day 1.
+
+### [Day 4: Passport Processing](https://adventofcode.com/2020/day/4)
+
+Validating data without a serializer is not a lot of fun. It took me a few attempts to get this question correct... my RegEx-es were not accurate enough.
+
+TIL: Make sure to start and end strings with `^` and `$`
