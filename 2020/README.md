@@ -46,3 +46,11 @@ This wasn't too bad. Was able to take advantage of the `math.prod` function I le
 Validating data without a serializer is not a lot of fun. It took me a few attempts to get this question correct... my RegEx-es were not accurate enough.
 
 TIL: Make sure to start and end strings with `^` and `$`
+
+### [Day 5: Binary Boarding](https://adventofcode.com/2020/day/5)
+
+Finally got a JavaScript environment set up using [parcel](https://parceljs.org/). Have to use Node since I'm reading files from disk and have no idea how to debug except for using `console.log`, but that's the point. Only way to get better in an ecosystem is to work in that ecosystem until you are comfortable.
+
+The problem wasn't too hard, spent most of my time re-learning how to basic things in JavaScript.
+
+TIL: `Array.sort` does not sort numbers, have to use `.sort((a, b) => { return a - b; })` instead.
