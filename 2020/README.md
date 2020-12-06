@@ -54,3 +54,9 @@ Finally got a JavaScript environment set up using [parcel](https://parceljs.org/
 The problem wasn't too hard, spent most of my time re-learning how to basic things in JavaScript.
 
 TIL: `Array.sort` does not sort numbers, have to use `.sort((a, b) => { return a - b; })` instead.
+
+### [Day 6: Custom Customs](https://adventofcode.com/2020/day/6)
+
+Today was pretty easy. Have a bunch of stuff to do today so I went back to Python to get it done. Question would have taken me a 20-30 minutes longer in JavaScript.
+
+Took advantage of the `.split("\n\n")` trick to read blank lines. Thanks to Wim in the Chicago Python Slack for the tip!
