@@ -66,3 +66,9 @@ Took advantage of the `.split("\n\n")` trick to read blank lines. Thanks to Wim 
 First hard-ish puzzle of the year! Stuck with Python since I have an 8:30 meeting in the morning and only had an hour to finish.
 
 Used a graph search for Part 1 since I figured Part 2 would require it.
+
+### [Day 8: Handheld Halting](https://adventofcode.com/2020/day/8)
+
+Today's puzzle was reminiscent of last year's IntCode Calculator. I just wrote up some if statments and called it a day for part 1. Part 2 required me to add a check to my part 1 function to ensure that it had halted.
+
+Probably a good idea to refactor my computer into a class. A wise man once said that [`if` statements are a code smell](https://www.youtube.com/watch?v=P0kfKqMHioQ) and it's more likely than not future problems will build upon this one.
