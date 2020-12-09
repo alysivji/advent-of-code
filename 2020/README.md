@@ -72,3 +72,7 @@ Used a graph search for Part 1 since I figured Part 2 would require it.
 Today's puzzle was reminiscent of last year's IntCode Calculator. I just wrote up some if statments and called it a day for part 1. Part 2 required me to add a check to my part 1 function to ensure that it had halted.
 
 Probably a good idea to refactor my computer into a class. A wise man once said that [`if` statements are a code smell](https://www.youtube.com/watch?v=P0kfKqMHioQ) and it's more likely than not future problems will build upon this one.
+
+### [Day 9: Encoding Error](https://adventofcode.com/2020/day/9)
+
+This felt very similar to day 1. Was pretty straightforward.
