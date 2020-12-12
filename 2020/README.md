@@ -82,3 +82,5 @@ This felt very similar to day 1. Was pretty straightforward.
 Part 1 was pretty straight forward. Spent some time thinking of a way to do Part 2 without recursion and couldn't think of anything.
 
 Implemented recursion, got it working, but it was taking forever to run. Utilized memoization via `functions.lru_cache()` to speed up the function. Cheers to Spencer in the Chicago Python `#advent-of-code` channel for the idea.
+
+### [Day 11: Seating System](https://adventofcode.com/2020/day/11)
