@@ -76,3 +76,9 @@ Probably a good idea to refactor my computer into a class. A wise man once said 
 ### [Day 9: Encoding Error](https://adventofcode.com/2020/day/9)
 
 This felt very similar to day 1. Was pretty straightforward.
+
+### [Day 10: Adapter Array](https://adventofcode.com/2020/day/10)
+
+Part 1 was pretty straight forward. Spent some time thinking of a way to do Part 2 without recursion and couldn't think of anything.
+
+Implemented recursion, got it working, but it was taking forever to run. Utilized memoization via `functions.lru_cache()` to speed up the function. Cheers to Spencer in the Chicago Python `#advent-of-code` channel for the idea.
