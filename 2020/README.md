@@ -88,3 +88,7 @@ Implemented recursion, got it working, but it was taking forever to run. Utilize
 This wasn't too difficult. My part 1 solution was janky and needed to be refactored a bit so I could use the same logic to solve part 2.
 
 I had a mistake in my input which I spent a bit of time debugging part 2. Once I starting printing out the seating map, I saw my mistake.
+
+### [Day 12: Rain Risk](https://adventofcode.com/2020/day/12)
+
+Day 11 was pretty messy so I tried to be clean for Day 12 by using a class. Structure from one came in handy as I was able to reuse it for part 2.
