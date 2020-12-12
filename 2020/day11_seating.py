@@ -21,7 +21,7 @@ def create_seating_chart(seat_layout):
     for row_idx, row in enumerate(seat_layout.split("\n")):
         for col_idx, seat in enumerate(row):
             if seat == "L":
-                seats[(row_idx, col_idx)] = ""
+                seats[(row_idx, col_idx)] = "L"
     return seats
 
 
@@ -45,18 +45,17 @@ def step_part1(seats: Dict):
         for dx, dy in DIRECTIONS:
             x_to_check = x + dx
             y_to_check = y + dy
-            try:
-                if seats[(x_to_check, y_to_check)]:
-                    occupied_seats += 1
-            except KeyError:
-                continue
 
-        if not seat:
+            if (x_to_check, y_to_check) in seats:
+                if seats[(x_to_check, y_to_check)] == "#":
+                    occupied_seats += 1
+
+        if seat == "L":
             if occupied_seats == 0:
                 new_layout[location] = "#"
         else:
             if occupied_seats >= 4:
-                new_layout[location] = ""
+                new_layout[location] = "L"
 
     return new_layout
 
@@ -70,7 +69,7 @@ def num_seats_occupied_when_pattern_converges(seats, step_fn):
 
     occupied_seats = 0
     for key, value in seats.items():
-        if value:
+        if value == "#":
             occupied_seats += 1
 
     return occupied_seats
