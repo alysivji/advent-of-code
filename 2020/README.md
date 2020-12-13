@@ -92,3 +92,15 @@ I had a mistake in my input which I spent a bit of time debugging part 2. Once I
 ### [Day 12: Rain Risk](https://adventofcode.com/2020/day/12)
 
 Day 11 was pretty messy so I tried to be clean for Day 12 by using a class. Structure from one came in handy as I was able to reuse it for part 2.
+
+### [Day 13: Shuttle Search](https://adventofcode.com/2020/day/13)
+
+I found Part 2 extremely difficult. I tried to brute force it by using generators to find when each bus is was moving. I couldn't think of a smart optimization; got a tip from the Chicago Python slack about using the Chinese Remainder Theorem.
+
+I took a few hours and relearned the basics of congruency and modulo arithmetic. Hand-coded my own version of the Chinese Remainder Theorem.
+
+#### Helpful resources
+
+- [2.2.1 Congruence mod n: Video](https://www.youtube.com/watch?v=KvtLWgCTwn4)
+- [Using the Chinese Remainder Theorem on a system of congruences](https://www.youtube.com/watch?v=2-tdwLqyaKo)
+- Python Docs: [`pow`](https://docs.python.org/3/library/functions.html#pow)
