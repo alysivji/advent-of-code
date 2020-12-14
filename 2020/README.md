@@ -104,3 +104,7 @@ I took a few hours and relearned the basics of congruency and modulo arithmetic.
 - [2.2.1 Congruence mod n: Video](https://www.youtube.com/watch?v=KvtLWgCTwn4)
 - [Using the Chinese Remainder Theorem on a system of congruences](https://www.youtube.com/watch?v=2-tdwLqyaKo)
 - Python Docs: [`pow`](https://docs.python.org/3/library/functions.html#pow)
+
+### [Day 14: Docking Data](https://adventofcode.com/2020/day/14)
+
+After a hard day yesterday, this one is fairly straightforward. My implemented started off clean for Part 1, but got messy as the Part 2 class was copied and pasted.
