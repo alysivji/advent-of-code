@@ -108,3 +108,9 @@ I took a few hours and relearned the basics of congruency and modulo arithmetic.
 ### [Day 14: Docking Data](https://adventofcode.com/2020/day/14)
 
 After a hard day yesterday, this one is fairly straightforward. My implemented started off clean for Part 1, but got messy as the Part 2 class was copied and pasted.
+
+### [Day 15: Rambunctious Recitation](https://adventofcode.com/2020/day/15)
+
+My algorithm isn't the best, but it gets the job done with pypy3, which is good enough for me.
+
+TODO: improve impelementation and get all tests to pass.
