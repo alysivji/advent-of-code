@@ -113,4 +113,12 @@ After a hard day yesterday, this one is fairly straightforward. My implemented s
 
 My algorithm isn't the best, but it gets the job done with pypy3, which is good enough for me.
 
-TODO: improve impelementation and get all tests to pass.
+TODO: improve implementation and get all tests to pass.
+
+### [Day 16: Ticket Translation](https://adventofcode.com/2020/day/16)
+
+Picking this back up in November 2021 to start getting ready for Advent of Code 2021. Part 1 was pretty straight forward. I made a mistake and used my solution for Part 1 in Part 2; there was an edge I didn't account for... got it eventually but after a bit of trial and error.
+
+### [Day 17: Conway Cubes](https://adventofcode.com/2020/day/17)
+
+The picture was confusing, but after a bit of Googling -- found a reddit thread where somebody explained what was going on with the pic. Once I wrote up a `print_state` function, things became easier to reason about. Part 2 was a quick copy and paste + add a new var to go from 3d to 4d.
