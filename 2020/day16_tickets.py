@@ -1,5 +1,6 @@
 from collections import defaultdict
 import itertools
+import math
 
 
 TEST_INPUT = """class: 1-3 or 5-7
@@ -26,28 +27,28 @@ class TicketScanner:
         self.nearby_tickets = [
             self.parse_ticket(ticket) for ticket in nearby_tickets_raw.split("\n")[1:]
         ]
+        self.all_valid_numbers = set().union(*self.rules.values())
 
     def calculate_error_rate_for_nearby_tickets(self):
-        return sum(self.validate_ticket(ticket) for ticket in self.nearby_tickets)
+        return sum(self.calculate_error_rate(ticket) for ticket in self.nearby_tickets)
 
-    def validate_ticket(self, ticket):
-        max_valid_fields = 0
-        saved_field = None
-        for field_list in itertools.permutations(self.rules.keys(), r=len(self.rules)):
-            num_valid_fields = 0
-            for field, value in zip(field_list, ticket):
-                if value in self.rules[field]:
-                    num_valid_fields += 1
-
-            if num_valid_fields > max_valid_fields:
-                max_valid_fields = num_valid_fields
-                saved_field = field_list
-
+    def calculate_error_rate(self, ticket):
         error_rate = 0
-        for field, value in zip(saved_field, ticket):
-            if value not in self.rules[field]:
-                error_rate += value
+        for num in ticket:
+            if num not in self.all_valid_numbers:
+                error_rate += num
+
         return error_rate
+
+    def get_valid_tickets(self):
+        return [ticket for ticket in self.nearby_tickets if self.is_valid(ticket)]
+
+    def is_valid(self, ticket):
+        for num in ticket:
+            if num not in self.all_valid_numbers:
+                return False
+
+        return True
 
     @staticmethod
     def parse_rules(rules_raw):
@@ -65,6 +66,35 @@ class TicketScanner:
     def parse_ticket(raw_ticket):
         return [int(value) for value in raw_ticket.split(",")]
 
+    def deduce_ticket_fields(self):
+        valid_tickets = self.get_valid_tickets()
+        valid_tickets.append(self.my_ticket)
+
+        possible_positions = {k: set() for k, v in self.rules.items()}
+
+        for field_key in self.rules.keys():
+            valid_field = True
+
+            for idx, field_values in enumerate(zip(*valid_tickets)):
+                range_to_check = self.rules[field_key]
+                for value in field_values:
+                    if value not in range_to_check:
+                        break
+                else:
+                    possible_positions[field_key].add(idx)
+
+        fields_by_length = {len(v): k for k, v in possible_positions.items()}
+        current_set = set()
+        field_mapping = {}
+
+        for idx in range(len(fields_by_length)):
+            current_field = fields_by_length[idx + 1]
+            inferred_index = possible_positions[current_field].difference(current_set)
+            field_mapping[current_field] = inferred_index.pop()
+            current_set = possible_positions[current_field]
+
+        return field_mapping
+
 
 def test_part_1():
     ts = TicketScanner(TEST_INPUT)
@@ -78,3 +108,9 @@ if __name__ == "__main__":
     ts = TicketScanner(ticket_data)
     result = ts.calculate_error_rate_for_nearby_tickets()
     print(f"Part 1 result is {result}")
+
+    field_mapping = ts.deduce_ticket_fields()
+    idx_to_multiply = [v for k, v in field_mapping.items() if k.startswith("departure")]
+    values = [ts.my_ticket[idx] for idx in idx_to_multiply]
+    result = math.prod(values)
+    print(f"Part 2 result is {result}")
