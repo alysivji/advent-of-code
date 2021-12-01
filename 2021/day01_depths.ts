@@ -1,7 +1,6 @@
 "use strict";
 
 import * as fs from 'fs';
-import assert from 'assert';
 
 // part 1
 function countIncreasing(depths: Array<number>) {
@@ -49,3 +48,17 @@ function countIncreasingGroupOfThree(depths: Array<number>) {
 
 console.log(countIncreasingGroupOfThree(testDepths));
 console.log("Part 2 answer: ", countIncreasingGroupOfThree(depths));
+
+
+// After looking at some solutions
+let result = testDepths
+.map((item, idx, arr) => arr[idx] + arr[idx+1] + arr[idx+2])
+.map((item, idx, arr) => item < arr[idx + 1])
+.reduce((acc, b) => b ? acc + 1 : acc, 0);
+console.log(result);
+
+result = depths
+.map((item, idx, arr) => arr[idx] + arr[idx+1] + arr[idx+2])
+.map((item, idx, arr) => item < arr[idx + 1])
+.reduce((acc, b) => b ? acc + 1 : acc, 0);
+console.log(result);
