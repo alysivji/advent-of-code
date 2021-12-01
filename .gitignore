@@ -151,7 +151,9 @@ yarn.lock
 ### </ TYPESCRIPT NODE GITIGNORE>
 
 # vscode
-.vscode/
+!.vscode
+.vscode/*
+!.vscode/launch.json
 
 # direnv
 .envrc

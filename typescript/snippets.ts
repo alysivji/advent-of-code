@@ -1,11 +1,12 @@
 // reading a file
-import * as fs from "fs";
-const boardingPasses = fs
+import fs from "fs";
+const depths = fs
   .readFileSync("2021/data/day01_input.txt")
   .toString()
   .trim()
-  .split("\n");
-console.log(boardingPasses);
+  .split("\n")
+  .map(Number);
+console.log(depths);
 
 // formatting a string
 const world = "world";

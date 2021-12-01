@@ -6,11 +6,22 @@
 
 ### Run
 
-Look at `Makefile`
+- VSCode: `F5`
+- Terminal: `npx ts-node [path-to-file]`
 
 ## Test
 
-Need to figure out how to do it in TS
+Need to figure out how to do it in TS. What testing framework works is a good fit here?
+
+## Debugging
+
+- Use `debugger;` keyword to add breakpoint
+- `F5` to start debugger
+
+### Installation Notes
+
+- install [vscode-ts-debug](https://github.com/hagishi/vscode-ts-debug) and set up launch configuration
+- if there are linking errors: `npm link ts-node`
 
 ## Daily Impressions
 

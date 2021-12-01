@@ -1,6 +1,6 @@
 "use strict";
 
-import * as fs from "fs";
+import fs from "fs";
 
 // part 1
 function countIncreasing(depths: Array<number>) {
@@ -36,7 +36,7 @@ const depths = fs
   .toString()
   .trim()
   .split("\n")
-  .map((item) => parseInt(item));
+  .map(Number);
 console.log("Part 1 answer: ", countIncreasing(depths));
 
 // part 2
