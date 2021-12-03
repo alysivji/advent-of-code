@@ -15,7 +15,7 @@ function countIncreasing(depths: Array<number>) {
   return numIncreasing;
 }
 
-const TEST_INPUT: string = `199
+const TEST_INPUT = `199
 200
 208
 210
