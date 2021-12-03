@@ -63,7 +63,7 @@ for (idx = 1; idx < passengerManifest.length - 1; idx++) {
     console.log(
       "Missing seat between",
       passengerManifest[idx - 1],
-      passengerManifest[idx]
+      passengerManifest[idx],
     );
   }
 }

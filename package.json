@@ -1,0 +1,29 @@
+{
+  "name": "advent-of-code",
+  "version": "1.0.0",
+  "description": "Advent of Code solutions",
+  "scripts": {
+    "prettier": "prettier --check '**/*.ts'",
+    "prettier:fix": "prettier --write '**/*.ts'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alysivji/advent-of-code.git"
+  },
+  "keywords": [
+    "advent-of-code",
+    "aoc"
+  ],
+  "author": "Aly Sivji",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alysivji/advent-of-code/issues"
+  },
+  "homepage": "https://github.com/alysivji/advent-of-code#readme",
+  "devDependencies": {
+    "@types/node": "^16.11.11",
+    "prettier": "2.5.0",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.2"
+  }
+}
