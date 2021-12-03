@@ -1,1 +1,2 @@
+py>=1.10.0 # per https://github.com/advisories/GHSA-hj5v-574p-mj7c
 pytest
