@@ -37,10 +37,14 @@ Got the problem done, don't think it's the nicest solution,
 but we are learning.
 What more do I want?
 
-### [Day 2: Dive!](https://adventofcode.com/2021/day/2#part2)
+### [Day 2: Dive!](https://adventofcode.com/2021/day/2)
 
 Spent a couple of hours improving my TypeScript development environment by making it easier to run scripts / debug. This was a worthwhile exercise as I was able to focus on writing code versus struggling with developer tooling.
 
 I need to figure out a better way of parsing input to reduce code duplication. Will work on that tomorrow.
 
 TIL: [TypeScript Interfaces](https://www.typescriptlang.org/docs/handbook/interfaces.html)
+
+### [Day 3: Binary Diagnostic](https://adventofcode.com/2021/day/3)
+
+Part 1 was pretty straight-forward. Part 2 took a bit of time to get. Had to calculate it in the REPL vs coming up with a clean solution; it's hard to think in TypeScript... hopefully will get easier as we move along.
