@@ -48,3 +48,9 @@ TIL: [TypeScript Interfaces](https://www.typescriptlang.org/docs/handbook/interf
 ### [Day 3: Binary Diagnostic](https://adventofcode.com/2021/day/3)
 
 Part 1 was pretty straight-forward. Part 2 took a bit of time to get. Had to calculate it in the REPL vs coming up with a clean solution; it's hard to think in TypeScript... hopefully will get easier as we move along.
+
+### [Day 4: Giant Squid](https://adventofcode.com/2021/day/4)
+
+Created a BingoBoard class to handle the logic of playing Bingo. Using for loops which does not feel right in TypeScript... but it works :shrug:
+
+TIL: Can enumerate the index of a for loop as follows: `for (const [idx, item] of items.entries())`
