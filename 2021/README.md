@@ -62,3 +62,7 @@ Cut down on the number of loops I've used which feels good. Not a fan of JavaScr
 ### [Day 6: Lanternfish](https://adventofcode.com/2021/day/6)
 
 Playing catchup... doing this a day later. Part 1 was done in a naive way. Used a better data structure for Part 2. Can probably replace my for loops with reduce calls, but it works so no point.
+
+### [Day 7: The Treachery of Whales](https://adventofcode.com/2021/day/7)
+
+Used the formula for calculating the sum of an infinite series of natural numbers. High school math came in handy!
