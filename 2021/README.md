@@ -58,3 +58,7 @@ TIL: Can enumerate the index of a for loop as follows: `for (const [idx, item] o
 ### [Day 5: Hydrothermal Venture](https://adventofcode.com/2021/day/5)
 
 Cut down on the number of loops I've used which feels good. Not a fan of JavaScript / TypeScript [Maps](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) and their lack of iterable methods; really would love a `my_dict.items()` I can map and filter through.
+
+### [Day 6: Lanternfish](https://adventofcode.com/2021/day/6)
+
+Playing catchup... doing this a day later. Part 1 was done in a naive way. Used a better data structure for Part 2. Can probably replace my for loops with reduce calls, but it works so no point.
