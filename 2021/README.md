@@ -54,3 +54,7 @@ Part 1 was pretty straight-forward. Part 2 took a bit of time to get. Had to cal
 Created a BingoBoard class to handle the logic of playing Bingo. Using for loops which does not feel right in TypeScript... but it works :shrug:
 
 TIL: Can enumerate the index of a for loop as follows: `for (const [idx, item] of items.entries())`
+
+### [Day 5: Hydrothermal Venture](https://adventofcode.com/2021/day/5)
+
+Cut down on the number of loops I've used which feels good. Not a fan of JavaScript / TypeScript [Maps](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) and their lack of iterable methods; really would love a `my_dict.items()` I can map and filter through.
