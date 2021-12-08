@@ -66,3 +66,7 @@ Playing catchup... doing this a day later. Part 1 was done in a naive way. Used 
 ### [Day 7: The Treachery of Whales](https://adventofcode.com/2021/day/7)
 
 Used the formula for calculating the sum of an infinite series of natural numbers. High school math came in handy!
+
+### [Day 8: Seven Segment Search](https://adventofcode.com/2021/day/8)
+
+This was challenging, especially for being in the middle of the week. Brute forced an algorithm to deduce the numbers... not pretty but gets the job done.
