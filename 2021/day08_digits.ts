@@ -31,10 +31,12 @@ const partA = (puzzleInput: string) => {
   }
   return count;
 };
+console.time("part A");
 console.log(partA(digits));
+console.timeEnd("part A");
 
 const stringDifference = (main: string, toSubtract: string) => {
-  // only works if characaters are not repeated
+  // only works if characters are not repeated
   return main
     .split("")
     .filter((value) => !toSubtract.split("").includes(value))
@@ -85,13 +87,10 @@ const deduceDigitMapping = (digitSignal: string[]): Map<string, number> => {
 const partB = (puzzleInput: string) => {
   const [signalPatterns, digits] = parseInput(puzzleInput);
 
-  let sum = 0;
-  digits.forEach((value, index, arr) => {
-    const digitMap = deduceDigitMapping(signalPatterns[index]);
-    sum += parseInt(value.map((digit) => digitMap.get(digit)).join(""));
-  });
-  deduceDigitMapping(signalPatterns[0]);
-  return sum;
+  return digits.reduce((sum, value, idx) => {
+    const digitMap = deduceDigitMapping(signalPatterns[idx]);
+    return sum += parseInt(value.map((digit) => digitMap.get(digit)).join(""));
+  }, 0)
 };
 
 const TEST_DATA = `be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe
@@ -105,4 +104,7 @@ bdfegc cbegaf gecbf dfcage bdacg ed bedf ced adcbefg gebcd | ed bcgafe cdgba cbg
 egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb
 gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce`;
 assert(partB(TEST_DATA) == 61229);
+
+console.time("part B");
 console.log(partB(digits));
+console.timeEnd("part B");

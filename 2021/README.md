@@ -1,6 +1,6 @@
 # Advent of Code 2021
 
-[AoC 2021](https://adventofcode.com/2021)
+Learning TypeScript by working my way through through [Advent of Code 2021](https://adventofcode.com/2021).
 
 ## Instructions
 
@@ -70,3 +70,5 @@ Used the formula for calculating the sum of an infinite series of natural number
 ### [Day 8: Seven Segment Search](https://adventofcode.com/2021/day/8)
 
 This was challenging, especially for being in the middle of the week. Brute forced an algorithm to deduce the numbers... not pretty but gets the job done.
+
+Found a [great solution](https://gist.github.com/bluepichu/94ccd0aed5fb8d1eaf0bc5ae0f39076f) which uses the Set data type from [Immutable.js](https://immutable-js.com/docs/).
