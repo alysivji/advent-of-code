@@ -72,3 +72,17 @@ Used the formula for calculating the sum of an infinite series of natural number
 This was challenging, especially for being in the middle of the week. Brute forced an algorithm to deduce the numbers... not pretty but gets the job done.
 
 Found a [great solution](https://gist.github.com/bluepichu/94ccd0aed5fb8d1eaf0bc5ae0f39076f) which uses the Set data type from [Immutable.js](https://immutable-js.com/docs/).
+
+### [Day 9: Smoke Basin](https://adventofcode.com/2021/day/9)
+
+This is a simple problem in Python, but not so much in JavaScript. I initially tried to use functional programming techniques, but I'm still getting the hang of FP and mapping through a double array wasn't making a lot of sense.
+
+I tried using immutable.js, but it looks like JavaScript has some issues with doing a `===` check for Maps and Sets which is fine. Ended up installing [`typescript-collections`](https://github.com/basarat/typescript-collections) to have Python-esque Data Structures... but even then the [Set](https://github.com/basarat/typescript-collections/blob/release/src/lib/Set.ts) type does not have a way to pop a random element off.
+
+Also had some problems where `0` is treated like false so when I'm doing a check for `undefined`, `i.e. Map.getValue(xyz) || 10`, `0` is treated like `false` and the result is 10.
+
+Still... got things done by hacking together a solution by stuffing 2D points into a (x, y) coordinate string to have the native Map work as expected.
+
+Fought the language for 2-3 hours... don't feel like I won. Really missed Python today, but definitely learned a lot. At least my `part1()` and `part2()` functions look sort of functional!
+
+Look forward to seeing how experienced TypeScript programmers completed today.
