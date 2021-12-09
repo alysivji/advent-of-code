@@ -1,6 +1,7 @@
 import fs from "fs";
 import assert from "assert";
 import _ from "lodash";
+const { Map } = require("immutable");
 
 const parseInput = (puzzleInput: string) => {
   return puzzleInput

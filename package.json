@@ -35,6 +35,7 @@
     "typescript": "^4.5.2"
   },
   "dependencies": {
+    "immutable": "^4.0.0",
     "lodash": "^4.17.21"
   }
 }
