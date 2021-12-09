@@ -86,3 +86,5 @@ Still... got things done by hacking together a solution by stuffing 2D points in
 Fought the language for 2-3 hours... don't feel like I won. Really missed Python today, but definitely learned a lot. At least my `part1()` and `part2()` functions look sort of functional!
 
 Look forward to seeing how experienced TypeScript programmers completed today.
+
+Update: Refactored my solution to use builtin data structures. Have to do a little bit of hacking to store points into dictionaries, but it's better than depending on libraries that don't exactly do what I need so I have to hack anyways.

@@ -1,24 +1,34 @@
 import fs from "fs";
 import assert from "assert";
-import Collections = require("typescript-collections");
 
-type TupleDict = Collections.Dictionary<number[], number>;
-type TupleSet = Collections.Set<number[]>;
+type PointDict = Map<string, number>;
 
-const parseInput = (puzzleInput: string) => {
-  const heightmap: TupleDict = new Collections.Dictionary();
+class Point {
+  x: number;
+  y: number;
+
+  constructor(x: number, y: number) {
+    this.x = x;
+    this.y = y;
+  }
+
+  toString() {
+    return `${this.x},${this.y}`;
+  }
+}
+
+const parseInput = (puzzleInput: string): PointDict => {
+  const heightmap = new Map();
 
   puzzleInput.split("\n").map((line, rowIdx) => {
-    return line
-      .split("")
-      .forEach((value, colIdx) =>
-        heightmap.setValue([rowIdx, colIdx], parseInt(value)),
-      );
+    return line.split("").forEach((value, colIdx) => {
+      const p = new Point(rowIdx, colIdx);
+      heightmap.set(p.toString(), parseInt(value));
+    });
   });
   return heightmap;
 };
 
-const MAX_HEIGHT = 10;
 const TEST_INPUT = `2199943210
 3987894921
 9856789892
@@ -29,28 +39,32 @@ const puzzleInput = fs
   .toString()
   .trim();
 
+const SEARCH_DIRECTIONS = [
+  [1, 0],
+  [-1, 0],
+  [0, 1],
+  [0, -1],
+];
+
 // part 1
-const findLowpoints = (puzzleInput: string): [TupleDict, number[][]] => {
+const findLowpoints = (puzzleInput: string): [PointDict, Point[]] => {
   const heightmap = parseInput(puzzleInput);
 
   const lowpoints = [];
-  for (const [rowIdx, colIdx] of heightmap.keys()) {
-    const height = heightmap.getValue([rowIdx, colIdx])!;
-    const north = heightmap.containsKey([rowIdx - 1, colIdx])
-      ? heightmap.getValue([rowIdx - 1, colIdx])!
-      : MAX_HEIGHT;
-    const south = heightmap.containsKey([rowIdx + 1, colIdx])
-      ? heightmap.getValue([rowIdx + 1, colIdx])!
-      : MAX_HEIGHT;
-    const east = heightmap.containsKey([rowIdx, colIdx - 1])
-      ? heightmap.getValue([rowIdx, colIdx - 1])!
-      : MAX_HEIGHT;
-    const west = heightmap.containsKey([rowIdx, colIdx + 1])
-      ? heightmap.getValue([rowIdx, colIdx + 1])!
-      : MAX_HEIGHT;
-    if (height < north && height < south && height < east && height < west) {
-      lowpoints.push([rowIdx, colIdx]);
+  for (const [key, height] of heightmap.entries()) {
+    const [x, y] = key.split(",").map(Number);
+    const p = new Point(x, y);
+    let lowestPoint = true;
+    for (const [xDiff, yDiff] of SEARCH_DIRECTIONS) {
+      const newPoint = new Point(p.x + xDiff, p.y + yDiff);
+      const newPointHeight = heightmap.has(newPoint.toString())
+        ? heightmap.get(newPoint.toString())!
+        : 10;
+      if (height >= newPointHeight) {
+        lowestPoint = false;
+      }
     }
+    if (lowestPoint) lowpoints.push(p);
   }
   return [heightmap, lowpoints];
 };
@@ -58,7 +72,7 @@ const findLowpoints = (puzzleInput: string): [TupleDict, number[][]] => {
 const part1 = (puzzleInput: string) => {
   const [heightmap, lowpoints] = findLowpoints(puzzleInput);
   const riskLevel = lowpoints
-    .map((point) => heightmap.getValue([point[0], point[1]])!)
+    .map((point) => heightmap.get(point.toString())!)
     .map((x) => x + 1);
   return riskLevel.reduce((sum, x) => sum + x, 0);
 };
@@ -68,36 +82,27 @@ console.log(part1(puzzleInput));
 console.timeEnd("part 1");
 
 // part 2
-const SEARCH_DIRECTIONS = [
-  [1, 0],
-  [-1, 0],
-  [0, 1],
-  [0, -1],
-];
-const findLocalBasin = (
-  heightmap: TupleDict,
-  lowpoint: number[],
-): number[][] => {
-  const seen: TupleSet = new Collections.Set();
-  const toProcess: string[] = [`${lowpoint[0]},${lowpoint[1]}`];
+const findLocalBasin = (heightmap: PointDict, lowpoint: Point): string[] => {
+  const seen: Set<string> = new Set();
+  const toProcess: string[] = [lowpoint.toString()];
   while (toProcess.length != 0) {
     const [x, y] = toProcess.shift()!.split(",").map(Number);
-    seen.add([x, y]);
+    const p = new Point(x, y);
+    seen.add(p.toString());
     for (const [xDiff, yDiff] of SEARCH_DIRECTIONS) {
-      const newPoint = [x + xDiff, y + yDiff];
-      const coordinateString = `${newPoint[0]},${newPoint[1]}`;
+      const newPoint = new Point(p.x + xDiff, p.y + yDiff);
       if (
-        heightmap.containsKey(newPoint) &&
-        !seen.contains(newPoint) &&
-        toProcess.indexOf(coordinateString) == -1
+        heightmap.has(newPoint.toString()) &&
+        !seen.has(newPoint.toString()) &&
+        toProcess.indexOf(newPoint.toString()) == -1
       ) {
-        if (heightmap.getValue(newPoint)! < 9) {
-          toProcess.push(coordinateString);
+        if (heightmap.get(newPoint.toString())! < 9) {
+          toProcess.push(newPoint.toString());
         }
       }
     }
   }
-  return seen.toArray();
+  return [...seen];
 };
 
 const part2 = (puzzleInput: string) => {
