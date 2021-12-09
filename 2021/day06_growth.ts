@@ -43,14 +43,14 @@ const parseInputPart2 = (inputString: string): number[] => {
   const fishAges = inputString.split(",").map(Number);
   return fishAges.reduce((acc, currValue) => {
     acc[currValue] += 1;
-    return acc
-  }, Array(9).fill(0))
+    return acc;
+  }, Array(9).fill(0));
 };
 
 const stepPart2 = (fishAges: number[]): number[] => {
   const fishAgesUpdate = fishAges.slice();
   const fishReadyToGiveBirth = fishAgesUpdate.shift() || 0;
-  fishAgesUpdate.push(fishReadyToGiveBirth)
+  fishAgesUpdate.push(fishReadyToGiveBirth);
   fishAgesUpdate[6] += fishReadyToGiveBirth;
   return fishAgesUpdate;
 };

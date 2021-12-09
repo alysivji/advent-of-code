@@ -141,7 +141,7 @@ const playBingoToLose = (
     for (const [boardIdx, board] of boards.entries()) {
       board.drawNumber(calledNumber);
       if (board.isWinner()) {
-        winningBoards.add(boardIdx)
+        winningBoards.add(boardIdx);
         if (winningBoards.size == boards.length)
           return board.calculateScore(calledNumber);
       }

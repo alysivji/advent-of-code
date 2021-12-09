@@ -26,7 +26,6 @@ const TEST_INPUT = `00100
   .trim()
   .split("\n");
 
-
 // part 1
 const calculatePowerConsumption = (diagnosticReport: string[]) => {
   const result: string[] = [];
@@ -37,7 +36,7 @@ const calculatePowerConsumption = (diagnosticReport: string[]) => {
       if (report[i] === "1") {
         numOnes += 1;
       }
-    };
+    }
     if (numOnes > Math.floor(diagnosticReport.length / 2)) {
       result.push("1");
       complement.push("0");
@@ -45,7 +44,7 @@ const calculatePowerConsumption = (diagnosticReport: string[]) => {
       result.push("0");
       complement.push("1");
     }
-  };
+  }
 
   return parseInt(result.join(""), 2) * parseInt(complement.join(""), 2);
 };
@@ -53,14 +52,11 @@ const calculatePowerConsumption = (diagnosticReport: string[]) => {
 assert(calculatePowerConsumption(TEST_INPUT) == 198);
 
 // part 2
-const calculateO2Rating = (
-  diagnosticReport: string[],
-  keepValue: number
-) => {
+const calculateO2Rating = (diagnosticReport: string[], keepValue: number) => {
   let validReports: string[] = diagnosticReport.slice();
 
   for (let i = 0; i < diagnosticReport[0].length; i++) {
-    let result = _.groupBy(validReports, (x) => x[i])
+    let result = _.groupBy(validReports, (x) => x[i]);
     if (result[0].length > result[1].length) {
       validReports = result[0];
     } else if (result[0].length < result[1].length) {
@@ -77,16 +73,13 @@ const calculateO2Rating = (
       return parseInt(validReports[0], 2);
     }
   }
-}
+};
 
-const calculateCO2Rating = (
-  diagnosticReport: string[],
-  keepValue: number
-) => {
+const calculateCO2Rating = (diagnosticReport: string[], keepValue: number) => {
   let validReports: string[] = diagnosticReport.slice();
 
   for (let i = 0; i < diagnosticReport[0].length; i++) {
-    let result = _.groupBy(validReports, (x) => x[i])
+    let result = _.groupBy(validReports, (x) => x[i]);
     if (result[0].length < result[1].length) {
       validReports = result[0];
     } else if (result[0].length > result[1].length) {
@@ -103,12 +96,12 @@ const calculateCO2Rating = (
       return parseInt(validReports[0], 2);
     }
   }
-}
+};
 
 const test_o2 = calculateO2Rating(TEST_INPUT, 1);
 console.log(test_o2);
 const test_co2 = calculateCO2Rating(TEST_INPUT, 0);
 console.log(test_co2);
 
-console.log(calculateO2Rating(diagnosticReport, 1))
-console.log(calculateCO2Rating(diagnosticReport, 0))
+console.log(calculateO2Rating(diagnosticReport, 1));
+console.log(calculateCO2Rating(diagnosticReport, 0));

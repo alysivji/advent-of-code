@@ -2,6 +2,30 @@
 
 Learning TypeScript by working my way through through [Advent of Code 2021](https://adventofcode.com/2021).
 
+#### Table of Contents
+
+<!-- TOC -->
+
+- [Instructions](#instructions)
+  - [Run](#run)
+  - [Test](#test)
+  - [Debugging](#debugging)
+  - [Installation Notes](#installation-notes)
+- [TypeScript Notes](#typescript-notes)
+  - [Todo](#todo)
+- [Daily Impressions](#daily-impressions)
+  - [Day 1: Sonar Sweep](#day-1-sonar-sweep)
+  - [Day 2: Dive!](#day-2-dive)
+  - [Day 3: Binary Diagnostic](#day-3-binary-diagnostic)
+  - [Day 4: Giant Squid](#day-4-giant-squid)
+  - [Day 5: Hydrothermal Venture](#day-5-hydrothermal-venture)
+  - [Day 6: Lanternfish](#day-6-lanternfish)
+  - [Day 7: The Treachery of Whales](#day-7-the-treachery-of-whales)
+  - [Day 8: Seven Segment Search](#day-8-seven-segment-search)
+  - [Day 9: Smoke Basin](#day-9-smoke-basin)
+
+<!-- /TOC -->
+
 ## Instructions
 
 ### Run
@@ -9,11 +33,11 @@ Learning TypeScript by working my way through through [Advent of Code 2021](http
 - VSCode: `F5`
 - Terminal: `npx ts-node [path-to-file]`
 
-## Test
+### Test
 
 Need to figure out how to do it in TS. What testing framework works is a good fit here?
 
-## Debugging
+### Debugging
 
 - Use `debugger;` keyword to add breakpoint
 - `F5` to start debugger
@@ -22,6 +46,17 @@ Need to figure out how to do it in TS. What testing framework works is a good fi
 
 - install [vscode-ts-debug](https://github.com/hagishi/vscode-ts-debug) and set up launch configuration
 - if there are linking errors: `npm link ts-node`
+
+## TypeScript Notes
+
+- Use [spread syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) to iterate over Map and Set
+  - `[... myMap].map(item => item * 2)`
+  - `[... mySet].map(([key, value]) => value)`
+
+### Todo
+
+- [ ] get better at handling 2D arrays and adjacent neighbors without having to handle undefined issues
+- [ ] write up helpers for Set operations
 
 ## Daily Impressions
 

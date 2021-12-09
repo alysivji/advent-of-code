@@ -154,6 +154,7 @@ yarn.lock
 !.vscode
 .vscode/*
 !.vscode/launch.json
+!.vscode/settings.json
 
 # direnv
 .envrc

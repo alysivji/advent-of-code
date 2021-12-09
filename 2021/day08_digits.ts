@@ -19,7 +19,7 @@ const parseInput = (inputString: string): [string[][], string[][]] => {
 
 const digits = fs.readFileSync("2021/data/day08_input.txt").toString().trim();
 
-const partA = (puzzleInput: string) => {
+const part1 = (puzzleInput: string) => {
   const [_, digits] = parseInput(puzzleInput);
   let count = 0;
   for (const digitPattern of digits) {
@@ -31,9 +31,9 @@ const partA = (puzzleInput: string) => {
   }
   return count;
 };
-console.time("part A");
-console.log(partA(digits));
-console.timeEnd("part A");
+console.time("part 1");
+console.log(part1(digits));
+console.timeEnd("part 1");
 
 const stringDifference = (main: string, toSubtract: string) => {
   // only works if characters are not repeated
@@ -84,13 +84,15 @@ const deduceDigitMapping = (digitSignal: string[]): Map<string, number> => {
   return digitArr.reduce((acc, value, idx) => acc.set(value, idx), new Map());
 };
 
-const partB = (puzzleInput: string) => {
+const part2 = (puzzleInput: string) => {
   const [signalPatterns, digits] = parseInput(puzzleInput);
 
   return digits.reduce((sum, value, idx) => {
     const digitMap = deduceDigitMapping(signalPatterns[idx]);
-    return sum += parseInt(value.map((digit) => digitMap.get(digit)).join(""));
-  }, 0)
+    return (sum += parseInt(
+      value.map((digit) => digitMap.get(digit)).join(""),
+    ));
+  }, 0);
 };
 
 const TEST_DATA = `be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe
@@ -103,8 +105,8 @@ dbcfg fgd bdegcaf fgec aegbdf ecdfab fbedc dacgb gdcebf gf | cefg dcbef fcge gbc
 bdfegc cbegaf gecbf dfcage bdacg ed bedf ced adcbefg gebcd | ed bcgafe cdgba cbgef
 egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb
 gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce`;
-assert(partB(TEST_DATA) == 61229);
+assert(part2(TEST_DATA) == 61229);
 
-console.time("part B");
-console.log(partB(digits));
-console.timeEnd("part B");
+console.time("part 2");
+console.log(part2(digits));
+console.timeEnd("part 2");

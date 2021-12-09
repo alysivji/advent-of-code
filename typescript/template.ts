@@ -4,28 +4,28 @@ import _ from "lodash";
 const { Map } = require("immutable");
 
 const parseInput = (puzzleInput: string) => {
-  return puzzleInput
-  .split("\n")
-  .map(Number)
-}
+  return puzzleInput.split("\n").map(Number);
+};
 
 const puzzleInput = fs
   .readFileSync("2021/data/day01_input.txt")
   .toString()
   .trim();
 
-const partA = (puzzleInput: string) => {
-  puzzleInput
-}
+// part 1
+const part1 = (puzzleInput: string) => {
+  puzzleInput;
+};
 assert(2 == 2);
-console.time("part A");
-console.log(partA(puzzleInput));
-console.timeEnd("part A");
+console.time("part 1");
+console.log(part1(puzzleInput));
+console.timeEnd("part 1");
 
-const partB = (puzzleInput: string) => {
-  puzzleInput
-}
+// part 2
+const part2 = (puzzleInput: string) => {
+  puzzleInput;
+};
 assert(2 == 2);
-console.time("part B");
-console.log(partB(puzzleInput));
-console.timeEnd("part B");
+console.time("part 2");
+console.log(part2(puzzleInput));
+console.timeEnd("part 2");

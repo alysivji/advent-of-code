@@ -90,8 +90,7 @@ const part2 = (input_string: string) => {
   return numOverlap;
 };
 
-
-assert (part1(TEST_INPUT) == 5);
+assert(part1(TEST_INPUT) == 5);
 
 const hydroThermalVents = fs
   .readFileSync("2021/data/day05_input.txt")
@@ -99,5 +98,5 @@ const hydroThermalVents = fs
   .trim();
 console.log(part1(hydroThermalVents));
 
-assert (part2(TEST_INPUT) == 12);
+assert(part2(TEST_INPUT) == 12);
 console.log(part2(hydroThermalVents));
