@@ -1,4 +1,7 @@
 {
+    // vscode UI
+    "debug.openDebug": "neverOpen",
+
     // project-specific language settings
     "[typescript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -7,19 +10,6 @@
         "editor.detectIndentation": false,
         "editor.formatOnSave": true,  // only change from workspace
     },
-
-    // python settings
-    "python.pythonPath": "venv/bin/python",
-    "python.linting.enabled": false,
-    "python.linting.mypyEnabled": true,
-    "python.linting.pylintEnabled": false,
-    "python.linting.flake8Enabled": true,
-    "python.linting.flake8Args": [
-        "--max-line-length=99",
-        "--ignore=E203",
-    ],
-    "python.formatting.blackPath": "venv/bin/black",
-    "python.formatting.provider": "black",
 
     // markdown
     "markdownlint.config": {
