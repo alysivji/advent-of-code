@@ -23,6 +23,7 @@ Learning TypeScript by working my way through through [Advent of Code 2021](http
   - [Day 7: The Treachery of Whales](#day-7-the-treachery-of-whales)
   - [Day 8: Seven Segment Search](#day-8-seven-segment-search)
   - [Day 9: Smoke Basin](#day-9-smoke-basin)
+  - [Day 10: Syntax Scoring](#day-10-syntax-scoring)
 
 <!-- /TOC -->
 
@@ -123,3 +124,7 @@ Fought the language for 2-3 hours... don't feel like I won. Really missed Python
 Look forward to seeing how experienced TypeScript programmers completed today.
 
 Update: Refactored my solution to use builtin data structures. Have to do a little bit of hacking to store points into dictionaries, but it's better than depending on libraries that don't exactly do what I need so I have to hack anyways.
+
+### [Day 10: Syntax Scoring](https://adventofcode.com/2021/day/10)
+
+This was fairly straight-forward. Feels like I used for loops a bit too much since this is the bracket matching problem and that's my normal way of doing it. Looking forward to seeing other people's better solutions.
