@@ -24,6 +24,7 @@ Learning TypeScript by working my way through through [Advent of Code 2021](http
   - [Day 8: Seven Segment Search](#day-8-seven-segment-search)
   - [Day 9: Smoke Basin](#day-9-smoke-basin)
   - [Day 10: Syntax Scoring](#day-10-syntax-scoring)
+  - [Day 11: Dumbo Octopus](#day-11-dumbo-octopus)
 
 <!-- /TOC -->
 
@@ -128,3 +129,9 @@ Update: Refactored my solution to use builtin data structures. Have to do a litt
 ### [Day 10: Syntax Scoring](https://adventofcode.com/2021/day/10)
 
 This was fairly straight-forward. Feels like I used for loops a bit too much since this is the bracket matching problem and that's my normal way of doing it. Looking forward to seeing other people's better solutions.
+
+### [Day 11: Dumbo Octopus](https://adventofcode.com/2021/day/11)
+
+Another fairly straight-forward puzzle. Only trick was making sure the process was done in the right order. Learned that `[]` is not a falsy value in JavaScript.
+
+[Complete List of JavaScript Falsy Values](https://developer.mozilla.org/en-US/docs/Glossary/Falsy)
