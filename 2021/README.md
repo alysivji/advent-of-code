@@ -26,6 +26,7 @@ Learning TypeScript by working my way through through [Advent of Code 2021](http
   - [Day 10: Syntax Scoring](#day-10-syntax-scoring)
   - [Day 11: Dumbo Octopus](#day-11-dumbo-octopus)
   - [Day 12: Passage Pathing](#day-12-passage-pathing)
+  - [Day 13: Transparent Origami](#day-13-transparent-origami)
 
 <!-- /TOC -->
 
@@ -142,3 +143,7 @@ Another fairly straight-forward puzzle. Only trick was making sure the process w
 My part 2 solution is very slow since I just brute forced it. Takes around 32 seconds to run which is way too long. If I was using Python, I would just use pypy to speed things up and call it a day... but for JS I need some better optimizations.
 
 [Recursive Solution that I can learn from](https://github.com/joao-conde/advents-of-code/blob/master/2021/src/day12.ts)
+
+### [Day 13: Transparent Origami](https://adventofcode.com/2021/day/13)
+
+I cracked out a piece of paper and figured out the algorithm required to get the answer. Wrote up a console logger to visualize the solution to part 2. Not too bad, but felt a bit messy. Getting better at TypeScript though.
