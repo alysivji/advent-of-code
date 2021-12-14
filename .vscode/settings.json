@@ -18,6 +18,7 @@
 
     // project specific words
     "cSpell.words": [
-        "lanternfish"
+        "lanternfish",
+        "Pathing",
     ],
 }

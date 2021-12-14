@@ -25,6 +25,7 @@ Learning TypeScript by working my way through through [Advent of Code 2021](http
   - [Day 9: Smoke Basin](#day-9-smoke-basin)
   - [Day 10: Syntax Scoring](#day-10-syntax-scoring)
   - [Day 11: Dumbo Octopus](#day-11-dumbo-octopus)
+  - [Day 12: Passage Pathing](#day-12-passage-pathing)
 
 <!-- /TOC -->
 
@@ -135,3 +136,9 @@ This was fairly straight-forward. Feels like I used for loops a bit too much sin
 Another fairly straight-forward puzzle. Only trick was making sure the process was done in the right order. Learned that `[]` is not a falsy value in JavaScript.
 
 [Complete List of JavaScript Falsy Values](https://developer.mozilla.org/en-US/docs/Glossary/Falsy)
+
+### [Day 12: Passage Pathing](https://adventofcode.com/2021/day/12)
+
+My part 2 solution is very slow since I just brute forced it. Takes around 32 seconds to run which is way too long. If I was using Python, I would just use pypy to speed things up and call it a day... but for JS I need some better optimizations.
+
+[Recursive Solution that I can learn from](https://github.com/joao-conde/advents-of-code/blob/master/2021/src/day12.ts)
