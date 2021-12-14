@@ -27,6 +27,7 @@ Learning TypeScript by working my way through through [Advent of Code 2021](http
   - [Day 11: Dumbo Octopus](#day-11-dumbo-octopus)
   - [Day 12: Passage Pathing](#day-12-passage-pathing)
   - [Day 13: Transparent Origami](#day-13-transparent-origami)
+  - [Day 14: Extended Polymerization](#day-14-extended-polymerization)
 
 <!-- /TOC -->
 
@@ -147,3 +148,9 @@ My part 2 solution is very slow since I just brute forced it. Takes around 32 se
 ### [Day 13: Transparent Origami](https://adventofcode.com/2021/day/13)
 
 I cracked out a piece of paper and figured out the algorithm required to get the answer. Wrote up a console logger to visualize the solution to part 2. Not too bad, but felt a bit messy. Getting better at TypeScript though.
+
+### [Day 14: Extended Polymerization](https://adventofcode.com/2021/day/14)
+
+Started this late as I was playing catchup on previous days so I only got part 1 done in a naive way before I went to bed. Woke up this morning with an idea about keep track of pair counts as we don't really care what the string looks like. Refactored part 1 solution into a solution that works for part 2. Used lodash and a class; fairly happy with my solution.
+
+I feel like I'm over-dependent on tuples since that's what I'm used to in Python. I need to start thinking JSON objects every time I think `tuple`. Thinking in JSON will also let me take advantage of lodash and other fun map-reduce things.
