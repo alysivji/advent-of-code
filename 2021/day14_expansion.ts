@@ -5,11 +5,13 @@ import _ from "lodash";
 // ##########
 // Read input
 // ##########
-const parseInput = (puzzleInput: string): [string, Map<string, string>] => {
+const parseInput = (puzzleInput: string): [string, Map<string, string[]>] => {
   const [templatePolymer, _rules] = puzzleInput.split("\n\n");
   const expansionMap = _rules.split("\n").reduce((acc, rule) => {
     const [pair, middleChar] = rule.split(" -> ");
-    acc.set(pair, pair[0] + middleChar + pair[1]);
+
+    const realizedPairs = [pair[0] + middleChar, middleChar + pair[1]];
+    acc.set(pair, realizedPairs);
     return acc;
   }, new Map());
 
@@ -43,15 +45,20 @@ const puzzleInput = fs
 // ########
 // Solution
 // ########
-type PairCount = [string, number];
+type PairCount = {
+  pair: string;
+  count: number;
+};
+
+type ExpansionMap = Map<string, string[]>;
 
 class Polymer {
-  pairCount: Array<PairCount>;
-  expansionMap: Map<string, string>;
+  pairCount: PairCount[];
+  expansionMap: ExpansionMap;
   lastLetter: string;
   numStep: number;
 
-  constructor(templateString: string, expansionMap: Map<string, string>) {
+  constructor(templateString: string, expansionMap: ExpansionMap) {
     this.lastLetter = templateString.charAt(templateString.length - 1);
     this.expansionMap = expansionMap;
     this.numStep = 0;
@@ -59,36 +66,34 @@ class Polymer {
       .split("")
       .map((char, index, arr) => char + arr[index + 1])
       .slice(0, -1)
-      .map((pair) => [pair, 1]);
+      .map((pair) => {
+        return { pair: pair, count: 1 };
+      });
   }
 
   step() {
-    const newPairCount: object[] = [];
-    this.pairCount.forEach(([pair, count]) => {
-      const expandedPair = this.expansionMap.get(pair)!;
-      newPairCount.push({
-        pair: expandedPair[0] + expandedPair[1],
-        count: count,
-      });
-      newPairCount.push({
-        pair: expandedPair[1] + expandedPair[2],
-        count: count,
+    const newPairCount = this.pairCount.flatMap((pair) => {
+      const expandedPairs = this.expansionMap.get(pair.pair)!;
+      return expandedPairs.map((nextPair) => {
+        return { pair: nextPair, count: pair.count };
       });
     });
 
     const countsByPair = _.groupBy(newPairCount, "pair");
     this.pairCount = Object.entries(countsByPair).map(([pair, entries]) => {
-      return [pair, _.sumBy(entries, "count")];
+      return {
+        pair: pair,
+        count: _.sumBy(entries, "count"),
+      };
     });
-
     this.numStep += 1;
   }
 
   getLetterCount() {
-    return this.pairCount.reduce((counts, [currentPair, count]) => {
-      const firstLetter = currentPair[0];
-      if (!counts.has(firstLetter)) counts.set(firstLetter, count);
-      else counts.set(firstLetter, counts.get(firstLetter)! + count);
+    return this.pairCount.reduce((counts, pair) => {
+      const firstLetter = pair.pair[0];
+      if (!counts.has(firstLetter)) counts.set(firstLetter, pair.count);
+      else counts.set(firstLetter, counts.get(firstLetter)! + pair.count);
       return counts;
     }, new Map([[this.lastLetter, 1]]));
   }

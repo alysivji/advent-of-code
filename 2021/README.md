@@ -154,3 +154,7 @@ I cracked out a piece of paper and figured out the algorithm required to get the
 Started this late as I was playing catchup on previous days so I only got part 1 done in a naive way before I went to bed. Woke up this morning with an idea about keep track of pair counts as we don't really care what the string looks like. Refactored part 1 solution into a solution that works for part 2. Used lodash and a class; fairly happy with my solution.
 
 I feel like I'm over-dependent on tuples since that's what I'm used to in Python. I need to start thinking JSON objects every time I think `tuple`. Thinking in JSON will also let me take advantage of lodash and other fun map-reduce things.
+
+Update: Refactored by making it more functional and taking advantage of JSON objects. Looks a lot nicer. Also making better use of lodash
+
+- [Useful lodash functions](https://geekflare.com/lodash-functions-for-javascript-developers/)
