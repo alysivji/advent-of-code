@@ -1,6 +1,7 @@
 import fs from "fs";
 import assert from "assert";
 import _ from "lodash";
+import { GridMap, GridSet } from "../aoc/utilities";
 
 // #####
 // INPUT
