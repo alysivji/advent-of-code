@@ -28,6 +28,7 @@ Learning TypeScript by working my way through through [Advent of Code 2021](http
   - [Day 12: Passage Pathing](#day-12-passage-pathing)
   - [Day 13: Transparent Origami](#day-13-transparent-origami)
   - [Day 14: Extended Polymerization](#day-14-extended-polymerization)
+  - [Day 15: Chiton](#day-15-chiton)
 
 <!-- /TOC -->
 
@@ -158,3 +159,9 @@ I feel like I'm over-dependent on tuples since that's what I'm used to in Python
 Update: Refactored by making it more functional and taking advantage of JSON objects. Looks a lot nicer. Also making better use of lodash
 
 - [Useful lodash functions](https://geekflare.com/lodash-functions-for-javascript-developers/)
+
+### [Day 15: Chiton](https://adventofcode.com/2021/day/15)
+
+Straight-forward application of pathfinding: used [heap](https://www.npmjs.com/package/heap) + Dijkstra's Algorithm. My part 2 solution runs in 1.2 seconds which is good enough for me. I created a [TypeScript utilities module](../aoc/utilities.ts) to simplify working with grids using the builtin Map and Set data types.
+
+Todo: implement A* and write up a custom implementation of a heap / priority queue.

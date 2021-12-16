@@ -1,12 +1,17 @@
 import fs from "fs";
 import assert from "assert";
 import Heap from "heap";
-import _, { isNull } from "lodash";
 import { GridMap, GridSet } from "../aoc/utilities";
 
 // #####
 // INPUT
 // #####
+type GridDetail = {
+  x: number;
+  y: number;
+  riskLevel: number;
+};
+
 const parseInput = (puzzleInput: string) => {
   const riskMap = puzzleInput
     .split("\n")
@@ -30,6 +35,61 @@ const parseInput = (puzzleInput: string) => {
   const startPosition = [0, 0];
   const gridSize = puzzleInput.split("\n").length - 1;
   const endPosition = [gridSize, gridSize];
+  return {
+    map: riskMap,
+    start: startPosition,
+    end: endPosition,
+  };
+};
+
+const parseInputPart2 = (puzzleInput: string) => {
+  const riskMap = puzzleInput
+    .split("\n")
+    .flatMap((row, y) => {
+      return row
+        .split("")
+        .map(Number)
+        .map((riskLevel, x) => {
+          return {
+            x: x,
+            y: y,
+            riskLevel: riskLevel,
+          };
+        });
+    })
+    .reduce((gridMap, gridPoint) => {
+      gridMap.set([gridPoint.x, gridPoint.y], gridPoint.riskLevel);
+      return gridMap;
+    }, new GridMap());
+  const originalGridSize = puzzleInput.split("\n").length;
+
+  // extend riskMap for extended cave
+  const riskLevelsToAdd: GridDetail[] = [];
+  for (let i = 0; i < 5; i++) {
+    for (let j = 0; j < 5; j++) {
+      if (i === 0 && j === 0) continue; // skip grid we already have
+
+      const totalOffset = i + j;
+      [...riskMap.entries()].forEach(([coordinate, riskLevel]) => {
+        const [x, y] = coordinate.split(",").map(Number);
+        const newX = x + originalGridSize * i;
+        const newY = y + originalGridSize * j;
+        let newriskLevel =
+          (riskLevel + totalOffset) % 9 == 0
+            ? 9
+            : (riskLevel + totalOffset) % 9;
+
+        riskLevelsToAdd.push({ x: newX, y: newY, riskLevel: newriskLevel });
+      });
+    }
+  }
+  riskLevelsToAdd.forEach((item) => {
+    riskMap.set([item.x, item.y], item.riskLevel);
+  });
+
+  const startPosition = [0, 0];
+  const gridSize = puzzleInput.split("\n").length * 5;
+  const endPosition = [gridSize - 1, gridSize - 1];
   return {
     map: riskMap,
     start: startPosition,
@@ -62,10 +122,12 @@ const DIRECTIONS_TO_CHECK = [
   [0, 1],
   [0, -1],
 ];
+
 type ToVisitDetails = {
   coordinate: number[];
   distance: number;
 };
+
 const findShortestPath = (riskMap: GridMap, start: number[], end: number[]) => {
   const toVisit: Heap<ToVisitDetails> = new Heap(
     (a, b) => a.distance - b.distance,
@@ -109,11 +171,11 @@ console.log(part1(puzzleInput));
 console.timeEnd("part 1");
 
 // part 2
-// const part2 = (puzzleInput: string) => {
-//   const tbd = parseInput(puzzleInput);
-// };
-// console.log(part2(TEST_INPUT));
-// assert(part2(TEST_INPUT) === );
-// console.time("part 2");
-// console.log(part2(puzzleInput));
-// console.timeEnd("part 2");
+const part2 = (puzzleInput: string) => {
+  const data = parseInputPart2(puzzleInput);
+  return findShortestPath(data.map, data.start, data.end);
+};
+assert(part2(TEST_INPUT) == 315);
+console.time("part 2");
+console.log(part2(puzzleInput));
+console.timeEnd("part 2");
