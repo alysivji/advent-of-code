@@ -144,7 +144,8 @@ Another fairly straight-forward puzzle. Only trick was making sure the process w
 
 My part 2 solution is very slow since I just brute forced it. Takes around 32 seconds to run which is way too long. If I was using Python, I would just use pypy to speed things up and call it a day... but for JS I need some better optimizations.
 
-[Recursive Solution that I can learn from](https://github.com/joao-conde/advents-of-code/blob/master/2021/src/day12.ts)
+- [Recursive Solution that I can learn from](https://github.com/joao-conde/advents-of-code/blob/master/2021/src/day12.ts)
+- [using strategy pattern](https://github.com/bhosale-ajay/adventofcode/blob/master/2021/ts/D12.test.ts)
 
 ### [Day 13: Transparent Origami](https://adventofcode.com/2021/day/13)
 
