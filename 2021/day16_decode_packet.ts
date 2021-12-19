@@ -1,7 +1,6 @@
 import fs from "fs";
 import assert from "assert";
 import _ from "lodash";
-import { GridMap, GridSet } from "../aoc/utilities";
 
 // ###############
 // STRUCTURE INPUT
@@ -23,6 +22,7 @@ interface Packet {
   typeId: number;
 
   sumVersions(): number;
+  evaluate(): number;
 }
 
 class Literal implements Packet {
@@ -39,13 +39,17 @@ class Literal implements Packet {
   sumVersions(): number {
     return this.version;
   }
+
+  evaluate(): number {
+    return this.literal;
+  }
 }
 
 class Operator implements Packet {
   version: number;
   typeId: number;
   lengthTypeId: number;
-  subpackets: Array<Operator | Literal>;
+  subpackets: Array<Packet>;
 
   constructor(version: number, typeId: number, lengthTypeId: number) {
     this.version = version;
@@ -60,11 +64,44 @@ class Operator implements Packet {
       this.subpackets.reduce((acc, b) => acc + b.sumVersions(), 0)
     );
   }
+
+  evaluate(): number {
+    const result = this.subpackets.map((value) => value.evaluate());
+    switch (this.typeId) {
+      case 0: {
+        return result.reduce((acc, b) => acc + b, 0);
+      }
+      case 1: {
+        return result.reduce((acc, b) => acc * b, 1);
+      }
+      case 2: {
+        return result.reduce((min, b) => Math.min(min, b, Infinity));
+      }
+      case 3: {
+        return result.reduce((max, b) => Math.max(max, b, -Infinity));
+      }
+      case 5: {
+        if (result[0] > result[1]) return 1;
+        else return 0;
+      }
+      case 6: {
+        if (result[0] < result[1]) return 1;
+        else return 0;
+      }
+      case 7: {
+        if (result[0] === result[1]) return 1;
+        else return 0;
+      }
+      default: {
+        throw new Error("unexpected operator");
+      }
+    }
+  }
 }
 
-const parsePacket = (packet: string): [Literal | Operator, number] => {
+const parsePacket = (packet: string): [Packet, number] => {
   // todo need to change?
-  const packetDetails: Array<Literal | Operator> = [];
+  const packetDetails: Array<Packet> = [];
   let position = 0;
 
   // decode header
@@ -156,11 +193,19 @@ console.log(part1(puzzleInput));
 console.timeEnd("part 1");
 
 // part 2
-// const part2 = (puzzleInput: string) => {
-//   const tbd = parseInput(puzzleInput);
-// };
-// console.log(part2(TEST_INPUT));
-// assert(part2(TEST_INPUT) === );
-// console.time("part 2");
-// console.log(part2(puzzleInput));
-// console.timeEnd("part 2");
+const part2 = (puzzleInput: string) => {
+  const packet = parseInput(puzzleInput);
+  const [structuredPacket, _] = parsePacket(packet);
+  return structuredPacket.evaluate();
+};
+assert(part2("C200B40A82") === 3);
+assert(part2("04005AC33890") === 54);
+assert(part2("880086C3E88112") === 7);
+assert(part2("CE00C43D881120") === 9);
+assert(part2("D8005AC2A8F0") === 1);
+assert(part2("F600BC2D8F") === 0);
+assert(part2("9C005AC2F8F0") === 0);
+assert(part2("9C0141080250320F1802104A08") === 1);
+console.time("part 2");
+console.log(part2(puzzleInput));
+console.timeEnd("part 2");

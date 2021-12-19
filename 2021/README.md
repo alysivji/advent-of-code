@@ -29,6 +29,7 @@ Learning TypeScript by working my way through through [Advent of Code 2021](http
   - [Day 13: Transparent Origami](#day-13-transparent-origami)
   - [Day 14: Extended Polymerization](#day-14-extended-polymerization)
   - [Day 15: Chiton](#day-15-chiton)
+  - [Day 16: Packet Decoder](#day-16-packet-decoder)
 
 <!-- /TOC -->
 
@@ -166,3 +167,13 @@ Update: Refactored by making it more functional and taking advantage of JSON obj
 Straight-forward application of pathfinding: used [heap](https://www.npmjs.com/package/heap) + Dijkstra's Algorithm. My part 2 solution runs in 1.2 seconds which is good enough for me. I created a [TypeScript utilities module](../aoc/utilities.ts) to simplify working with grids using the builtin Map and Set data types.
 
 Todo: implement A* and write up a custom implementation of a heap / priority queue.
+
+### [Day 16: Packet Decoder](https://adventofcode.com/2021/day/16)
+
+I had to re-read part 1 a bunch of times before I was able to solve it. Hacked together a solution which created a flat array and then I summed over the version numbers to get the answer.
+
+I knew for part 2, I would need to create a nested data structure to make it easier to solve. I went down the route of creating classes for Operators and Literals and then using functional programming techniques to get the final answer.
+
+Found myself struggling against TypeScript types. Used an interface and class to get to the final solution.
+
+TODO: Look at other solutions. Specifically look at FP solutions.
