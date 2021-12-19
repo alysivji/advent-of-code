@@ -21,15 +21,49 @@ const parseInput = (puzzleInput: string) => {
 interface Packet {
   version: number;
   typeId: number;
-}
-interface Literal extends Packet {
-  literal: number;
-}
-interface Operator extends Packet {
-  lengthTypeId: number;
+
+  sumVersions(): number;
 }
 
-const parsePacket = (packet: string): [Array<Literal | Operator>, number] => {
+class Literal implements Packet {
+  version: number;
+  typeId: number;
+  literal: number;
+
+  constructor(version: number, typeId: number, literal: number) {
+    this.version = version;
+    this.typeId = typeId;
+    this.literal = literal;
+  }
+
+  sumVersions(): number {
+    return this.version;
+  }
+}
+
+class Operator implements Packet {
+  version: number;
+  typeId: number;
+  lengthTypeId: number;
+  subpackets: Array<Operator | Literal>;
+
+  constructor(version: number, typeId: number, lengthTypeId: number) {
+    this.version = version;
+    this.typeId = typeId;
+    this.lengthTypeId = lengthTypeId;
+    this.subpackets = [];
+  }
+
+  sumVersions(): number {
+    return (
+      this.version +
+      this.subpackets.reduce((acc, b) => acc + b.sumVersions(), 0)
+    );
+  }
+}
+
+const parsePacket = (packet: string): [Literal | Operator, number] => {
+  // todo need to change?
   const packetDetails: Array<Literal | Operator> = [];
   let position = 0;
 
@@ -49,19 +83,16 @@ const parsePacket = (packet: string): [Array<Literal | Operator>, number] => {
 
       if (leadingChar === "0") break;
     }
-    packetDetails.push({
-      version: version,
-      typeId: typeId,
-      literal: binaryToDecimal(literalBinary),
-    });
+    const literal = new Literal(
+      version,
+      typeId,
+      binaryToDecimal(literalBinary),
+    );
+    return [literal, position];
   } else {
     // operator packet
     const lengthTypeId = parseInt(packet.substring(position, position + 1));
-    packetDetails.push({
-      version: version,
-      typeId: typeId,
-      lengthTypeId: lengthTypeId,
-    });
+    const operator = new Operator(version, typeId, lengthTypeId);
     position++;
     if (lengthTypeId === 0) {
       // next 15 bits define how many bits are in the next packet
@@ -72,10 +103,10 @@ const parsePacket = (packet: string): [Array<Literal | Operator>, number] => {
 
       const packetEnd = position + numBitsInSubpacket;
       while (position < packetEnd) {
-        const [parsedSubpackets, bitsConsumed] = parsePacket(
+        const [parsedSubpacket, bitsConsumed] = parsePacket(
           packet.substring(position),
         );
-        packetDetails.push(...parsedSubpackets);
+        operator.subpackets.push(parsedSubpacket);
         position += bitsConsumed;
       }
     } else if (lengthTypeId === 1) {
@@ -87,15 +118,15 @@ const parsePacket = (packet: string): [Array<Literal | Operator>, number] => {
       position += 11;
 
       for (let i = 0; i < numSubpackets; i++) {
-        const [parsedSubpackets, bitsConsumed] = parsePacket(
+        const [parsedSubpacket, bitsConsumed] = parsePacket(
           packet.substring(position),
         );
-        packetDetails.push(...parsedSubpackets);
+        operator.subpackets.push(parsedSubpacket);
         position += bitsConsumed;
       }
     }
+    return [operator, position];
   }
-  return [packetDetails, position];
 };
 
 const binaryToDecimal = (bin: string) => {
@@ -113,8 +144,8 @@ const puzzleInput = fs
 // part 1
 const part1 = (puzzleInput: string) => {
   const packet = parseInput(puzzleInput);
-  const [packetDetails, _] = parsePacket(packet);
-  return packetDetails.reduce((acc, a) => acc + a.version, 0);
+  const [structuredPacket, _] = parsePacket(packet);
+  return structuredPacket.sumVersions();
 };
 assert(part1("8A004A801A8002F478") === 16);
 assert(part1("620080001611562C8802118E34") === 12);
