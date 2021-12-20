@@ -29,6 +29,7 @@ Learning TypeScript by working my way through through [Advent of Code 2021](http
   - [Day 14: Extended Polymerization](#day-14-extended-polymerization)
   - [Day 15: Chiton](#day-15-chiton)
   - [Day 16: Packet Decoder](#day-16-packet-decoder)
+  - [Day 17: Packet Decoder](#day-17-packet-decoder)
 
 <!-- /TOC -->
 
@@ -181,3 +182,7 @@ Found myself struggling against TypeScript types. Used an interface and class to
 After looking at a [TypeScript solution I found on Reddit](https://github.com/ElCholoGamer/advent-of-code/blob/main/src/days/2021/16.ts), I noticed that I was on the right track but didn't know I could use the `as` keyword to cast union types into a more strict type. I think I like my approach of combining classes and recursion versus doing straight up JSON manipulation and recursion. Feels more readable and easier to extend for other types.
 
 TIL: [parseInt()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt) has an optional `radix` parameters that can be used to convert between bases
+
+### [Day 17: Trick Shot](https://adventofcode.com/2021/day/17)
+
+I just brute-forced this once. I think there is a trick involving reducing the search space, but I just played with my for loop ranges until the answer converged. Sometimes it's not worth it.
