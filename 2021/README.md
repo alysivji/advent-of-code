@@ -10,7 +10,6 @@ Learning TypeScript by working my way through through [Advent of Code 2021](http
   - [Run](#run)
   - [Test](#test)
   - [Debugging](#debugging)
-  - [Installation Notes](#installation-notes)
 - [TypeScript Notes](#typescript-notes)
   - [Todo](#todo)
 - [Daily Impressions](#daily-impressions)
@@ -49,7 +48,7 @@ Need to figure out how to do it in TS. What testing framework works is a good fi
 - Use `debugger;` keyword to add breakpoint
 - `F5` to start debugger
 
-### Installation Notes
+#### Installation Notes
 
 - install [vscode-ts-debug](https://github.com/hagishi/vscode-ts-debug) and set up launch configuration
 - if there are linking errors: `npm link ts-node`
@@ -62,8 +61,11 @@ Need to figure out how to do it in TS. What testing framework works is a good fi
 
 ### Todo
 
-- [ ] get better at handling 2D arrays and adjacent neighbors without having to handle undefined issues
+- [x] get better at handling 2D arrays and adjacent neighbors without having to handle undefined issues
+  - created a Grid type; also check if x and y are between a certain range
 - [ ] write up helpers for Set operations
+- [ ] how to perform a step in function programming
+  - do we have to pass a ton of information to the function to keep track?
 
 ## Daily Impressions
 
@@ -176,4 +178,6 @@ I knew for part 2, I would need to create a nested data structure to make it eas
 
 Found myself struggling against TypeScript types. Used an interface and class to get to the final solution.
 
-TODO: Look at other solutions. Specifically look at FP solutions.
+After looking at a [TypeScript solution I found on Reddit](https://github.com/ElCholoGamer/advent-of-code/blob/main/src/days/2021/16.ts), I noticed that I was on the right track but didn't know I could use the `as` keyword to cast union types into a more strict type. I think I like my approach of combining classes and recursion versus doing straight up JSON manipulation and recursion. Feels more readable and easier to extend for other types.
+
+TIL: [parseInt()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt) has an optional `radix` parameters that can be used to convert between bases

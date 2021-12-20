@@ -48,13 +48,11 @@ class Literal implements Packet {
 class Operator implements Packet {
   version: number;
   typeId: number;
-  lengthTypeId: number;
   subpackets: Array<Packet>;
 
-  constructor(version: number, typeId: number, lengthTypeId: number) {
+  constructor(version: number, typeId: number) {
     this.version = version;
     this.typeId = typeId;
-    this.lengthTypeId = lengthTypeId;
     this.subpackets = [];
   }
 
@@ -68,30 +66,20 @@ class Operator implements Packet {
   evaluate(): number {
     const result = this.subpackets.map((value) => value.evaluate());
     switch (this.typeId) {
-      case 0: {
+      case 0:
         return result.reduce((acc, b) => acc + b, 0);
-      }
-      case 1: {
+      case 1:
         return result.reduce((acc, b) => acc * b, 1);
-      }
-      case 2: {
+      case 2:
         return result.reduce((min, b) => Math.min(min, b, Infinity));
-      }
-      case 3: {
+      case 3:
         return result.reduce((max, b) => Math.max(max, b, -Infinity));
-      }
-      case 5: {
-        if (result[0] > result[1]) return 1;
-        else return 0;
-      }
-      case 6: {
-        if (result[0] < result[1]) return 1;
-        else return 0;
-      }
-      case 7: {
-        if (result[0] === result[1]) return 1;
-        else return 0;
-      }
+      case 5:
+        return result[0] > result[1] ? 1 : 0;
+      case 6:
+        return result[0] < result[1] ? 1 : 0;
+      case 7:
+        return result[0] === result[1] ? 1 : 0;
       default: {
         throw new Error("unexpected operator");
       }
@@ -100,13 +88,11 @@ class Operator implements Packet {
 }
 
 const parsePacket = (packet: string): [Packet, number] => {
-  // todo need to change?
-  const packetDetails: Array<Packet> = [];
   let position = 0;
 
   // decode header
-  const version = binaryToDecimal(packet.substring(position, position + 3));
-  const typeId = binaryToDecimal(packet.substring(position + 3, position + 6));
+  const version = parseInt(packet.substring(position, position + 3), 2);
+  const typeId = parseInt(packet.substring(position + 3, position + 6), 2);
   position += 6;
 
   if (typeId == 4) {
@@ -120,22 +106,16 @@ const parsePacket = (packet: string): [Packet, number] => {
 
       if (leadingChar === "0") break;
     }
-    const literal = new Literal(
-      version,
-      typeId,
-      binaryToDecimal(literalBinary),
-    );
+    const literal = new Literal(version, typeId, parseInt(literalBinary, 2));
     return [literal, position];
   } else {
     // operator packet
     const lengthTypeId = parseInt(packet.substring(position, position + 1));
-    const operator = new Operator(version, typeId, lengthTypeId);
+    const operator = new Operator(version, typeId);
     position++;
     if (lengthTypeId === 0) {
-      // next 15 bits define how many bits are in the next packet
-      const numBitsInSubpacket = binaryToDecimal(
-        packet.substring(position, position + 15),
-      );
+      const bitsToExpectInBinary = packet.substring(position, position + 15);
+      const numBitsInSubpacket = parseInt(bitsToExpectInBinary, 2);
       position += 15;
 
       const packetEnd = position + numBitsInSubpacket;
@@ -147,11 +127,8 @@ const parsePacket = (packet: string): [Packet, number] => {
         position += bitsConsumed;
       }
     } else if (lengthTypeId === 1) {
-      // first 11 bits tells you how many packes to expect
-      // then parse packets
-      const numSubpackets = binaryToDecimal(
-        packet.substring(position, position + 11),
-      );
+      const packetsToExpectInBinary = packet.substring(position, position + 11);
+      const numSubpackets = parseInt(packetsToExpectInBinary, 2);
       position += 11;
 
       for (let i = 0; i < numSubpackets; i++) {
@@ -164,13 +141,6 @@ const parsePacket = (packet: string): [Packet, number] => {
     }
     return [operator, position];
   }
-};
-
-const binaryToDecimal = (bin: string) => {
-  const result = bin.split("").reduceRight((acc, value, index) => {
-    return acc + parseInt(value) * 2 ** (bin.length - 1 - index);
-  }, 0);
-  return result;
 };
 
 const puzzleInput = fs
