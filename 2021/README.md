@@ -29,7 +29,8 @@ Learning TypeScript by working my way through through [Advent of Code 2021](http
   - [Day 14: Extended Polymerization](#day-14-extended-polymerization)
   - [Day 15: Chiton](#day-15-chiton)
   - [Day 16: Packet Decoder](#day-16-packet-decoder)
-  - [Day 17: Packet Decoder](#day-17-packet-decoder)
+  - [Day 17: Trick Shot](#day-17-trick-shot)
+  - [Day 18: Snailfish](#day-18-snailfish)
 
 <!-- /TOC -->
 
@@ -67,6 +68,11 @@ Need to figure out how to do it in TS. What testing framework works is a good fi
 - [ ] write up helpers for Set operations
 - [ ] how to perform a step in function programming
   - do we have to pass a ton of information to the function to keep track?
+
+### Notes to Improve Future Performance
+
+- write down all information you know and then test each step separately, if possible
+- have a way to log output at each stage without having to use the debugger
 
 ## Daily Impressions
 
@@ -186,3 +192,14 @@ TIL: [parseInt()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refere
 ### [Day 17: Trick Shot](https://adventofcode.com/2021/day/17)
 
 I just brute-forced this once. I think there is a trick involving reducing the search space, but I just played with my for loop ranges until the answer converged. Sometimes it's not worth it.
+
+### [Day 18: Snailfish](https://adventofcode.com/2021/day/18)
+
+This one took a bit of time since I didn't really design the solution in a clean way; everything is a giant spaghetti mess. Used `eval` to convert each line into an array and then stored the data in a tree-like format.
+
+Don't think I had the best structure for my tree -- left / right can reference either a number or another Node. This required me to add a bunch of guard clauses with type checks to stop TypeScript from complaining.
+
+Todo
+
+- how to store binary trees in an idiomatic TypeScript way?
+- look at other people's solutions / watch videos
