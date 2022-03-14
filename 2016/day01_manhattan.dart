@@ -19,6 +19,40 @@ Map<String, Map<String, String>> directionMap = {
   }
 };
 
+void main() {
+  String puzzleInput = File('data/day01_input.txt').readAsStringSync();
+
+  // part 1
+  assert(part1("R2, L3") == 5);
+  assert(part1("R2, R2, R2") == 2);
+  assert(part1("R5, L5, R5, R3") == 12);
+
+  final stopwatchPart1 = Stopwatch()..start();
+  print("part 1: ${part1(puzzleInput)}");
+  stopwatchPart1.stop();
+  print("Elapsed time: ${stopwatchPart1.elapsed}");
+
+  // part 2
+  assert(part2("R8, R4, R4, R8") == 4);
+
+  final stopwatchPart2 = Stopwatch()..start();
+  print("part 2: ${part2(puzzleInput)}");
+  stopwatchPart2.stop();
+  print("Elapsed time: ${stopwatchPart2.elapsed}");
+}
+
+int part1(puzzleInput) {
+  var data = parseInput(puzzleInput);
+  var lastPoint = resultingDistance(data);
+  return calculateManhattanDistance(lastPoint, [0, 0]);
+}
+
+int part2(puzzleInput) {
+  var data = parseInput(puzzleInput);
+  var visitedTwice = firstLocationVisitedTwice(data);
+  return calculateManhattanDistance(visitedTwice, [0, 0]);
+}
+
 List<String> parseInput(String puzzleInput) {
   return puzzleInput.split(",").map((item) => item.trim()).toList();
 }
@@ -72,38 +106,4 @@ List<int> firstLocationVisitedTwice(List<String> pathSequence) {
 int calculateManhattanDistance(List<int> coordinate1, List<int> coordinate2) {
   return (coordinate2[0] - coordinate1[0]).abs() +
       (coordinate2[1] - coordinate1[1]).abs();
-}
-
-int part1(puzzleInput) {
-  var data = parseInput(puzzleInput);
-  var lastPoint = resultingDistance(data);
-  return calculateManhattanDistance(lastPoint, [0, 0]);
-}
-
-int part2(puzzleInput) {
-  var data = parseInput(puzzleInput);
-  var visitedTwice = firstLocationVisitedTwice(data);
-  return calculateManhattanDistance(visitedTwice, [0, 0]);
-}
-
-void main() {
-  String puzzleInput = File('data/day01_input.txt').readAsStringSync();
-
-  // part 1
-  assert(part1("R2, L3") == 5);
-  assert(part1("R2, R2, R2") == 2);
-  assert(part1("R5, L5, R5, R3") == 12);
-
-  final stopwatchPart1 = Stopwatch()..start();
-  print("part 1: ${part1(puzzleInput)}");
-  stopwatchPart1.stop();
-  print("Elapsed time: ${stopwatchPart1.elapsed}");
-
-  // part 2
-  assert(part2("R8, R4, R4, R8") == 4);
-
-  final stopwatchPart2 = Stopwatch()..start();
-  print("part 2: ${part2(puzzleInput)}");
-  stopwatchPart2.stop();
-  print("Elapsed time: ${stopwatchPart2.elapsed}");
 }
