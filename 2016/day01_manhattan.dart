@@ -19,6 +19,10 @@ Map<String, Map<String, String>> directionMap = {
   }
 };
 
+List<String> parseInput(String puzzleInput) {
+  return puzzleInput.split(",").map((item) => item.trim()).toList();
+}
+
 List<int> resultingDistance(List<String> pathSequence) {
   List<int> currentPosition = [0, 0];
   String currentDirection = "N";
@@ -70,10 +74,36 @@ int calculateManhattanDistance(List<int> coordinate1, List<int> coordinate2) {
       (coordinate2[1] - coordinate1[1]).abs();
 }
 
-void main() {
-  String contents = File('data/day01_input.txt').readAsStringSync();
-  List<String> path = contents.split(",").map((item) => item.trim()).toList();
+int part1(puzzleInput) {
+  var data = parseInput(puzzleInput);
+  var lastPoint = resultingDistance(data);
+  return calculateManhattanDistance(lastPoint, [0, 0]);
+}
 
-  print(calculateManhattanDistance(resultingDistance(path), [0, 0]));
-  print(calculateManhattanDistance(firstLocationVisitedTwice(path), [0, 0]));
+int part2(puzzleInput) {
+  var data = parseInput(puzzleInput);
+  var visitedTwice = firstLocationVisitedTwice(data);
+  return calculateManhattanDistance(visitedTwice, [0, 0]);
+}
+
+void main() {
+  String puzzleInput = File('data/day01_input.txt').readAsStringSync();
+
+  // part 1
+  assert(part1("R2, L3") == 5);
+  assert(part1("R2, R2, R2") == 2);
+  assert(part1("R5, L5, R5, R3") == 12);
+
+  final stopwatchPart1 = Stopwatch()..start();
+  print("part 1: ${part1(puzzleInput)}");
+  stopwatchPart1.stop();
+  print("Elapsed time: ${stopwatchPart1.elapsed}");
+
+  // part 2
+  assert(part2("R8, R4, R4, R8") == 4);
+
+  final stopwatchPart2 = Stopwatch()..start();
+  print("part 2: ${part2(puzzleInput)}");
+  stopwatchPart2.stop();
+  print("Elapsed time: ${stopwatchPart2.elapsed}");
 }

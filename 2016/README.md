@@ -41,8 +41,8 @@ Installed Dart 2.16.1 via `homebrew`.
   - https://dartcode.org/docs/launch-configuration/
 - [ ] is there a linter?
 - [ ] final vs const
-- [ ] clean up how we approach this problem to make it easy to switch between test cases and actual dataset
-- [ ] add assert statement for Day 1
+- [x] clean up how we approach this problem to make it easy to switch between test cases and actual dataset
+- [x] add assert statement for Day 1
 - [ ] should we start approaching everything with an OOP mindset?
   - very easy to set up equality b/w objects: https://work.j832.com/2014/05/equality-and-dart.html
 
@@ -52,4 +52,4 @@ Installed Dart 2.16.1 via `homebrew`.
 
 Fairly straightforward problem. This is my first time using Dart so I have been looking up modules and syntax as I worked through the problem. Dart does not have native Tuple support; tried a [Google implementation](https://pub.dev/packages/tuple) but it was not right.
 
-The `.toString` method does make life easy if we have to hash small arrays (which we treat as tuples) inside of a Set.
+The `.toString` method does make life easy if we have to hash small arrays (which we treat as tuples) inside of a Set. TIL: We can use the [Point class](https://api.flutter.dev/flutter/dart-math/Point-class.html) to represent 2D positions.
