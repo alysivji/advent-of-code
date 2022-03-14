@@ -1,6 +1,6 @@
 # Advent of Code 2021
 
-Learning TypeScript by working my way through through [Advent of Code 2021](https://adventofcode.com/2021).
+Learning TypeScript by working my way through [Advent of Code 2021](https://adventofcode.com/2021).
 
 #### Table of Contents
 
