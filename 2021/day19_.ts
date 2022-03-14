@@ -7,6 +7,11 @@ import { GridMap, GridSet } from "../aoc/utilities";
 // SOLUTION
 // ########
 
+// overlap if there are at least 12 beacons in common
+// scanner can be each be in any of 24 different orientations: 
+// facing positive or negative x, y, or z, * four directions "up" from that facing.
+
+
 // ###########
 // RUN PROGRAM
 // ###########

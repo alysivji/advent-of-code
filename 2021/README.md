@@ -12,6 +12,7 @@ Learning TypeScript by working my way through through [Advent of Code 2021](http
   - [Debugging](#debugging)
 - [TypeScript Notes](#typescript-notes)
   - [Todo](#todo)
+  - [Notes to Improve Future Performance](#notes-to-improve-future-performance)
 - [Daily Impressions](#daily-impressions)
   - [Day 1: Sonar Sweep](#day-1-sonar-sweep)
   - [Day 2: Dive!](#day-2-dive)
@@ -203,3 +204,4 @@ Todo
 
 - how to store binary trees in an idiomatic TypeScript way?
 - look at other people's solutions / watch videos
+- [solution I can learn from](https://github.com/bhosale-ajay/adventofcode/blob/master/2021/ts/D18.test.ts)
