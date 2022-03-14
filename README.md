@@ -6,6 +6,7 @@ My solutions for [Advent of Code](https://adventofcode.com/).
 
 Year | Language
 -----|---------
+[2016](2016/) | Dart
 [2017](2017/) | Python
 [2018](2018/) | Python
 [2019](2019/) | Python
@@ -14,8 +15,8 @@ Year | Language
 
 ## Notes
 
-- all language configuration is in the root directory
-  - might move this to sub-directories as I start learning / using more languages
+- Python + TS language configuration is in the root directory
+  - need to move this to sub-directories to keep things consistent
 
 ### TypeScript Setup Notes
 

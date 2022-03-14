@@ -22,7 +22,7 @@ Installed Dart 2.16.1 via `homebrew`.
 
 ### Run
 
-- VSCode: ``
+- VSCode: `F5`
 - Terminal `dart run [path-to-file]`
 
 ### Test
@@ -43,6 +43,8 @@ Installed Dart 2.16.1 via `homebrew`.
 - [ ] final vs const
 - [ ] clean up how we approach this problem to make it easy to switch between test cases and actual dataset
 - [ ] add assert statement for Day 1
+- [ ] should we start approaching everything with an OOP mindset?
+  - very easy to set up equality b/w objects: https://work.j832.com/2014/05/equality-and-dart.html
 
 ## Daily Impressions
 
