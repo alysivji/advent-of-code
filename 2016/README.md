@@ -13,6 +13,7 @@ Learning Dart by working my way through [Advent of Code 2016](https://adventofco
   - [Todo](#todo)
 - [Daily Impressions](#daily-impressions)
   - [Day 1: No Time for a Taxicab](#day-1-no-time-for-a-taxicab)
+  - [Day 2: Bathroom Security](#day-2-bathroom-security)
 
 <!-- /TOC -->
 
@@ -53,3 +54,7 @@ Installed Dart 2.16.1 via `homebrew`.
 Fairly straightforward problem. This is my first time using Dart so I have been looking up modules and syntax as I worked through the problem. Dart does not have native Tuple support; tried a [Google implementation](https://pub.dev/packages/tuple) but it was not right.
 
 The `.toString` method does make life easy if we have to hash small arrays (which we treat as tuples) inside of a Set. TIL: We can use the [Point class](https://api.flutter.dev/flutter/dart-math/Point-class.html) to represent 2D positions.
+
+### [Day 2: Bathroom Security](https://adventofcode.com/2016/day/2)
+
+Used `Point` and `Map` to build a key-value data structure for all the values in the Number Pad. Still trying to find a good way to organize Dart scripts. I think my template will be more helpful tomorrow than it was today.
