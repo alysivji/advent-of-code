@@ -15,6 +15,7 @@ Learning Dart by working my way through [Advent of Code 2016](https://adventofco
   - [Day 1: No Time for a Taxicab](#day-1-no-time-for-a-taxicab)
   - [Day 2: Bathroom Security](#day-2-bathroom-security)
   - [Day 3: Squares With Three Sides](#day-3-squares-with-three-sides)
+  - [Day 4: Security Through Obscurity](#day-4-security-through-obscurity)
 
 <!-- /TOC -->
 
@@ -34,6 +35,9 @@ Installed Dart 2.16.1 via `homebrew`.
 ## Dart Notes
 
 - Dart is mostly OOP with a few functional constructs like `map`
+- [.removeWhere is like .filter](https://flutterbyexample.com/lesson/removing-elements-remove-clear-remove-where)
+- can use [LineSplitter](https://www.woolha.com/tutorials/dart-split-string-by-newline-using-linesplitter) to separate new line characters across all OS
+- [cascade notation](https://dart.dev/guides/language/language-tour#cascade-notation) can be used to chain together operations on a single object
 
 ### Todo
 
@@ -47,8 +51,11 @@ Installed Dart 2.16.1 via `homebrew`.
 - [x] add assert statement for Day 1
 - [ ] should we start approaching everything with an OOP mindset?
   - very easy to set up equality b/w objects: https://work.j832.com/2014/05/equality-and-dart.html
+  - [ ] how lightweight are Dart classes?
 
 ## Daily Impressions
+
+Comparing solutions against https://github.com/julemand101/AdventOfCode2016/tree/master/bin
 
 ### [Day 1: No Time for a Taxicab](https://adventofcode.com/2016/day/1)
 
@@ -63,3 +70,15 @@ Used `Point` and `Map` to build a key-value data structure for all the values in
 ### [Day 3: Squares With Three Sides](https://adventofcode.com/2016/day/3)
 
 Had to reach into the RegEx toolbox today to parse the puzzle data. Dart arrow functions are used to define a single expression. When using functional programming functions (`map`, `reduce`, and `forEach`), we have to use the regular function syntax to pass in functions.
+
+### [Day 4: Security Through Obscurity](https://adventofcode.com/2016/day/4)
+
+Converting my input data into Objects and used straight forward OOP to solve this problem. Need to do some research into how lightweight Dart classes are, but I can see this being a powerful way to handle JSON-like data.
+
+I can start to see how Dart is a powerful language -- it's syntax gets out of the way letting you get classes up and running really quickly.
+
+#### Day 4 TIL
+
+- Regex non-capturing groups start with `?:`
+- `final` keyword in Dart is similar to how we use `const` in ES6 and TS
+- Dart OOP -- creating classes, getters, setters, etc

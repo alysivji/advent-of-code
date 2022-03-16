@@ -4,6 +4,9 @@ import 'dart:math';
 // ########
 // SOLUTION
 // ########
+List<String> parseInput(String puzzleInput) {
+  return puzzleInput.split("\n").map((item) => item.trim()).toList();
+}
 
 int part1(puzzleInput) {
   var data = parseInput(puzzleInput);
@@ -18,10 +21,6 @@ int part2(puzzleInput) {
 // ###########
 // RUN PROGRAM
 // ###########
-List<String> parseInput(String puzzleInput) {
-  return puzzleInput.split("\n").map((item) => item.trim()).toList();
-}
-
 void main() {
   String puzzleInput = File('data/dayXX_input.txt').readAsStringSync();
   const TEST_INPUT = "";
