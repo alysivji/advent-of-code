@@ -14,6 +14,7 @@ Learning Dart by working my way through [Advent of Code 2016](https://adventofco
 - [Daily Impressions](#daily-impressions)
   - [Day 1: No Time for a Taxicab](#day-1-no-time-for-a-taxicab)
   - [Day 2: Bathroom Security](#day-2-bathroom-security)
+  - [Day 3: Squares With Three Sides](#day-3-squares-with-three-sides)
 
 <!-- /TOC -->
 
@@ -58,3 +59,7 @@ The `.toString` method does make life easy if we have to hash small arrays (whic
 ### [Day 2: Bathroom Security](https://adventofcode.com/2016/day/2)
 
 Used `Point` and `Map` to build a key-value data structure for all the values in the Number Pad. Still trying to find a good way to organize Dart scripts. I think my template will be more helpful tomorrow than it was today.
+
+### [Day 3: Squares With Three Sides](https://adventofcode.com/2016/day/3)
+
+Had to reach into the RegEx toolbox today to parse the puzzle data. Dart arrow functions are used to define a single expression. When using functional programming functions (`map`, `reduce`, and `forEach`), we have to use the regular function syntax to pass in functions.
