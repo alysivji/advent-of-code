@@ -18,6 +18,7 @@ Learning Dart by working my way through [Advent of Code 2016](https://adventofco
   - [Day 4: Security Through Obscurity](#day-4-security-through-obscurity)
   - [Day 5: How About a Nice Game of Chess?](#day-5-how-about-a-nice-game-of-chess)
   - [Day 6: Signals and Noise](#day-6-signals-and-noise)
+  - [Day 7: Internet Protocol Version 7](#day-7-internet-protocol-version-7)
 
 <!-- /TOC -->
 
@@ -54,6 +55,8 @@ Installed Dart 2.16.1 via `homebrew`.
 - [ ] should we start approaching everything with an OOP mindset?
   - very easy to set up equality b/w objects: https://work.j832.com/2014/05/equality-and-dart.html
   - [ ] how lightweight are Dart classes?
+- [ ] Found a [Day 6 solution](https://github.com/julemand101/AdventOfCode2016/blob/master/bin/day06/main.dart) that features Multiset and fold
+  - if this patterns comes up again; learn what's going on there
 
 ## Daily Impressions
 
@@ -94,3 +97,7 @@ Once I learn Flutter, this will be a fun one to animate.
 ### [Day 6: Signals and Noise](https://adventofcode.com/2016/day/6)
 
 A simple counting puzzle. 2016 is pretty straightforward so far.
+
+### [Day 7: Internet Protocol Version 7](https://adventofcode.com/2016/day/7)
+
+Lots of text manipulation in this puzzle. Wrote a function to process each line and then I solved this problem in a fairly functional way.
