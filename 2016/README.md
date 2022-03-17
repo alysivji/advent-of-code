@@ -16,6 +16,7 @@ Learning Dart by working my way through [Advent of Code 2016](https://adventofco
   - [Day 2: Bathroom Security](#day-2-bathroom-security)
   - [Day 3: Squares With Three Sides](#day-3-squares-with-three-sides)
   - [Day 4: Security Through Obscurity](#day-4-security-through-obscurity)
+  - [Day 5: How About a Nice Game of Chess?](#day-5-how-about-a-nice-game-of-chess)
 
 <!-- /TOC -->
 
@@ -82,3 +83,9 @@ I can start to see how Dart is a powerful language -- it's syntax gets out of th
 - Regex non-capturing groups start with `?:`
 - `final` keyword in Dart is similar to how we use `const` in ES6 and TS
 - Dart OOP -- creating classes, getters, setters, etc
+
+### [Day 5: How About a Nice Game of Chess?](https://adventofcode.com/2016/day/5)
+
+Today was a brute-force problem that used the MD5 algorithm (via Dart's [crypto](https://pub.dev/packages/crypto) package) to calculate a hash. It took around 50 seconds for each of my solutions to run.
+
+Once I learn Flutter, this will be a fun one to animate.
