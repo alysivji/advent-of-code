@@ -5,7 +5,7 @@ import 'dart:math';
 // SOLUTION
 // ########
 List<String> parseInput(String puzzleInput) {
-  return puzzleInput.split("\n").map((item) => item.trim()).toList();
+  return puzzleInput.trim().split("\n").map((item) => item.trim()).toList();
 }
 
 int part1(puzzleInput) {

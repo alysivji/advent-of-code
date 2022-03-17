@@ -17,6 +17,7 @@ Learning Dart by working my way through [Advent of Code 2016](https://adventofco
   - [Day 3: Squares With Three Sides](#day-3-squares-with-three-sides)
   - [Day 4: Security Through Obscurity](#day-4-security-through-obscurity)
   - [Day 5: How About a Nice Game of Chess?](#day-5-how-about-a-nice-game-of-chess)
+  - [Day 6: Signals and Noise](#day-6-signals-and-noise)
 
 <!-- /TOC -->
 
@@ -89,3 +90,7 @@ I can start to see how Dart is a powerful language -- it's syntax gets out of th
 Today was a brute-force problem that used the MD5 algorithm (via Dart's [crypto](https://pub.dev/packages/crypto) package) to calculate a hash. It took around 50 seconds for each of my solutions to run.
 
 Once I learn Flutter, this will be a fun one to animate.
+
+### [Day 6: Signals and Noise](https://adventofcode.com/2016/day/6)
+
+A simple counting puzzle. 2016 is pretty straightforward so far.
