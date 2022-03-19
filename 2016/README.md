@@ -19,6 +19,7 @@ Learning Dart by working my way through [Advent of Code 2016](https://adventofco
   - [Day 5: How About a Nice Game of Chess?](#day-5-how-about-a-nice-game-of-chess)
   - [Day 6: Signals and Noise](#day-6-signals-and-noise)
   - [Day 7: Internet Protocol Version 7](#day-7-internet-protocol-version-7)
+  - [Day 8: Two-Factor Authentication](#day-8-two-factor-authentication)
 
 <!-- /TOC -->
 
@@ -101,3 +102,7 @@ A simple counting puzzle. 2016 is pretty straightforward so far.
 ### [Day 7: Internet Protocol Version 7](https://adventofcode.com/2016/day/7)
 
 Lots of text manipulation in this puzzle. Wrote a function to process each line and then I solved this problem in a fairly functional way.
+
+### [Day 8: Two-Factor Authentication](https://adventofcode.com/2016/day/8)
+
+This was took a bit longer than expected. Used a very Object-Oriented solution, but got wires mixed up with rows / columns vs y / x. Really liking Dart; can't seem to find anything about naming function parameters... but I need to do a bit more research.
