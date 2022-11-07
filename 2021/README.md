@@ -6,10 +6,6 @@ Learning TypeScript by working my way through [Advent of Code 2021](https://adve
 
 <!-- TOC -->
 
-- [Instructions](#instructions)
-  - [Run](#run)
-  - [Test](#test)
-  - [Debugging](#debugging)
 - [TypeScript Notes](#typescript-notes)
   - [Todo](#todo)
   - [Notes to Improve Future Performance](#notes-to-improve-future-performance)
@@ -34,27 +30,6 @@ Learning TypeScript by working my way through [Advent of Code 2021](https://adve
   - [Day 18: Snailfish](#day-18-snailfish)
 
 <!-- /TOC -->
-
-## Instructions
-
-### Run
-
-- VSCode: `F5`
-- Terminal: `npx ts-node [path-to-file]`
-
-### Test
-
-Need to figure out how to do it in TS. What testing framework works is a good fit here?
-
-### Debugging
-
-- Use `debugger;` keyword to add breakpoint
-- `F5` to start debugger
-
-#### Installation Notes
-
-- install [vscode-ts-debug](https://github.com/hagishi/vscode-ts-debug) and set up launch configuration
-- if there are linking errors: `npm link ts-node`
 
 ## TypeScript Notes
 

@@ -2,21 +2,6 @@
 
 [AoC 2020](https://adventofcode.com/2020)
 
-## Instructions
-
-### Run
-
-```console
-$ ipython
-%run 2020/day01_expense_report.py
-```
-
-## Test
-
-```console
-pytest 2020/day01_expense_report.py
-```
-
 ## Daily Impressions
 
 ### [Day 1: Report Repair](https://adventofcode.com/2020/day/1)

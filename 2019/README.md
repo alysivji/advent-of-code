@@ -2,21 +2,6 @@
 
 [AoC 2019](https://adventofcode.com/2019)
 
-## Instructions
-
-### Run
-
-```console
-$ ipython
-%run 2019/day01_fuel.py
-```
-
-## Test
-
-```console
-pytest 2019/day01_fuel.py
-```
-
 ## Daily Impressions
 
 ### [Day 1: The Tyranny of the Rocket Equation](https://adventofcode.com/2019/day/1)

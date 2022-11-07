@@ -2,6 +2,14 @@
 
 My solutions for [Advent of Code](https://adventofcode.com/).
 
+#### Table of Contents
+
+- [Details](#details)
+- [Description](#description)
+- [Language Configuration Notes](#language-configuration-notes)
+  - [Python](#python)
+  - [TypeScript](#typescript)
+
 ## Details
 
 Year | Language
@@ -13,12 +21,58 @@ Year | Language
 [2020](2020/) | Python
 [2021](2021/) | TypeScript
 
-## Notes
+## Description
 
-- Python + TS language configuration is in the root directory
-  - need to move this to sub-directories to keep things consistent
+This is a polyglot repo to practice algorithms, languages, and new way of writing code with Advent of Code (AoC) as the backdrop. Each subfolder contains my solutions for a given year of AoC.
 
-### TypeScript Setup Notes
+## Language Configuration Notes
+
+This section outlines how the development environment is set up for each language.
+
+### Python
+
+#### Install
+
+1. Create and activate virtual environment for Python version specified in `.python-version`
+2. `make python-install` to install dependencies.
+
+#### Run
+
+```console
+$ ipython
+%run 2020/day01_expense_report.py
+```
+
+#### Test
+
+```console
+pytest 2020/day01_expense_report.py
+```
+
+### TypeScript
+
+#### Install
+
+1. Install node version specified in `.nvmrc`
+1. `npm install`
+
+#### Run
+
+- VSCode: `F5`
+- Terminal: `npx ts-node [path-to-file]`
+
+#### Test
+
+Need to figure out how to do it in TS. What testing framework works is a good fit here?
+
+#### Debug
+
+- install [vscode-ts-debug](https://github.com/hagishi/vscode-ts-debug) and set up launch configuration
+- if there are linking errors: `npm link ts-node`
+- Use `debugger;` keyword to add breakpoint
+- `F5` to start debugger
+
+#### Notes
 
 - [TypeScript new project setup instructions](https://www.digitalocean.com/community/tutorials/typescript-new-project)
 - [Lint and Style Your TypeScript Code with ESLint and Prettier](https://moduscreate.com/blog/lint-style-typescript/)
