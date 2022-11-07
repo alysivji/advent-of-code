@@ -1,11 +1,17 @@
-shell-dev:
+python-shell:
 	ipython
 
-requirements:
+python-requirements:
 	pip-compile --output-file requirements.txt requirements.in
 
-install:
-	pip install -r requirements_dev.txt
+python-requirements-dev:
+	pip-compile --output-file requirements-dev.txt requirements-dev.in
+
+python-install:
+	pip install -r requirements-dev.txt -r requirements.txt
 
 run-ts:
 	npx ts-node $(file)
+
+node-install:
+	npm install
