@@ -7,19 +7,20 @@ My solutions for [Advent of Code](https://adventofcode.com/).
 - [Details](#details)
 - [Description](#description)
 - [Language Configuration Notes](#language-configuration-notes)
+  - [Go](#go)
   - [Python](#python)
   - [TypeScript](#typescript)
 
 ## Details
 
-Year | Language
------|---------
-[2016](2016/) | Dart
-[2017](2017/) | Python
-[2018](2018/) | Python
-[2019](2019/) | Python
-[2020](2020/) | Python
-[2021](2021/) | TypeScript
+| Year          | Language   |
+| ------------- | ---------- |
+| [2016](2016/) | Dart       |
+| [2017](2017/) | Python     |
+| [2018](2018/) | Python     |
+| [2019](2019/) | Python     |
+| [2020](2020/) | Python     |
+| [2021](2021/) | TypeScript |
 
 ## Description
 
@@ -28,6 +29,19 @@ This is a polyglot repo to practice algorithms, languages, and new way of writin
 ## Language Configuration Notes
 
 This section outlines how the development environment is set up for each language.
+
+### Go
+
+#### Install
+
+Using [goenv](https://github.com/syndbg/goenv) to manage mutiple Go versions
+
+1. Install version specified in `.go-version` file
+
+#### Todo
+
+- [ ] setting up VSCode for Go
+- [ ] reading in a file
 
 ### Python
 
