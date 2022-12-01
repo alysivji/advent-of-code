@@ -21,6 +21,7 @@ My solutions for [Advent of Code](https://adventofcode.com/).
 | [2019](2019/) | Python     |
 | [2020](2020/) | Python     |
 | [2021](2021/) | TypeScript |
+| [2022](2022/) | Go         |
 
 ## Description
 
@@ -37,11 +38,6 @@ This section outlines how the development environment is set up for each languag
 Using [goenv](https://github.com/syndbg/goenv) to manage mutiple Go versions
 
 1. Install version specified in `.go-version` file
-
-#### Todo
-
-- [ ] setting up VSCode for Go
-- [ ] reading in a file
 
 ### Python
 

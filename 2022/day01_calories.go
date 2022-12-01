@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -37,30 +38,34 @@ func readFile(filePath string) [][]int {
 	return allElfCalories
 }
 
-func findElfWithMaxCalories(caloriesByElf [][]int) int {
-	maxCalories := 0
+func sumElfCalories(caloriesByElf [][]int) []int {
+	// return sorted array
+	summedCalories := make([]int, 0)
+
 	for _, elfCalories := range caloriesByElf {
 		var currElfTotal = 0
 		for _, itemCalorie := range elfCalories {
 			currElfTotal += itemCalorie
 		}
 
-		if currElfTotal > maxCalories {
-			maxCalories = currElfTotal
-		}
+		summedCalories = append(summedCalories, currElfTotal)
 	}
 
-	return maxCalories
+	sort.Ints(summedCalories)
+	return summedCalories
 }
 
 func main() {
 	var caloriesByElf = readFile("2022/data/day01_sample.txt")
-	result := findElfWithMaxCalories(caloriesByElf)
-	if result != 24000 {
+	result := sumElfCalories(caloriesByElf)
+
+	if result[len(result)-1] != 24000 {
 		panic("Part 1 example is failing")
 	}
 
 	caloriesByElf = readFile("2022/data/day01_input.txt")
-	result = findElfWithMaxCalories(caloriesByElf)
-	fmt.Println("Part 1:", result)
+	result = sumElfCalories(caloriesByElf)
+	fmt.Println("Part 1:", result[len(result)-1])
+
+	fmt.Println("Part 2:", result[len(result)-1]+result[len(result)-2]+result[len(result)-3])
 }
