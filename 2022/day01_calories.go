@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-func readFile(filePath string) [][]int {
+func readElfCalorieFile(filePath string) [][]int {
 	body, err := ioutil.ReadFile(filePath)
 
 	if err != nil {
@@ -55,15 +55,15 @@ func sumElfCalories(caloriesByElf [][]int) []int {
 	return summedCalories
 }
 
-func main() {
-	var caloriesByElf = readFile("2022/data/day01_sample.txt")
+func day01() {
+	var caloriesByElf = readElfCalorieFile("2022/data/day01_sample.txt")
 	result := sumElfCalories(caloriesByElf)
 
 	if result[len(result)-1] != 24000 {
 		panic("Part 1 example is failing")
 	}
 
-	caloriesByElf = readFile("2022/data/day01_input.txt")
+	caloriesByElf = readElfCalorieFile("2022/data/day01_input.txt")
 	result = sumElfCalories(caloriesByElf)
 	fmt.Println("Part 1:", result[len(result)-1])
 

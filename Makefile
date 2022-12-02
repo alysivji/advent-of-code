@@ -10,8 +10,11 @@ python-requirements-dev:
 python-install:
 	pip install -r requirements-dev.txt -r requirements.txt
 
-run-ts:
+ts-run:
 	npx ts-node $(file)
 
 node-install:
 	npm install
+
+go-run:
+	go run 2022/*.go
