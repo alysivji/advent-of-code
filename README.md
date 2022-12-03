@@ -25,7 +25,7 @@ My solutions for [Advent of Code](https://adventofcode.com/).
 
 ## Description
 
-This is a polyglot repo to practice algorithms, languages, and new way of writing code with Advent of Code (AoC) as the backdrop. Each subfolder contains my solutions for a given year of AoC.
+This is a polyglot repo to practice algorithms, languages, and new ways of writing code with Advent of Code (AoC) as the backdrop. Each subfolder contains my solutions for a given year of AoC.
 
 ## Language Configuration Notes
 
