@@ -10,9 +10,6 @@ type rucksack struct {
 	comparment1 string
 	comparment2 string
 }
-type void struct{}
-
-var member void
 
 func readRucksackFile(filePath string) []string {
 	input, _ := os.ReadFile(filePath)

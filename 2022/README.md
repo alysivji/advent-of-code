@@ -8,6 +8,7 @@ Learning Go by working my way through [Advent of Code 2022](https://adventofcode
   - [Day 1: Calorie Counting](#day-1-calorie-counting)
   - [Day 2: Rock Paper Scissors](#day-2-rock-paper-scissors)
   - [Day 3: Rucksack Reorganization](#day-3-rucksack-reorganization)
+  - [Day 4: Camp Cleanup](#day-4-camp-cleanup)
 
 ## Daily Impressions
 
@@ -35,3 +36,6 @@ Today was a grind; would've been a few lines if I could do it in Python or TS. I
 
 Aside: there is apparently a [Go port of lodash](https://github.com/samber/lo).
 
+### [Day 4: Camp Cleanup](https://adventofcode.com/2022/day/4)
+
+Another grindy day. Brute forced it instead of checking bounds. I'm mostly fighting my lack of knowledge of Go. Hopefully will have some time in the next few days to read through [The Go Programming Language](https://www.gopl.io/) book.
