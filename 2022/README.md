@@ -9,6 +9,7 @@ Learning Go by working my way through [Advent of Code 2022](https://adventofcode
   - [Day 2: Rock Paper Scissors](#day-2-rock-paper-scissors)
   - [Day 3: Rucksack Reorganization](#day-3-rucksack-reorganization)
   - [Day 4: Camp Cleanup](#day-4-camp-cleanup)
+  - [Day 5: Supply Stacks](#day-5-supply-stacks)
 
 ## Daily Impressions
 
@@ -39,3 +40,9 @@ Aside: there is apparently a [Go port of lodash](https://github.com/samber/lo).
 ### [Day 4: Camp Cleanup](https://adventofcode.com/2022/day/4)
 
 Another grindy day. Brute forced it instead of checking bounds. I'm mostly fighting my lack of knowledge of Go. Hopefully will have some time in the next few days to read through [The Go Programming Language](https://www.gopl.io/) book.
+
+### [Day 5: Supply Stacks](https://adventofcode.com/2022/day/5)
+
+Today was Towers of Hanoi more or less. I gave up on only using the Go Standard Library and installed the fantastic [deque](https://pkg.go.dev/github.com/gammazero/deque@v0.2.1) library.
+
+Reading input was not a lot of fun, but am learning about a lot of ways to make things easier to process in Go.
