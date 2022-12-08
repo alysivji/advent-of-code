@@ -10,6 +10,7 @@ Learning Go by working my way through [Advent of Code 2022](https://adventofcode
   - [Day 3: Rucksack Reorganization](#day-3-rucksack-reorganization)
   - [Day 4: Camp Cleanup](#day-4-camp-cleanup)
   - [Day 5: Supply Stacks](#day-5-supply-stacks)
+  - [Day 6: Tuning Trouble](#day-6-tuning-trouble)
 
 ## Daily Impressions
 
@@ -46,3 +47,9 @@ Another grindy day. Brute forced it instead of checking bounds. I'm mostly fight
 Today was Towers of Hanoi more or less. I gave up on only using the Go Standard Library and installed the fantastic [deque](https://pkg.go.dev/github.com/gammazero/deque@v0.2.1) library.
 
 Reading input was not a lot of fun, but am learning about a lot of ways to make things easier to process in Go.
+
+### [Day 6: Tuning Trouble](https://adventofcode.com/2022/day/6)
+
+First time I didn't fight Golang to get the solution done. But it was a very easy problem which used all of the knowledge I accquired from previous puzzles.
+
+Also it was very easy to modify part 1 to solve part 2.
