@@ -11,6 +11,7 @@ Learning Go by working my way through [Advent of Code 2022](https://adventofcode
   - [Day 4: Camp Cleanup](#day-4-camp-cleanup)
   - [Day 5: Supply Stacks](#day-5-supply-stacks)
   - [Day 6: Tuning Trouble](#day-6-tuning-trouble)
+  - [Day 7: No Space Left On Device](#day-7-no-space-left-on-device)
 
 ## Daily Impressions
 
@@ -53,3 +54,9 @@ Reading input was not a lot of fun, but am learning about a lot of ways to make 
 First time I didn't fight Golang to get the solution done. But it was a very easy problem which used all of the knowledge I accquired from previous puzzles.
 
 Also it was very easy to modify part 1 to solve part 2.
+
+### [Day 7: No Space Left On Device](https://adventofcode.com/2022/day/7)
+
+I used ChatGPT to help me parse the input into a tree and to create a print function that takes my tree and prints it out nicely. Learned more feature of Go this way than by actually reading a book (which has been hard to do on vacation). The GPT generated code wasn't perfect, but it helped me get started.
+
+Finally starting to feel comfortable in Go. Not struggling as much as I was for the first few days. I'm still not 100% sure on pointers and the `&` vs `*` operators, but I think that will come in through time.
