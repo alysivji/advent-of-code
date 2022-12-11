@@ -10,18 +10,18 @@ import (
 type TreeGrid struct {
 	rows int
 	cols int
-	grid map[Grid]int
+	grid map[Point]int
 }
 
 func parseTreeHeightInput(filePath string) TreeGrid {
 	input, _ := os.ReadFile(filePath)
 	inputLines := strings.Split(strings.TrimSpace(string(input)), "\n")
 
-	trees := make(map[Grid]int)
+	trees := make(map[Point]int)
 	for y, line := range inputLines {
 		for x, treeHeight := range line {
 			height, _ := strconv.Atoi(string(treeHeight))
-			trees[Grid{x: x, y: y}] = height
+			trees[Point{x: x, y: y}] = height
 		}
 	}
 	return TreeGrid{rows: len(inputLines), cols: len(inputLines), grid: trees}
@@ -42,7 +42,7 @@ func findNumVisibleTrees(treeGrid TreeGrid) int {
 		visible := true
 		// check left
 		for i := currTree.y - 1; i >= 0; i-- {
-			if height <= treeGrid.grid[Grid{x: currTree.x, y: i}] {
+			if height <= treeGrid.grid[Point{x: currTree.x, y: i}] {
 				visible = false
 			}
 		}
@@ -54,7 +54,7 @@ func findNumVisibleTrees(treeGrid TreeGrid) int {
 		// check right
 		visible = true
 		for i := currTree.y + 1; i < treeGrid.cols; i++ {
-			if height <= treeGrid.grid[Grid{x: currTree.x, y: i}] {
+			if height <= treeGrid.grid[Point{x: currTree.x, y: i}] {
 				visible = false
 			}
 		}
@@ -66,7 +66,7 @@ func findNumVisibleTrees(treeGrid TreeGrid) int {
 		// check up
 		visible = true
 		for i := currTree.x - 1; i >= 0; i-- {
-			if height <= treeGrid.grid[Grid{x: i, y: currTree.y}] {
+			if height <= treeGrid.grid[Point{x: i, y: currTree.y}] {
 				visible = false
 			}
 		}
@@ -78,7 +78,7 @@ func findNumVisibleTrees(treeGrid TreeGrid) int {
 		// check down
 		visible = true
 		for i := currTree.x + 1; i < treeGrid.rows; i++ {
-			if height <= treeGrid.grid[Grid{x: i, y: currTree.y}] {
+			if height <= treeGrid.grid[Point{x: i, y: currTree.y}] {
 				visible = false
 			}
 		}
@@ -105,7 +105,7 @@ func findMaxScenicScore(treeGrid TreeGrid) int {
 		visibleLeft := 0
 		for i := currTree.y - 1; i >= 0; i-- {
 			visibleLeft++
-			if height <= treeGrid.grid[Grid{x: currTree.x, y: i}] {
+			if height <= treeGrid.grid[Point{x: currTree.x, y: i}] {
 				break
 			}
 		}
@@ -114,7 +114,7 @@ func findMaxScenicScore(treeGrid TreeGrid) int {
 		visibleRight := 0
 		for i := currTree.y + 1; i < treeGrid.cols; i++ {
 			visibleRight++
-			if height <= treeGrid.grid[Grid{x: currTree.x, y: i}] {
+			if height <= treeGrid.grid[Point{x: currTree.x, y: i}] {
 				break
 			}
 		}
@@ -123,7 +123,7 @@ func findMaxScenicScore(treeGrid TreeGrid) int {
 		visibleUp := 0
 		for i := currTree.x - 1; i >= 0; i-- {
 			visibleUp++
-			if height <= treeGrid.grid[Grid{x: i, y: currTree.y}] {
+			if height <= treeGrid.grid[Point{x: i, y: currTree.y}] {
 				break
 			}
 		}
@@ -132,7 +132,7 @@ func findMaxScenicScore(treeGrid TreeGrid) int {
 		visibleDown := 0
 		for i := currTree.x + 1; i < treeGrid.rows; i++ {
 			visibleDown++
-			if height <= treeGrid.grid[Grid{x: i, y: currTree.y}] {
+			if height <= treeGrid.grid[Point{x: i, y: currTree.y}] {
 				break
 			}
 		}

@@ -1,16 +1,6 @@
 package main
 
-// need this to hack together sets
-type void struct{}
-
-var member void
-
-// grid struct
-type Grid struct {
-	x int
-	y int
-}
-
+// run solutions for each day
 func main() {
 	// day01()
 	// day02()
@@ -19,5 +9,6 @@ func main() {
 	// day05()
 	// day06()
 	// day07()
-	day08()
+	// day08()
+	day09()
 }
