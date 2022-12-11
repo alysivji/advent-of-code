@@ -13,6 +13,7 @@ Learning Go by working my way through [Advent of Code 2022](https://adventofcode
   - [Day 6: Tuning Trouble](#day-6-tuning-trouble)
   - [Day 7: No Space Left On Device](#day-7-no-space-left-on-device)
   - [Day 8: Treetop Tree House](#day-8-treetop-tree-house)
+  - [Day 9: Rope Bridge](#day-9-rope-bridge)
 
 ## Daily Impressions
 
@@ -67,3 +68,9 @@ Finally starting to feel comfortable in Go. Not struggling as much as I was for 
 I brute forced today's challenge using a mapping. Could probably clean it up with 2D arrays and direction vectors to reduce the code, but it's probably not worth it.
 
 Definitely need to look at other people's Go solutions to ensure I'm doing things in "The Go Way."
+
+### [Day 9: Rope Bridge](https://adventofcode.com/2022/day/9)
+
+I finally broke down and started writing methods for my `strut`s. This was another method which required (x, y) coordinates so I created a utility module for `Point` operations.
+
+Some day I need to understand how imaginary numbers make this a lot easier to handle.
