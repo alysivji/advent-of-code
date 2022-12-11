@@ -12,6 +12,7 @@ Learning Go by working my way through [Advent of Code 2022](https://adventofcode
   - [Day 5: Supply Stacks](#day-5-supply-stacks)
   - [Day 6: Tuning Trouble](#day-6-tuning-trouble)
   - [Day 7: No Space Left On Device](#day-7-no-space-left-on-device)
+  - [Day 8: Treetop Tree House](#day-8-treetop-tree-house)
 
 ## Daily Impressions
 
@@ -60,3 +61,9 @@ Also it was very easy to modify part 1 to solve part 2.
 I used ChatGPT to help me parse the input into a tree and to create a print function that takes my tree and prints it out nicely. Learned more feature of Go this way than by actually reading a book (which has been hard to do on vacation). The GPT generated code wasn't perfect, but it helped me get started.
 
 Finally starting to feel comfortable in Go. Not struggling as much as I was for the first few days. I'm still not 100% sure on pointers and the `&` vs `*` operators, but I think that will come in through time.
+
+### [Day 8: Treetop Tree House](https://adventofcode.com/2022/day/8)
+
+I brute forced today's challenge using a mapping. Could probably clean it up with 2D arrays and direction vectors to reduce the code, but it's probably not worth it.
+
+Definitely need to look at other people's Go solutions to ensure I'm doing things in "The Go Way."
