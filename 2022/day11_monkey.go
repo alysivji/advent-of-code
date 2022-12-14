@@ -9,7 +9,6 @@ import (
 	"strings"
 
 	"github.com/gammazero/deque"
-	"github.com/maja42/goval"
 )
 
 type MonkeyDetails struct {
@@ -75,6 +74,11 @@ func simulateMonkeyInTheMiddle(monkeyData map[int]MonkeyDetails, numRounds int, 
 	var itemsInspected []int
 	itemsInspected = make([]int, len(monkeyData))
 
+	denominator := 1
+	for _, monkeyInfo := range monkeyData {
+		denominator = denominator * monkeyInfo.divisibleBy
+	}
+
 	for round := 0; round < numRounds; round++ {
 		for monkeyNum := 0; monkeyNum < len(monkeyData); monkeyNum++ {
 			currMonkeyInfo := monkeyData[monkeyNum]
@@ -82,15 +86,24 @@ func simulateMonkeyInTheMiddle(monkeyData map[int]MonkeyDetails, numRounds int, 
 				itemWorryLevel := currMonkeyInfo.items.PopFront()
 				itemsInspected[monkeyNum] += 1
 
-				eval := goval.NewEvaluator()
-				variables := map[string]interface{}{
-					"old": itemWorryLevel,
+				var currentWorryLevel int
+				parts := strings.Fields(currMonkeyInfo.operation)
+				if parts[1] == "+" {
+					num, _ := strconv.Atoi(parts[2])
+					currentWorryLevel = itemWorryLevel + num
+				} else { // "*"
+					if parts[2] == "old" {
+						currentWorryLevel = itemWorryLevel * itemWorryLevel
+					} else {
+						num, _ := strconv.Atoi(parts[2])
+						currentWorryLevel = itemWorryLevel * num
+					}
 				}
-				result, _ := eval.Evaluate(currMonkeyInfo.operation, variables, nil)
-				currentWorryLevel, _ := result.(int)
 
 				if feelRelief {
 					currentWorryLevel = int(math.Floor(float64((currentWorryLevel) / 3)))
+				} else {
+					currentWorryLevel = currentWorryLevel % denominator
 				}
 
 				var monkeyToThrowTo int
@@ -123,13 +136,19 @@ func day11() {
 	if monkeyBusinessLevel != 10605 {
 		panic("Part 1 example is failing")
 	}
-	// monkeyBusinessLevel = simulateMonkeyInTheMiddle(monkeyData, 1000, false)
-	// fmt.Println(monkeyBusinessLevel)
-	// if monkeyBusinessLevel != 2713310158 {
-	// 	panic("Part 2 example is failing")
-	// }
+	monkeyData = readAndParseMonkeyInformation("2022/data/day11_sample.txt")
+	monkeyBusinessLevel = simulateMonkeyInTheMiddle(monkeyData, 10000, false)
+	fmt.Println(monkeyBusinessLevel)
+	if monkeyBusinessLevel != 2713310158 {
+		panic("Part 2 example is failing")
+	}
 
+	// real input
 	monkeyData = readAndParseMonkeyInformation("2022/data/day11_input.txt")
 	monkeyBusinessLevel = simulateMonkeyInTheMiddle(monkeyData, 20, true)
 	fmt.Println("Part 1:", monkeyBusinessLevel)
+
+	monkeyData = readAndParseMonkeyInformation("2022/data/day11_input.txt")
+	monkeyBusinessLevel = simulateMonkeyInTheMiddle(monkeyData, 10000, false)
+	fmt.Println("Part 2:", monkeyBusinessLevel)
 }
