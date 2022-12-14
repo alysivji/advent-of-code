@@ -16,6 +16,7 @@ Learning Go by working my way through [Advent of Code 2022](https://adventofcode
   - [Day 9: Rope Bridge](#day-9-rope-bridge)
   - [Day 10: Cathode-Ray Tube](#day-10-cathode-ray-tube)
   - [Day 11: Monkey in the Middle](#day-11-monkey-in-the-middle)
+  - [Day 12: Hill Climbing Algorithm](#day-12-hill-climbing-algorithm)
 
 ## Daily Impressions
 
@@ -86,3 +87,9 @@ Today's question was hard to parse, but the actual solution fairly straight forw
 Reading this in with Go was painful. I should have looked at the input because I went down the path of installing [maja42/goval](github.com/maja42/goval) to handle the operation. The `new = old * old` totally threw me for a loop.
 
 Part 2 took forever. I tried out `big.Int`, but it wasn't the right solution. Found a hint on Slack / Reddit that helped me get the answer. I always get caught by LCM-type questions.
+
+Aside: [this solution](https://github.com/mnml/aoc/blob/main/2022/11/1.go) has a really clean way of parsing input
+
+### [Day 12: Hill Climbing Algorithm](https://adventofcode.com/2022/day/12)
+
+This was a "shortest path" problem that took me a bit longer than normal to code up. I was just treating it as a find a path to X vs find the shortest path to X. My idea in part 1 was to work backwards, but I didn't code it that way until part 2 which required it.

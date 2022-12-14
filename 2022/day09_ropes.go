@@ -26,25 +26,6 @@ func parseRopeMoves(filePath string) []RopeMove {
 	return moves
 }
 
-var dir_to_vector_map = map[string]Point{
-	"R": {x: 0, y: +1},
-	"L": {x: 0, y: -1},
-	"U": {x: -1, y: 0},
-	"D": {x: +1, y: 0},
-}
-
-var allDirectionVectors = []Point{
-	{x: -1, y: -1},
-	{x: 0, y: -1},
-	{x: +1, y: -1},
-	{x: -1, y: 0},
-	{x: 0, y: 0},
-	{x: +1, y: 0},
-	{x: -1, y: +1},
-	{x: 0, y: +1},
-	{x: +1, y: +1},
-}
-
 func processMovesAndTrackTail(moves []RopeMove, numKnots int) []Point {
 	// return list of tail positions after each step
 	var tailTracker []Point
