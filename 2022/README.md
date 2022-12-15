@@ -19,6 +19,7 @@ Learning Go by working my way through [Advent of Code 2022](https://adventofcode
   - [Day 12: Hill Climbing Algorithm](#day-12-hill-climbing-algorithm)
   - [Day 13](#day-13)
   - [Day 14: Regolith Reservoir](#day-14-regolith-reservoir)
+  - [Day 15: Beacon Exclusion Zone](#day-15-beacon-exclusion-zone)
 
 ## Daily Impressions
 
@@ -105,3 +106,11 @@ Stashing -- will come back to
 Today was a fairly straight forward puzzle. After struggling with Day 13; I decided to skip it and come back to it later when I could read it with a fresh set of eyes.
 
 It was nice to have a easy puzzle today which could be simulated very quickly in Go. Not sure if this puzzle required a trick or not.
+
+### [Day 15: Beacon Exclusion Zone](https://adventofcode.com/2022/day/15)
+
+Fun puzzle! For part 1, I tired to count the instances where y=limit. Solution ran pretty fast. Brute forcing part 1 for part 2 did not seem like it would work today. I was stuck for a few hours until I saw a Reddit animation with a diamond-shaped bounding box.
+
+That gave me an idea for an algorithm. Find all the boundary points for each of the signals + manhattan distance to closest beacon + 1. Then filter out the points that don't work. This gave me the correct result in ~30-35 seconds (on average). Not perfect, but it does the job.
+
+TODO -- look up other people's solutions for this one
