@@ -17,6 +17,7 @@ Learning Go by working my way through [Advent of Code 2022](https://adventofcode
   - [Day 10: Cathode-Ray Tube](#day-10-cathode-ray-tube)
   - [Day 11: Monkey in the Middle](#day-11-monkey-in-the-middle)
   - [Day 12: Hill Climbing Algorithm](#day-12-hill-climbing-algorithm)
+  - [Day 13](#day-13)
 
 ## Daily Impressions
 
@@ -93,3 +94,7 @@ Aside: [this solution](https://github.com/mnml/aoc/blob/main/2022/11/1.go) has a
 ### [Day 12: Hill Climbing Algorithm](https://adventofcode.com/2022/day/12)
 
 This was a "shortest path" problem that took me a bit longer than normal to code up. I was just treating it as a find a path to X vs find the shortest path to X. My idea in part 1 was to work backwards, but I didn't code it that way until part 2 which required it.
+
+### Day 13
+
+Stashing -- will come back to
