@@ -23,10 +23,6 @@ func readPacketData(filePath string) []packetPair {
 	return allPairs
 }
 
-func comparePairs(packet packetPair) bool {
-
-}
-
 func day13() {
 	var packets []packetPair
 

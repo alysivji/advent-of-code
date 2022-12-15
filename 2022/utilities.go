@@ -1,5 +1,10 @@
 package main
 
+import (
+	"strconv"
+	"strings"
+)
+
 // need this to hack together sets with maps
 type void struct{}
 
@@ -13,6 +18,21 @@ type Point struct {
 
 func (p1 *Point) add(p2 Point) Point {
 	return Point{x: p1.x + p2.x, y: p1.y + p2.y}
+}
+
+func (p1 *Point) sub(p2 Point) Point {
+	return Point{x: p1.x - p2.x, y: p1.y - p2.y}
+}
+
+func (p1 *Point) scalerMult(val int) Point {
+	return Point{x: val * p1.x, y: val * p1.y}
+}
+
+func PointFromString(pointStr string) *Point {
+	parts := strings.Split(pointStr, ",")
+	x, _ := strconv.Atoi(parts[0])
+	y, _ := strconv.Atoi(parts[1])
+	return &Point{x, y}
 }
 
 var dir_to_vector_map = map[string]Point{

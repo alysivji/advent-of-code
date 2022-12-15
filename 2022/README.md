@@ -18,6 +18,7 @@ Learning Go by working my way through [Advent of Code 2022](https://adventofcode
   - [Day 11: Monkey in the Middle](#day-11-monkey-in-the-middle)
   - [Day 12: Hill Climbing Algorithm](#day-12-hill-climbing-algorithm)
   - [Day 13](#day-13)
+  - [Day 14: Regolith Reservoir](#day-14-regolith-reservoir)
 
 ## Daily Impressions
 
@@ -98,3 +99,9 @@ This was a "shortest path" problem that took me a bit longer than normal to code
 ### Day 13
 
 Stashing -- will come back to
+
+### [Day 14: Regolith Reservoir](https://adventofcode.com/2022/day/14)
+
+Today was a fairly straight forward puzzle. After struggling with Day 13; I decided to skip it and come back to it later when I could read it with a fresh set of eyes.
+
+It was nice to have a easy puzzle today which could be simulated very quickly in Go. Not sure if this puzzle required a trick or not.
