@@ -28,6 +28,10 @@ func (p1 *Point) scalerMult(val int) Point {
 	return Point{x: val * p1.x, y: val * p1.y}
 }
 
+func (p1 *Point) manhattanDistance(p2 Point) int {
+	return IntAbs(p1.x-p2.x) + IntAbs(p1.y-p2.y)
+}
+
 func PointFromString(pointStr string) *Point {
 	parts := strings.Split(pointStr, ",")
 	x, _ := strconv.Atoi(parts[0])
