@@ -133,7 +133,7 @@ func getMinDistanceFromSingleTunnel(valves ValveMap, adjMatrix ValveMatrix, star
 }
 
 type ValveScenario struct {
-	time         int
+	step         int
 	currValve    string
 	valvesToOpen []string
 	flowRate     int
@@ -151,7 +151,7 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) in
 	}
 
 	initialScenario := ValveScenario{
-		time:         0,
+		step:         0,
 		currValve:    startValve,
 		valvesToOpen: valvesToOpen,
 		flowRate:     0,
@@ -168,22 +168,19 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) in
 	for len(scenariosToProcess) > 0 {
 		counter++
 		if counter%1000000 == 0 {
-			fmt.Println("scenario #", counter)
+			// fmt.Println("scenario #", counter)
 		}
+		currScenario := scenariosToProcess[0]
+		scenariosToProcess = scenariosToProcess[1:]
+
 		// fmt.Println("*******************")
 		// fmt.Println("Current Scenario")
-		currScenario := scenariosToProcess[0]
 		// fmt.Println(currScenario)
 		// fmt.Println("*******************")
 
-		scenariosToProcess = scenariosToProcess[1:]
-
-		// update flow rate and exit if we are at the limit
-		updatedTotalFlow := currScenario.totalFlow + currScenario.flowRate
-		if currScenario.time+1 == maxSteps {
-			// fmt.Println(currScenario)
-			if updatedTotalFlow > maxFlow {
-				maxFlow = updatedTotalFlow
+		if currScenario.step == maxSteps {
+			if currScenario.totalFlow > maxFlow {
+				maxFlow = currScenario.totalFlow
 			}
 			continue
 		}
@@ -196,7 +193,7 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) in
 			// if so, add it
 			distance := distMatrix[ValvePath{start: currScenario.currValve, end: valveToOpen}]
 			// is there enough time to valve and turn it on?
-			timeStepValveWouldReleasePressure := currScenario.time + distance + 1
+			timeStepValveWouldReleasePressure := currScenario.step + distance + 1
 			movePossible := timeStepValveWouldReleasePressure <= maxSteps
 			if movePossible {
 				// mark valve as opened
@@ -209,9 +206,9 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) in
 
 				updatedFlowRate := currScenario.flowRate + valves[valveToOpen].flowRate
 				// update flow rate for fast travel
-				fastTravelTotalFlow := updatedTotalFlow + (timeStepValveWouldReleasePressure-currScenario.time-1)*currScenario.flowRate
+				fastTravelTotalFlow := currScenario.totalFlow + (timeStepValveWouldReleasePressure-currScenario.step)*currScenario.flowRate
 				newScenario := ValveScenario{
-					time:         timeStepValveWouldReleasePressure,
+					step:         timeStepValveWouldReleasePressure,
 					currValve:    valveToOpen,
 					valvesToOpen: updatedValvesToOpen,
 					flowRate:     updatedFlowRate,
@@ -225,9 +222,12 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) in
 		}
 
 		if !canImprove {
-			nextStep := currScenario.time + 1
+			// fast travel to t = 30
+			timeTravelTo := currScenario.step + 1
+			updatedTotalFlow := currScenario.totalFlow + (timeTravelTo-currScenario.step)*currScenario.flowRate
+
 			updatedScenario := ValveScenario{
-				time:         nextStep,
+				step:         timeTravelTo,
 				currValve:    currScenario.currValve,
 				valvesToOpen: currScenario.valvesToOpen,
 				flowRate:     currScenario.flowRate,
@@ -240,6 +240,7 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) in
 		}
 	}
 
+	// fmt.Println(counter)
 	return maxFlow
 }
 
@@ -253,7 +254,7 @@ func day16() {
 		panic("Part 1 example is failing")
 	}
 
-	// valves = parseValveData("2022/data/day16_input.txt")
-	// maxRelease = findMaxPressureRelease(valves, 30, "AA")
-	// fmt.Println("Part 1:", maxRelease)
+	valves = parseValveData("2022/data/day16_input.txt")
+	maxRelease = findMaxPressureRelease(valves, 30, "AA")
+	fmt.Println("Part 1:", maxRelease)
 }
