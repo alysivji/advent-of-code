@@ -134,10 +134,16 @@ func getMinDistanceFromSingleTunnel(valves ValveMap, adjMatrix ValveMatrix, star
 
 type ValveScenario struct {
 	step         int
-	currValve    string
+	agent        *ValveAgent
 	valvesToOpen []string
 	flowRate     int
 	totalFlow    int
+}
+
+type ValveAgent struct {
+	currValue     string
+	timeToAwake   int
+	flowRateToAdd int
 }
 
 func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) int {
@@ -150,9 +156,10 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) in
 		}
 	}
 
+	agent := ValveAgent{currValue: startValve, timeToAwake: 0, flowRateToAdd: 0}
 	initialScenario := ValveScenario{
 		step:         0,
-		currValve:    startValve,
+		agent:        &agent,
 		valvesToOpen: valvesToOpen,
 		flowRate:     0,
 		totalFlow:    0,
@@ -191,7 +198,8 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) in
 			// fmt.Println("valve to open", valveToOpen)
 			// do we have enough time to get there and turn it on?
 			// if so, add it
-			distance := distMatrix[ValvePath{start: currScenario.currValve, end: valveToOpen}]
+			currValue := currScenario.agent.currValue
+			distance := distMatrix[ValvePath{start: currValue, end: valveToOpen}]
 			// is there enough time to valve and turn it on?
 			timeStepValveWouldReleasePressure := currScenario.step + distance + 1
 			movePossible := timeStepValveWouldReleasePressure <= maxSteps
@@ -207,9 +215,12 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) in
 				updatedFlowRate := currScenario.flowRate + valves[valveToOpen].flowRate
 				// update flow rate for fast travel
 				fastTravelTotalFlow := currScenario.totalFlow + (timeStepValveWouldReleasePressure-currScenario.step)*currScenario.flowRate
+				updatedAgent := *currScenario.agent
+				updatedAgent.currValue = valveToOpen
+
 				newScenario := ValveScenario{
 					step:         timeStepValveWouldReleasePressure,
-					currValve:    valveToOpen,
+					agent:        &updatedAgent,
 					valvesToOpen: updatedValvesToOpen,
 					flowRate:     updatedFlowRate,
 					totalFlow:    fastTravelTotalFlow,
@@ -224,10 +235,9 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) in
 		if !canImprove {
 			secondsInTheFuture := maxSteps - currScenario.step
 			updatedTotalFlow := currScenario.totalFlow + secondsInTheFuture*currScenario.flowRate
-
 			updatedScenario := ValveScenario{
 				step:         currScenario.step + secondsInTheFuture,
-				currValve:    currScenario.currValve,
+				agent:        currScenario.agent,
 				valvesToOpen: currScenario.valvesToOpen,
 				flowRate:     currScenario.flowRate,
 				totalFlow:    updatedTotalFlow,
