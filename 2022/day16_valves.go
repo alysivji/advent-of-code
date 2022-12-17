@@ -222,12 +222,11 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) in
 		}
 
 		if !canImprove {
-			// fast travel to t = 30
-			timeTravelTo := currScenario.step + 1
-			updatedTotalFlow := currScenario.totalFlow + (timeTravelTo-currScenario.step)*currScenario.flowRate
+			secondsInTheFuture := maxSteps - currScenario.step
+			updatedTotalFlow := currScenario.totalFlow + secondsInTheFuture*currScenario.flowRate
 
 			updatedScenario := ValveScenario{
-				step:         timeTravelTo,
+				step:         currScenario.step + secondsInTheFuture,
 				currValve:    currScenario.currValve,
 				valvesToOpen: currScenario.valvesToOpen,
 				flowRate:     currScenario.flowRate,
