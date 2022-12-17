@@ -20,6 +20,7 @@ Learning Go by working my way through [Advent of Code 2022](https://adventofcode
   - [Day 13](#day-13)
   - [Day 14: Regolith Reservoir](#day-14-regolith-reservoir)
   - [Day 15: Beacon Exclusion Zone](#day-15-beacon-exclusion-zone)
+  - [Day 16](#day-16)
 
 ## Daily Impressions
 
@@ -114,3 +115,10 @@ Fun puzzle! For part 1, I tired to count the instances where y=limit. Solution r
 That gave me an idea for an algorithm. Find all the boundary points for each of the signals + manhattan distance to closest beacon + 1. Then filter out the points that don't work. This gave me the correct result in ~30-35 seconds (on average). Not perfect, but it does the job.
 
 TODO -- look up other people's solutions for this one
+
+### Day 16
+
+Go has python style capture groups which is pretty awesome!
+
+- https://dev.to/dandyvica/go-regular-expressions-53dn
+- https://stackoverflow.com/a/39635221/4326704

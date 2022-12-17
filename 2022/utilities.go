@@ -1,6 +1,7 @@
 package main
 
 import (
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -70,4 +71,20 @@ func IntAbs(x int) int {
 		return x
 	}
 	return -1 * x
+}
+
+// function to capture regular expression groups into a map
+// https://stackoverflow.com/a/39635221/4326704
+func processRegularExpression(regEx, stringToCheck string) (paramsMap map[string]string) {
+
+	var compRegEx = regexp.MustCompile(regEx)
+	match := compRegEx.FindStringSubmatch(stringToCheck)
+
+	paramsMap = make(map[string]string)
+	for i, name := range compRegEx.SubexpNames() {
+		if i > 0 && i <= len(match) {
+			paramsMap[name] = match[i]
+		}
+	}
+	return paramsMap
 }
