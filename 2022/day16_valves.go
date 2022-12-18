@@ -135,7 +135,7 @@ func getMinDistanceFromSingleTunnel(valves ValveMap, adjMatrix ValveMatrix, star
 type ValveScenario struct {
 	step         int
 	prevScenario *ValveScenario
-	agent        *ValveAgent
+	agents       []ValveAgent
 	valvesToOpen []string
 	flowRate     int
 	totalFlow    int
@@ -143,11 +143,11 @@ type ValveScenario struct {
 
 type ValveAgent struct {
 	currValue     string
-	openValveStep int
+	firstFlowStep int
 	flowRateToAdd int
 }
 
-func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) int {
+func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string, numAgents int) int {
 	distMatrix := createDistanceMatrix(valves)
 
 	var valvesToOpen []string
@@ -157,10 +157,15 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) in
 		}
 	}
 
-	agent := ValveAgent{currValue: startValve, openValveStep: 0, flowRateToAdd: 0}
+	var agents []ValveAgent
+	for i := 0; i < numAgents; i++ {
+		agent := ValveAgent{currValue: startValve, firstFlowStep: 0, flowRateToAdd: 0}
+		agents = append(agents, agent)
+	}
+
 	initialScenario := ValveScenario{
 		step:         0,
-		agent:        &agent,
+		agents:       agents,
 		valvesToOpen: valvesToOpen,
 		flowRate:     0,
 		totalFlow:    0,
@@ -169,10 +174,7 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) in
 	var scenariosToProcess []ValveScenario
 	scenariosToProcess = append(scenariosToProcess, initialScenario)
 	maxFlow := 0
-	// maxCounter := 10
 	counter := 0
-	// len(scenariosToProcess) > 0 ||
-	// counter <= maxCounter
 	for len(scenariosToProcess) > 0 {
 		counter++
 		// if counter%10 == 0 {
@@ -182,24 +184,31 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) in
 		currScenario := scenariosToProcess[0]
 		scenariosToProcess = scenariosToProcess[1:]
 
-		// update current flow rate if a valve got oppened
-		updatedFlowRate := currScenario.flowRate
-		if currScenario.agent.openValveStep == currScenario.step {
-			updatedFlowRate += currScenario.agent.flowRateToAdd
-		}
-
 		// calculate total flow since previous
 		updatedTotalFlow := currScenario.totalFlow
 		if currScenario.prevScenario != nil {
 			timeElapsed := currScenario.step - currScenario.prevScenario.step
 			updatedTotalFlow += currScenario.flowRate * timeElapsed
+			// fmt.Println("flow", updatedTotalFlow)
+			// fmt.Println(timeElapsed, updatedTotalFlow)
 		}
 
-		// fmt.Println("*******************")
-		// fmt.Println(updatedTotalFlow)
-		// fmt.Println("Current Scenario")
-		// fmt.Println(currScenario)
-		// fmt.Println("*******************")
+		// update current flow rate if a valve got opened
+		updatedFlowRate := currScenario.flowRate
+		var agentIdx int
+		for idx, agent := range currScenario.agents {
+			if agent.firstFlowStep == currScenario.step {
+				updatedFlowRate += agent.flowRateToAdd
+				// fmt.Println("rate", updatedFlowRate)
+				agentIdx = idx
+			}
+		}
+
+		fmt.Println("*******************")
+		fmt.Println(updatedTotalFlow)
+		fmt.Println("Current Scenario")
+		fmt.Println(currScenario)
+		fmt.Println("*******************")
 
 		if currScenario.step == maxSteps {
 			if updatedTotalFlow > maxFlow {
@@ -211,10 +220,10 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) in
 		canImprove := false
 		for _, valveToOpen := range currScenario.valvesToOpen {
 			// how far is valve?
-			// fmt.Println("valve to open", valveToOpen)
 			// do we have enough time to get there and turn it on?
-			// if so, add it
-			currValue := currScenario.agent.currValue
+			// fmt.Println("valve to open", valveToOpen)
+			agentToProcess := currScenario.agents[agentIdx]
+			currValue := agentToProcess.currValue
 			distance := distMatrix[ValvePath{start: currValue, end: valveToOpen}]
 			// is there enough time to valve and turn it on?
 			timeStepValveWouldReleasePressure := currScenario.step + distance + 1
@@ -229,39 +238,50 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) in
 				}
 
 				// fmt.Println("next", valveToOpen)
-
-				updatedAgent := &ValveAgent{
+				var updatedAgents []ValveAgent
+				for _, agent := range currScenario.agents {
+					updatedAgent := agent
+					updatedAgents = append(updatedAgents, updatedAgent)
+				}
+				updatedAgents[agentIdx] = ValveAgent{
 					currValue:     valveToOpen,
 					flowRateToAdd: valves[valveToOpen].flowRate,
-					openValveStep: timeStepValveWouldReleasePressure,
+					firstFlowStep: timeStepValveWouldReleasePressure,
+				}
+
+				minSteps := math.MaxInt
+				for _, agent := range updatedAgents {
+					if agent.firstFlowStep < minSteps {
+						minSteps = agent.firstFlowStep
+					}
 				}
 
 				newScenario := ValveScenario{
-					step:         timeStepValveWouldReleasePressure,
+					step:         minSteps,
 					prevScenario: &currScenario,
-					agent:        updatedAgent,
+					agents:       updatedAgents,
 					valvesToOpen: updatedValvesToOpen,
 					flowRate:     updatedFlowRate,
 					totalFlow:    updatedTotalFlow,
 				}
-				// fmt.Println(newScenario, updatedAgent)
+				fmt.Println(newScenario, updatedAgents)
 				scenariosToProcess = append(scenariosToProcess, newScenario)
 				canImprove = true
 			}
 		}
-		// fmt.Println("-------")
+		fmt.Println("-------")
 
 		if !canImprove {
 			updatedScenario := ValveScenario{
 				step:         maxSteps,
 				prevScenario: &currScenario,
-				agent:        currScenario.agent,
+				agents:       currScenario.agents,
 				valvesToOpen: currScenario.valvesToOpen,
 				flowRate:     updatedFlowRate,
 				totalFlow:    updatedTotalFlow,
 			}
-			// fmt.Println(updatedScenario)
-			// fmt.Println("-------")
+			fmt.Println(updatedScenario)
+			fmt.Println("-------")
 			scenariosToProcess = append(scenariosToProcess, updatedScenario)
 			continue
 		}
@@ -275,13 +295,19 @@ func day16() {
 	var valves ValveMap
 	var maxRelease int
 
+	// sample data
 	valves = parseValveData("2022/data/day16_sample.txt")
-	maxRelease = findMaxPressureRelease(valves, 30, "AA")
-	if maxRelease != 1651 {
-		panic("Part 1 example is failing")
-	}
+	maxRelease = findMaxPressureRelease(valves, 30, "AA", 1)
+	// if maxRelease != 1651 {
+	// 	panic("Part 1 example is failing")
+	// }
 
-	valves = parseValveData("2022/data/day16_input.txt")
-	maxRelease = findMaxPressureRelease(valves, 30, "AA")
-	fmt.Println("Part 1:", maxRelease)
+	// valves = parseValveData("2022/data/day16_sample.txt")
+	// maxRelease = findMaxPressureRelease(valves, 26, "AA", 2)
+	fmt.Println(maxRelease)
+
+	// // real data
+	// valves = parseValveData("2022/data/day16_input.txt")
+	// maxRelease = findMaxPressureRelease(valves, 30, "AA", 1)
+	// fmt.Println("Part 1:", maxRelease)
 }
