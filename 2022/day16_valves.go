@@ -134,6 +134,7 @@ func getMinDistanceFromSingleTunnel(valves ValveMap, adjMatrix ValveMatrix, star
 
 type ValveScenario struct {
 	step         int
+	prevScenario *ValveScenario
 	agent        *ValveAgent
 	valvesToOpen []string
 	flowRate     int
@@ -142,7 +143,7 @@ type ValveScenario struct {
 
 type ValveAgent struct {
 	currValue     string
-	timeToAwake   int
+	openValveStep int
 	flowRateToAdd int
 }
 
@@ -156,7 +157,7 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) in
 		}
 	}
 
-	agent := ValveAgent{currValue: startValve, timeToAwake: 0, flowRateToAdd: 0}
+	agent := ValveAgent{currValue: startValve, openValveStep: 0, flowRateToAdd: 0}
 	initialScenario := ValveScenario{
 		step:         0,
 		agent:        &agent,
@@ -174,20 +175,35 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) in
 	// counter <= maxCounter
 	for len(scenariosToProcess) > 0 {
 		counter++
-		if counter%1000000 == 0 {
-			// fmt.Println("scenario #", counter)
-		}
+		// if counter%10 == 0 {
+		// 	break
+		// 	// fmt.Println("scenario #", counter)
+		// }
 		currScenario := scenariosToProcess[0]
 		scenariosToProcess = scenariosToProcess[1:]
 
+		// update current flow rate if a valve got oppened
+		updatedFlowRate := currScenario.flowRate
+		if currScenario.agent.openValveStep == currScenario.step {
+			updatedFlowRate += currScenario.agent.flowRateToAdd
+		}
+
+		// calculate total flow since previous
+		updatedTotalFlow := currScenario.totalFlow
+		if currScenario.prevScenario != nil {
+			timeElapsed := currScenario.step - currScenario.prevScenario.step
+			updatedTotalFlow += currScenario.flowRate * timeElapsed
+		}
+
 		// fmt.Println("*******************")
+		// fmt.Println(updatedTotalFlow)
 		// fmt.Println("Current Scenario")
 		// fmt.Println(currScenario)
 		// fmt.Println("*******************")
 
 		if currScenario.step == maxSteps {
-			if currScenario.totalFlow > maxFlow {
-				maxFlow = currScenario.totalFlow
+			if updatedTotalFlow > maxFlow {
+				maxFlow = updatedTotalFlow
 			}
 			continue
 		}
@@ -212,34 +228,36 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string) in
 					}
 				}
 
-				updatedFlowRate := currScenario.flowRate + valves[valveToOpen].flowRate
-				// update flow rate for fast travel
-				fastTravelTotalFlow := currScenario.totalFlow + (timeStepValveWouldReleasePressure-currScenario.step)*currScenario.flowRate
-				updatedAgent := *currScenario.agent
-				updatedAgent.currValue = valveToOpen
+				// fmt.Println("next", valveToOpen)
+
+				updatedAgent := &ValveAgent{
+					currValue:     valveToOpen,
+					flowRateToAdd: valves[valveToOpen].flowRate,
+					openValveStep: timeStepValveWouldReleasePressure,
+				}
 
 				newScenario := ValveScenario{
 					step:         timeStepValveWouldReleasePressure,
-					agent:        &updatedAgent,
+					prevScenario: &currScenario,
+					agent:        updatedAgent,
 					valvesToOpen: updatedValvesToOpen,
 					flowRate:     updatedFlowRate,
-					totalFlow:    fastTravelTotalFlow,
+					totalFlow:    updatedTotalFlow,
 				}
-				// fmt.Println(newScenario)
-				// fmt.Println("-------")
+				// fmt.Println(newScenario, updatedAgent)
 				scenariosToProcess = append(scenariosToProcess, newScenario)
 				canImprove = true
 			}
 		}
+		// fmt.Println("-------")
 
 		if !canImprove {
-			secondsInTheFuture := maxSteps - currScenario.step
-			updatedTotalFlow := currScenario.totalFlow + secondsInTheFuture*currScenario.flowRate
 			updatedScenario := ValveScenario{
-				step:         currScenario.step + secondsInTheFuture,
+				step:         maxSteps,
+				prevScenario: &currScenario,
 				agent:        currScenario.agent,
 				valvesToOpen: currScenario.valvesToOpen,
-				flowRate:     currScenario.flowRate,
+				flowRate:     updatedFlowRate,
 				totalFlow:    updatedTotalFlow,
 			}
 			// fmt.Println(updatedScenario)
