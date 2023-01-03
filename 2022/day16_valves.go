@@ -141,7 +141,8 @@ type ValveScenario struct {
 	agents        []ValveAgent
 	valvesToOpen  []string
 	startFlowRate int
-	totalFlow     int
+	// endFlowRate   int
+	totalFlow int
 }
 
 type ValveAgent struct {
@@ -171,7 +172,8 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string, nu
 		agents:        agents,
 		valvesToOpen:  valvesToOpen,
 		startFlowRate: 0,
-		totalFlow:     0,
+		// endFlowRate:   0,
+		totalFlow: 0,
 	}
 
 	var scenariosToProcess []ValveScenario
@@ -182,20 +184,11 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string, nu
 	for len(scenariosToProcess) > 0 {
 		counter++
 		// if counter%10 == 0 {
-		// 	break
-		// 	// fmt.Println("scenario #", counter)
+		// break
+		// fmt.Println("scenario #", counter)
 		// }
 		currScenario := scenariosToProcess[0]
 		scenariosToProcess = scenariosToProcess[1:]
-
-		// calculate total flow since previous
-		updatedTotalFlow := currScenario.totalFlow
-		if currScenario.prevScenario != nil {
-			timeElapsed := currScenario.step - currScenario.prevScenario.step
-			updatedTotalFlow += currScenario.startFlowRate * timeElapsed
-			// fmt.Println("flow", updatedTotalFlow)
-			// fmt.Println(timeElapsed, updatedTotalFlow)
-		}
 
 		// update current flow rate if a valve got opened
 		// figure out which agents are free
@@ -220,22 +213,23 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string, nu
 		// fmt.Println("*******************")
 
 		if currScenario.step == maxSteps {
-			if updatedTotalFlow > maxFlow {
-				maxFlow = updatedTotalFlow
+			if currScenario.totalFlow > maxFlow {
+				maxFlow = currScenario.totalFlow
 				bestScenarioEnd = &currScenario
 			}
 			continue
 		}
 
 		possibleValves := currScenario.valvesToOpen
-		if len(currScenario.agents) >= 1 {
+		if len(availableAgents) > 1 {
 			possibleValves = append(possibleValves, "")
 		}
 
 		var valveCombinations [][]int
 		n := len(possibleValves)
 		k := len(availableAgents)
-		if n >= k {
+		if n == 0 {
+		} else if n >= k {
 			valveCombinations = combin.Permutations(len(possibleValves), len(availableAgents))
 		} else {
 			arr := make([]int, 1)
@@ -295,20 +289,32 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string, nu
 					}
 				}
 
-				minSteps := math.MaxInt
+				nextStep := math.MaxInt
 				for _, agent := range updatedAgents {
-					if agent.nextStepAvailable < minSteps {
-						minSteps = agent.nextStepAvailable
+					if agent.nextStepAvailable < nextStep {
+						nextStep = agent.nextStepAvailable
 					}
 				}
 
+				// endFlowRate := updatedFlowRate
+				// for _, agent := range updatedAgents {
+				// 	if agent.nextStepAvailable == nextStep {
+				// 		endFlowRate += agent.flowRateToAdd
+				// 	}
+				// }
+
+				// calculate total flow since previous
+				updatedTotalFlow := currScenario.totalFlow
+				timeElapsed := nextStep - currScenario.step
+				updatedTotalFlow += updatedFlowRate * timeElapsed
 				newScenario := ValveScenario{
-					step:          minSteps,
+					step:          nextStep,
 					prevScenario:  &currScenario,
 					agents:        updatedAgents,
 					valvesToOpen:  updatedValvesToOpen,
 					startFlowRate: updatedFlowRate,
-					totalFlow:     updatedTotalFlow,
+					// endFlowRate:   endFlowRate,
+					totalFlow: updatedTotalFlow,
 				}
 				// fmt.Println(newScenario, updatedAgents)
 				scenariosToProcess = append(scenariosToProcess, newScenario)
@@ -318,13 +324,19 @@ func findMaxPressureRelease(valves ValveMap, maxSteps int, startValve string, nu
 		// fmt.Println("-------")
 
 		if !canImprove {
+			// fmt.Println("reached")
+			updatedTotalFlow := currScenario.totalFlow
+			timeElapsed := maxSteps - currScenario.step
+			updatedTotalFlow += updatedFlowRate * timeElapsed
+
 			updatedScenario := ValveScenario{
 				step:          maxSteps,
 				prevScenario:  &currScenario,
 				agents:        currScenario.agents,
 				valvesToOpen:  currScenario.valvesToOpen,
 				startFlowRate: updatedFlowRate,
-				totalFlow:     updatedTotalFlow,
+				// endFlowRate:   endFlowRate,
+				totalFlow: updatedTotalFlow,
 			}
 			// fmt.Println(updatedScenario)
 			// fmt.Println("-------")
@@ -348,18 +360,22 @@ func day16() {
 	var maxRelease int
 
 	// sample data
-	valves = parseValveData("2022/data/day16_sample.txt")
-	maxRelease = findMaxPressureRelease(valves, 30, "AA", 1)
+	// valves = parseValveData("2022/data/day16_sample.txt")
+	// maxRelease = findMaxPressureRelease(valves, 30, "AA", 1)
 	// if maxRelease != 1651 {
 	// 	panic("Part 1 example is failing")
 	// }
 
-	// valves = parseValveData("2022/data/day16_sample.txt")
-	// maxRelease = findMaxPressureRelease(valves, 26, "AA", 2)
+	valves = parseValveData("2022/data/day16_sample.txt")
+	maxRelease = findMaxPressureRelease(valves, 26, "AA", 2)
 	fmt.Println(maxRelease)
 
-	// // real data
+	// real data
 	// valves = parseValveData("2022/data/day16_input.txt")
 	// maxRelease = findMaxPressureRelease(valves, 30, "AA", 1)
 	// fmt.Println("Part 1:", maxRelease)
+
+	valves = parseValveData("2022/data/day16_input.txt")
+	maxRelease = findMaxPressureRelease(valves, 30, "AA", 2)
+	fmt.Println(maxRelease)
 }

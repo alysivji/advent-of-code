@@ -122,3 +122,5 @@ Go has python style capture groups which is pretty awesome!
 
 - https://dev.to/dandyvica/go-regular-expressions-53dn
 - https://stackoverflow.com/a/39635221/4326704
+
+Spent a lot of time on this one but still can't get the example to work for more than 1 agent. Will come back to it with Python when I have some time.
