@@ -11,6 +11,9 @@
         "editor.formatOnSave": true,  // only change from workspace
     },
 
+    // dart
+    "dart.flutterSdkPath": ".fvm/flutter_sdk",
+
     // markdown
     "markdownlint.config": {
         "MD001": false,

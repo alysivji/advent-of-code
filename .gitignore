@@ -161,3 +161,6 @@ yarn.lock
 
 # misc
 .DS_Store
+
+# dart
+.fvm/
