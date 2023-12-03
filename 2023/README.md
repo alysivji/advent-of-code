@@ -9,6 +9,7 @@ Learning Dart by working my way through [Advent of Code 2013](https://adventofco
 - [Daily Impressions](#daily-impressions)
   - [Day 1: Trebuchet?!](#day-1-trebuchet)
   - [Day 2: Cube Conundrum](#day-2-cube-conundrum)
+  - [Day 3: Gear Ratios](#day-3-gear-ratios)
 
 <!-- /TOC -->
 
@@ -23,3 +24,9 @@ I definitely hacked together a solution to get things out the door. Totally okay
 ### [Day 2: Cube Conundrum](https://adventofcode.com/2023/day/2)
 
 This was more about reading the data into a data structure I could work with easily. Think I did a pretty good job as the second part flowed easily from my part 1.
+
+### [Day 3: Gear Ratios](https://adventofcode.com/2023/day/3)
+
+Used an object-oriented approach to set up the problem and then used a functional style approach to solve each of the methods. There were some edges that I didn't think about, but after a while I realized I had to track clusters separately since the part numbers repeat.
+
+Found a great article that showed me how to [overload operators in Dart](https://medium.com/pinch-nl/comparing-objects-in-dart-made-easy-with-equatable-d208e5eb9571).
