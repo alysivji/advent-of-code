@@ -10,6 +10,7 @@ Learning Dart by working my way through [Advent of Code 2013](https://adventofco
   - [Day 1: Trebuchet?!](#day-1-trebuchet)
   - [Day 2: Cube Conundrum](#day-2-cube-conundrum)
   - [Day 3: Gear Ratios](#day-3-gear-ratios)
+  - [Day 4: Scratchcards](#day-4-scratchcards)
 
 <!-- /TOC -->
 
@@ -30,3 +31,7 @@ This was more about reading the data into a data structure I could work with eas
 Used an object-oriented approach to set up the problem and then used a functional style approach to solve each of the methods. There were some edges that I didn't think about, but after a while I realized I had to track clusters separately since the part numbers repeat.
 
 Found a great article that showed me how to [overload operators in Dart](https://medium.com/pinch-nl/comparing-objects-in-dart-made-easy-with-equatable-d208e5eb9571).
+
+### [Day 4: Scratchcards](https://adventofcode.com/2023/day/4)
+
+Today was easy. Feels like I'm going back to a lot of the OOP principles that I'm comfortable with in Dart. I should start looking at other people's solutions to make sure I'm doing things in a way that makes sense.
