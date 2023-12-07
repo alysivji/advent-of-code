@@ -11,6 +11,8 @@ Learning Dart by working my way through [Advent of Code 2013](https://adventofco
   - [Day 2: Cube Conundrum](#day-2-cube-conundrum)
   - [Day 3: Gear Ratios](#day-3-gear-ratios)
   - [Day 4: Scratchcards](#day-4-scratchcards)
+  - [Day 5: If You Give A Seed A Fertilizer](#day-5-if-you-give-a-seed-a-fertilizer)
+  - [Day 6: Wait For It](#day-6-wait-for-it)
 
 <!-- /TOC -->
 
@@ -35,3 +37,11 @@ Found a great article that showed me how to [overload operators in Dart](https:/
 ### [Day 4: Scratchcards](https://adventofcode.com/2023/day/4)
 
 Today was easy. Feels like I'm going back to a lot of the OOP principles that I'm comfortable with in Dart. I should start looking at other people's solutions to make sure I'm doing things in a way that makes sense.
+
+### [Day 5: If You Give A Seed A Fertilizer](https://adventofcode.com/2023/day/5)
+
+skipped this day since it sounded boring
+
+### [Day 6: Wait For It](https://adventofcode.com/2023/day/6)
+
+I brute-forced this one. Focused a lot more on writing functional Dart than I did thinking of a smart way to solve the problem, i.e. solving quadratic functions. Definitely learned a bit more about how to work in Dart which is good since I need to get a PR into our Flutter repo in the next few days.
