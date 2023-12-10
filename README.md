@@ -46,6 +46,8 @@ Using [fvm](https://fvm.app/) to manage multiple Flutter / Dart versions
 
 ```console
 fvm dart [path]
+
+fvm dart run --enable-asserts [path]
 ```
 
 ### Go

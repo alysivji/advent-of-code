@@ -1,6 +1,6 @@
-# Advent of Code 2013
+# Advent of Code 2023
 
-Learning Dart by working my way through [Advent of Code 2013](https://adventofcode.com/2013).
+Learning Dart by working my way through [Advent of Code 2023](https://adventofcode.com/2013).
 
 #### Table of Contents
 
@@ -40,7 +40,7 @@ Today was easy. Feels like I'm going back to a lot of the OOP principles that I'
 
 ### [Day 5: If You Give A Seed A Fertilizer](https://adventofcode.com/2023/day/5)
 
-skipped this day since it sounded boring
+I skipped this day initially since it sounded confusing when I read it at midnight. Came back to it on Day 10 -- part 1 was simple, but part 2 required a trick. Took some time to think through intersections of ranges (after getting a hint from the Chicago Python Slack). I feel like I re-write the same code every year as there is a problem like this every single year.
 
 ### [Day 6: Wait For It](https://adventofcode.com/2023/day/6)
 
