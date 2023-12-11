@@ -13,6 +13,7 @@ Learning Dart by working my way through [Advent of Code 2023](https://adventofco
   - [Day 4: Scratchcards](#day-4-scratchcards)
   - [Day 5: If You Give A Seed A Fertilizer](#day-5-if-you-give-a-seed-a-fertilizer)
   - [Day 6: Wait For It](#day-6-wait-for-it)
+  - [Day 7: Camel Cards](#day-7-camel-cards)
 
 <!-- /TOC -->
 
@@ -45,3 +46,13 @@ I skipped this day initially since it sounded confusing when I read it at midnig
 ### [Day 6: Wait For It](https://adventofcode.com/2023/day/6)
 
 I brute-forced this one. Focused a lot more on writing functional Dart than I did thinking of a smart way to solve the problem, i.e. solving quadratic functions. Definitely learned a bit more about how to work in Dart which is good since I need to get a PR into our Flutter repo in the next few days.
+
+### [Day 7: Camel Cards](https://adventofcode.com/2023/day/7)
+
+ChatGPT was helpful in learning about more Dart features like Comparable and `asMap`.
+
+This was a fairly easy puzzle. I'm sure I could have done it in a much better way, but I'm fairly happy with how readable my code is. Dart is a fun language to work with.
+
+TIL:
+- [Comparable interface](https://api.dart.dev/stable/3.2.3/dart-core/Comparable-class.html)
+- `asMap` returns a MapEntry element has a `key` and a `value` attribute
