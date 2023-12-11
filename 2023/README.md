@@ -15,6 +15,7 @@ Learning Dart by working my way through [Advent of Code 2023](https://adventofco
   - [Day 6: Wait For It](#day-6-wait-for-it)
   - [Day 7: Camel Cards](#day-7-camel-cards)
   - [Day 8: Haunted Wasteland](#day-8-haunted-wasteland)
+  - [Day 9: Mirage Maintenance](#day-9-mirage-maintenance)
 
 <!-- /TOC -->
 
@@ -63,3 +64,13 @@ TIL:
 ChatGPT was helpful in generating functions to replicate `itertools.chain` and calculate `lcm` for a list of numbers.
 
 A variant of this puzzle has been done before so it wasn't as bad if I hadn't done it in previous years. Did learn a bit about how `async` works in Dart... not really useful for AoC but definitely useful for work.
+
+### [Day 9: Mirage Maintenance](https://adventofcode.com/2023/day/9)
+
+ChatGPT was helpful in learning more about Dart.
+
+Part 1 felt recursive and that definitely did work. Had some tricky parts, but nothing that I couldn't fix with a bit of debugging. Part 2 was the easiest part 2 in a long time -- maybe it was the language I used, but I just reversed the list and ran the same recursive solution and got the answer.
+
+TIL:
+- if your map has `null` and you filter the `null` out, Dart doesn't understand so you need to `.cast<int>()` to make types work
+- `every` and `any` are the ways to check a conditional against all / any of the values in a list
