@@ -14,6 +14,7 @@ Learning Dart by working my way through [Advent of Code 2023](https://adventofco
   - [Day 5: If You Give A Seed A Fertilizer](#day-5-if-you-give-a-seed-a-fertilizer)
   - [Day 6: Wait For It](#day-6-wait-for-it)
   - [Day 7: Camel Cards](#day-7-camel-cards)
+  - [Day 8: Haunted Wasteland](#day-8-haunted-wasteland)
 
 <!-- /TOC -->
 
@@ -56,3 +57,9 @@ This was a fairly easy puzzle. I'm sure I could have done it in a much better wa
 TIL:
 - [Comparable interface](https://api.dart.dev/stable/3.2.3/dart-core/Comparable-class.html)
 - `asMap` returns a MapEntry element has a `key` and a `value` attribute
+
+### [Day 8: Haunted Wasteland](https://adventofcode.com/2023/day/8)
+
+ChatGPT was helpful in generating functions to replicate `itertools.chain` and calculate `lcm` for a list of numbers.
+
+A variant of this puzzle has been done before so it wasn't as bad if I hadn't done it in previous years. Did learn a bit about how `async` works in Dart... not really useful for AoC but definitely useful for work.
