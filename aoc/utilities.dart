@@ -4,6 +4,22 @@ class Point {
   int x;
   int y;
 
+  Point east() {
+    return this + Vector(1, 0);
+  }
+
+  Point north() {
+    return this + Vector(0, -1);
+  }
+
+  Point south() {
+    return this + Vector(0, 1);
+  }
+
+  Point west() {
+    return this + Vector(-1, 0);
+  }
+
   Iterable<Point> adjacent8() {
     List<Vector> vectors = [
       Vector(-1, 0),
