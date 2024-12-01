@@ -24,6 +24,7 @@ My solutions for [Advent of Code](https://adventofcode.com/).
 | [2021](2021/) | TypeScript |
 | [2022](2022/) | Go         |
 | [2023](2023/) | Dart       |
+| [2024](2024/) | TypeScript |
 
 ## Description
 
