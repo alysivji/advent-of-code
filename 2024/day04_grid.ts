@@ -1,8 +1,13 @@
 import assert from "node:assert";
 import fs from "fs";
 
-import { ALL_DIRECTIONS, DIAGONALS, GridMap, Point, Vector } from "./utilities";
-import test from "node:test";
+import {
+  ALL_DIRECTIONS,
+  DIAGONALS,
+  GridMap,
+  Point,
+  Vector,
+} from "./utilities/grid";
 
 const parseInput = (input: string) => {
   // top left will be 0,0
