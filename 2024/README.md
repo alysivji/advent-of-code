@@ -11,6 +11,7 @@ Strengthening my TS skills by working my way through [Advent of Code 2024](https
   - [Day 2: Red-Nosed Reports](#day-2-red-nosed-reports)
   - [Day 3: Mull It Over](#day-3-mull-it-over)
   - [Day 4: Ceres Search](#day-4-ceres-search)
+  - [Day 5: Print Queue](#day-5-print-queue)
 
 <!-- /TOC -->
 
@@ -41,3 +42,7 @@ Once that was done, I was able to write up some hybrid code -- functional shell 
 Did have a bit of a `eureka` moment when I figured out a better way to do a for loop with a `map` and then again using `filter` and keeping the exact data structure I need for the next set of steps. But again, feels like I have this moment everytime I do something complex with functional code vs the standard React DOM mappings. This is my first proper TypeScript job so I'm hoping a lot of the concepts stick.
 
 A+++++ puzzle. Would buy from again.
+
+### [Day 5: Print Queue](https://adventofcode.com/2024/day/5)
+
+Part 1 was pretty straight forward. Had to refactor a bit to set things up for Part 2. I was wondering if I could use something like `permutations` to not have to think, but this was not a brute force solution. Looked at the data a few times before I saw the pattern. Took longer than I'd like to admin.
