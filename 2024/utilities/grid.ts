@@ -80,3 +80,24 @@ export class GridMap {
     return point.eightDirections().filter((p) => this.has(p));
   }
 }
+
+export class GridSet {
+  private _set: Set<string>;
+
+  constructor(points: Point[] = []) {
+    this._set = new Set();
+    points.forEach((point) => this.add(point));
+  }
+
+  add(point: Point) {
+    this._set.add(point.toString());
+  }
+
+  has(point: Point) {
+    return this._set.has(point.toString());
+  }
+
+  get size() {
+    return this._set.size;
+  }
+}
