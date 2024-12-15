@@ -57,8 +57,15 @@ Completed using an imperative approach. Honestly, I'm not quite sure how I'd mak
 
 Created a wrapper around the native `Set` to have it work with my custom `Point` class.
 
+[Some optimizations from Reddit](https://www.reddit.com/r/adventofcode/comments/1h7z9sj/2024_day_6_pt_2_what_optimisations_are_there/):
+- put obstacles on the original path vs every single point
+  - implemented
+- store direction in the "seen" set so we can find cycles if something repeats by comparing point and the direction that the guard walks
+- do not iterate over every point, you can teleport the guard to the step before the obstacle
+  - this is probably a good one to do, but honestly I don't really want to implement it
+
 ## Todo
 
 - [ ] Day 5 -- create custom comparison function
+- [x] Day 6 -- implement some of the optimizations
 - [ ] Day 6 -- figure out how to do functionally
-- [ ] Day 6 -- find non brute force approach

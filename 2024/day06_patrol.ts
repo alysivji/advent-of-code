@@ -103,31 +103,22 @@ const simulateGuardMovement = (mapInfo: MapInfo) => {
 const findNewObstructionsThatCreateCycle = (mapInfo: MapInfo) => {
   const { initialGuardPosition, obstructions, boxSize } = mapInfo;
 
+  // find original path
+  const { positionsVisited } = simulateGuardMovement(mapInfo);
+  const obstructionLocations = [...positionsVisited.values()].map((p) =>
+    Point.fromString(p),
+  );
+
   let counter = 0;
-  for (let x = 0; x < boxSize; x++) {
-    for (let y = 0; y < boxSize; y++) {
-      const newObstruction = new Point(x, y);
-      if (obstructions.has(newObstruction)) continue;
-      if (newObstruction.equals(initialGuardPosition)) continue;
+  for (const newObstruction of obstructionLocations) {
+    // add obstruction to set, run simulation, remove obstruction
+    // small optimization so we're not creating new objects each time
+    obstructions.add(newObstruction);
+    const result = simulateGuardMovement(mapInfo);
+    obstructions.delete(newObstruction);
 
-      // create new map info
-      const updatedObstructions = new GridSet(
-        [...obstructions.values()].map((pointStr) =>
-          Point.fromString(pointStr),
-        ),
-      );
-      updatedObstructions.add(newObstruction);
-      const newMapInfo = {
-        initialGuardPosition,
-        boxSize,
-        obstructions: updatedObstructions,
-      };
-
-      const result = simulateGuardMovement(newMapInfo);
-      if (result.foundCycle === true) {
-        // console.log("Obstruction:", newObstruction);
-        counter++;
-      }
+    if (result.foundCycle === true) {
+      counter++;
     }
   }
   return counter;

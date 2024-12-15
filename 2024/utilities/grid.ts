@@ -105,6 +105,10 @@ export class GridSet {
     return this._set.has(point.toString());
   }
 
+  delete(point: Point) {
+    return this._set.delete(point.toString());
+  }
+
   // TODO make this into an iterator
   values() {
     return this._set.values();
