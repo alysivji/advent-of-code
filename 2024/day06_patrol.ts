@@ -59,8 +59,15 @@ const simulateGuardMovement = (mapInfo: MapInfo) => {
   let guardDirection = "U";
   let guardPosition = initialGuardPosition;
   let positionsVisited = new GridSet();
-
+  let step = 0;
+  let foundCycle = false;
   while (isOnMap(guardPosition)) {
+    step++;
+    if (step >= boxSize ** 2) {
+      foundCycle = true;
+      break;
+    }
+
     positionsVisited.add(guardPosition);
 
     let newGuardPosition: Point;
@@ -87,7 +94,43 @@ const simulateGuardMovement = (mapInfo: MapInfo) => {
     guardPosition = newGuardPosition!;
   }
 
-  return positionsVisited.size;
+  return {
+    positionsVisited,
+    foundCycle,
+  };
+};
+
+const findNewObstructionsThatCreateCycle = (mapInfo: MapInfo) => {
+  const { initialGuardPosition, obstructions, boxSize } = mapInfo;
+
+  let counter = 0;
+  for (let x = 0; x < boxSize; x++) {
+    for (let y = 0; y < boxSize; y++) {
+      const newObstruction = new Point(x, y);
+      if (obstructions.has(newObstruction)) continue;
+      if (newObstruction.equals(initialGuardPosition)) continue;
+
+      // create new map info
+      const updatedObstructions = new GridSet(
+        [...obstructions.values()].map((pointStr) =>
+          Point.fromString(pointStr),
+        ),
+      );
+      updatedObstructions.add(newObstruction);
+      const newMapInfo = {
+        initialGuardPosition,
+        boxSize,
+        obstructions: updatedObstructions,
+      };
+
+      const result = simulateGuardMovement(newMapInfo);
+      if (result.foundCycle === true) {
+        // console.log("Obstruction:", newObstruction);
+        counter++;
+      }
+    }
+  }
+  return counter;
 };
 
 const TEST_INPUT = `....#.....
@@ -102,8 +145,23 @@ const TEST_INPUT = `....#.....
 ......#...
 `;
 const testMapInfo = parseInput(TEST_INPUT);
-assert(simulateGuardMovement(testMapInfo) === 41, "part 1 test failed");
+assert(
+  simulateGuardMovement(testMapInfo).positionsVisited.size === 41,
+  "part 1 test failed",
+);
+assert(
+  !simulateGuardMovement(testMapInfo).foundCycle,
+  "part 1 test failed -- found cycle",
+);
+assert(
+  findNewObstructionsThatCreateCycle(testMapInfo) === 6,
+  "part 2 test failed",
+);
 
 const puzzleInput = fs.readFileSync("data/day06_input.txt").toString();
 const mapInfo = parseInput(puzzleInput);
-console.log("Part 1:", simulateGuardMovement(mapInfo));
+console.log("Part 1:", simulateGuardMovement(mapInfo).positionsVisited.size);
+
+console.time("part 2");
+console.log("Part 2:", findNewObstructionsThatCreateCycle(mapInfo));
+console.timeEnd("part 2");

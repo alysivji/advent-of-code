@@ -12,6 +12,8 @@ Strengthening my TS skills by working my way through [Advent of Code 2024](https
   - [Day 3: Mull It Over](#day-3-mull-it-over)
   - [Day 4: Ceres Search](#day-4-ceres-search)
   - [Day 5: Print Queue](#day-5-print-queue)
+  - [Day 6: Guard Gallivant](#day-6-guard-gallivant)
+- [Todo](#todo)
 
 <!-- /TOC -->
 
@@ -46,3 +48,17 @@ A+++++ puzzle. Would buy from again.
 ### [Day 5: Print Queue](https://adventofcode.com/2024/day/5)
 
 Part 1 was pretty straight forward. Had to refactor a bit to set things up for Part 2. I was wondering if I could use something like `permutations` to not have to think, but this was not a brute force solution. Looked at the data a few times before I saw the pattern. Took longer than I'd like to admin.
+
+Update -- saw on reddit that people created a custom comparison function -- which makes sense since we know to sort two numbers.
+
+### [Day 6: Guard Gallivant](https://adventofcode.com/2024/day/6)
+
+Completed using an imperative approach. Honestly, I'm not quite sure how I'd make this functional. Part 2 was brute-forced and took 15 seconds. I should be doing better here, but solving a puzzle is solving a puzzle... especially since I'm over a week behind.
+
+Created a wrapper around the native `Set` to have it work with my custom `Point` class.
+
+## Todo
+
+- [ ] Day 5 -- create custom comparison function
+- [ ] Day 6 -- figure out how to do functionally
+- [ ] Day 6 -- find non brute force approach

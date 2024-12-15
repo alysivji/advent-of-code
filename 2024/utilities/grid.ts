@@ -17,6 +17,10 @@ export class Point {
     return new Point(this.x + vector.xDiff, this.y + vector.yDiff);
   }
 
+  equals(other: Point) {
+    return this.x === other.x && this.y === other.y;
+  }
+
   eightDirections() {
     return ALL_DIRECTIONS.map(
       (v) => new Point(this.x + v.xDiff, this.y + v.yDiff),
@@ -89,6 +93,10 @@ export class GridSet {
     points.forEach((point) => this.add(point));
   }
 
+  get size() {
+    return this._set.size;
+  }
+
   add(point: Point) {
     this._set.add(point.toString());
   }
@@ -97,7 +105,8 @@ export class GridSet {
     return this._set.has(point.toString());
   }
 
-  get size() {
-    return this._set.size;
+  // TODO make this into an iterator
+  values() {
+    return this._set.values();
   }
 }
