@@ -69,7 +69,7 @@ Created a wrapper around the native `Set` to have it work with my custom `Point`
 
 I was thinking about using permutations for this one but 12 choose 12 is a very big number so there definitely must have been another way. Found a recursive solution that worked for part 1, but not part 2 since I recursed backwards vs forwards. Ran into some issues during the part 2 implementation that made me realize I could more easily solve this by recursing forward.
 
-Felt really comfortable to write the solution in TypeScript.
+Felt really comfortable to write the solution in TypeScript. Also, learned about [structuredClone()](https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone)
 
 ## Todo
 
