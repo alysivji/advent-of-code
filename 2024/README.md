@@ -13,6 +13,7 @@ Strengthening my TS skills by working my way through [Advent of Code 2024](https
   - [Day 4: Ceres Search](#day-4-ceres-search)
   - [Day 5: Print Queue](#day-5-print-queue)
   - [Day 6: Guard Gallivant](#day-6-guard-gallivant)
+  - [Day 7: Bridge Repair](#day-7-bridge-repair)
 - [Todo](#todo)
 
 <!-- /TOC -->
@@ -63,6 +64,12 @@ Created a wrapper around the native `Set` to have it work with my custom `Point`
 - store direction in the "seen" set so we can find cycles if something repeats by comparing point and the direction that the guard walks
 - do not iterate over every point, you can teleport the guard to the step before the obstacle
   - this is probably a good one to do, but honestly I don't really want to implement it
+
+### [Day 7: Bridge Repair](https://adventofcode.com/2024/day/7)
+
+I was thinking about using permutations for this one but 12 choose 12 is a very big number so there definitely must have been another way. Found a recursive solution that worked for part 1, but not part 2 since I recursed backwards vs forwards. Ran into some issues during the part 2 implementation that made me realize I could more easily solve this by recursing forward.
+
+Felt really comfortable to write the solution in TypeScript.
 
 ## Todo
 
