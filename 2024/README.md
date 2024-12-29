@@ -14,6 +14,7 @@ Strengthening my TS skills by working my way through [Advent of Code 2024](https
   - [Day 5: Print Queue](#day-5-print-queue)
   - [Day 6: Guard Gallivant](#day-6-guard-gallivant)
   - [Day 7: Bridge Repair](#day-7-bridge-repair)
+  - [Day 8: Resonant Collinearity](#day-8-resonant-collinearity)
 - [Todo](#todo)
 
 <!-- /TOC -->
@@ -70,6 +71,12 @@ Created a wrapper around the native `Set` to have it work with my custom `Point`
 I was thinking about using permutations for this one but 12 choose 12 is a very big number so there definitely must have been another way. Found a recursive solution that worked for part 1, but not part 2 since I recursed backwards vs forwards. Ran into some issues during the part 2 implementation that made me realize I could more easily solve this by recursing forward.
 
 Felt really comfortable to write the solution in TypeScript. Also, learned about [structuredClone()](https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone)
+
+### [Day 8: Resonant Collinearity](https://adventofcode.com/2024/day/8)
+
+Read through this one almost a couple of weeks ago, but didn't want to spend the time doing yet another grid problem. Came back to it after a while since I have to do some algorithmic thinking for a side project I need to do and this was good practice.
+
+Hacked togethered a solution for Part 1 in a functional way. For Part 2, I had to refactor a bit since my solution was more or less hard coded for part 1. New approach was a bit more functional, but to get things done, I buried a `while` loop in there as iteration made more sense for the problem at hand. Can clean things up, but :shrug: not worth the effort.
 
 ## Todo
 
