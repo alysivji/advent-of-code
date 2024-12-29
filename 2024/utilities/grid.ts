@@ -2,7 +2,7 @@ export class Point {
   constructor(
     public x: number,
     public y: number,
-  ) {}
+  ) { }
 
   toString() {
     return `${this.x},${this.y}`;
@@ -21,6 +21,10 @@ export class Point {
     return this.x === other.x && this.y === other.y;
   }
 
+  directionalVector(other: Point) {
+    return new Vector(other.x - this.x, other.y - this.y)
+  }
+
   eightDirections() {
     return ALL_DIRECTIONS.map(
       (v) => new Point(this.x + v.xDiff, this.y + v.yDiff),
@@ -32,7 +36,7 @@ export class Vector {
   constructor(
     public xDiff: number,
     public yDiff: number,
-  ) {}
+  ) { }
 
   multiply(scaler: number) {
     return new Vector(scaler * this.xDiff, scaler * this.yDiff);
