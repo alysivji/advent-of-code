@@ -15,6 +15,7 @@ Strengthening my TS skills by working my way through [Advent of Code 2024](https
   - [Day 6: Guard Gallivant](#day-6-guard-gallivant)
   - [Day 7: Bridge Repair](#day-7-bridge-repair)
   - [Day 8: Resonant Collinearity](#day-8-resonant-collinearity)
+  - [Day 9: Disk Fragmenter](#day-9-disk-fragmenter)
 - [Todo](#todo)
 
 <!-- /TOC -->
@@ -77,6 +78,10 @@ Felt really comfortable to write the solution in TypeScript. Also, learned about
 Read through this one almost a couple of weeks ago, but didn't want to spend the time doing yet another grid problem. Came back to it after a while since I have to do some algorithmic thinking for a side project I need to do and this was good practice.
 
 Hacked togethered a solution for Part 1 in a functional way. For Part 2, I had to refactor a bit since my solution was more or less hard coded for part 1. New approach was a bit more functional, but to get things done, I buried a `while` loop in there as iteration made more sense for the problem at hand. Can clean things up, but :shrug: not worth the effort.
+
+### [Day 9: Disk Fragmenter](https://adventofcode.com/2024/day/9)
+
+I brute-forced it. This was not a fun problem. I feel like this year's AoC has been a bit of a slog with us doing a lot of the same type of iteration tricks.
 
 ## Todo
 
