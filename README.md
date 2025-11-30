@@ -25,6 +25,7 @@ My solutions for [Advent of Code](https://adventofcode.com/).
 | [2022](2022/) | Go         |
 | [2023](2023/) | Dart       |
 | [2024](2024/) | TypeScript |
+| [2025](2025/) | TypeScript |
 
 ## Description
 
@@ -84,6 +85,7 @@ pytest 2020/day01_expense_report.py
 #### Install
 
 1. Install node version specified in `.nvmrc`
+1. `nvm use`
 1. `npm install`
 
 #### Run
