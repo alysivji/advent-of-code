@@ -8,7 +8,7 @@ Strengthening my TS skills by working my way through [Advent of Code 2025](https
 
 - [Installation Notes](#installation-notes)
 - [Daily Impressions](#daily-impressions)
-  - [Day 1: Title](#day-1-title)
+  - [Day 1: Secret Entrance](#day-1-secret-entrance)
 - [Todo](#todo)
 
 <!-- /TOC -->
@@ -21,10 +21,10 @@ Downside is that `tsx` doesn't support type checking ([more info](https://better
 
 ## Daily Impressions
 
-### [Day 1: Title](https://adventofcode.com/2025/day/1)
+### [Day 1: Secret Entrance](https://adventofcode.com/2025/day/1)
 
-notes
+Part 1 was fairly straight forward. Part 2, I got accidently. My edge cases weren't well defined, but it somehow produced the right number. After I got it done, I fixed the edge cases properly.
 
 ## Todo
 
-todo
+- [ ] fix import errors in IDE for node imports

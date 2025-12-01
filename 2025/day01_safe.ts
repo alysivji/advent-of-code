@@ -1,5 +1,6 @@
-import fs from "fs";
-import os from "os";
+import assert from "node:assert";
+import fs from "node:fs";
+import os from "node:os";
 
 const TEST_INPUT = `L68
 L30
@@ -57,7 +58,7 @@ const part1 = (moves: Move[]): number => {
 };
 
 const part2 = (moves: Move[]): number => {
-  // count the number of times the dial is at zero during & after each move
+  // count the number of times the dial is at zero during each step of the move
 
   let numTimesAtZero = 0;
   let pointer = START_NUMBER;
@@ -65,28 +66,41 @@ const part2 = (moves: Move[]): number => {
   for (const move of moves) {
     const modDistance = move.distance % TOTAL_NUMBERS;
 
-    if (move.rotationDirection === "L") {
-      pointer = pointer - modDistance;
-    } else {
-      pointer = pointer + modDistance;
+    const sign = move.rotationDirection === "L" ? -1 : 1;
+
+    let newPointer = pointer + sign * modDistance;
+
+    if (newPointer < 0) {
+      newPointer = TOTAL_NUMBERS + newPointer;
+      numTimesAtZero++;
+
+      // adjustment -- don't double count if old pointer is at 0
+      // we've already counted the move in the previous step
+      if (pointer === 0) {
+        numTimesAtZero--;
+      }
+    }
+
+    if (newPointer >= TOTAL_NUMBERS) {
+      newPointer = newPointer % TOTAL_NUMBERS;
+      numTimesAtZero++;
+
+      // adjustment -- don't double count if new pointer is at 0
+      // we'll count the move in the next check
+      if (newPointer === 0) {
+        numTimesAtZero--;
+      }
+    }
+
+    if (newPointer === 0) {
+      numTimesAtZero++;
     }
 
     // count number of full rotations as those cross 0 integer division times
     const numTimesAtZeroDuringMove = Math.floor(move.distance / TOTAL_NUMBERS);
     numTimesAtZero += numTimesAtZeroDuringMove;
 
-    if (pointer < 0) {
-      pointer = (TOTAL_NUMBERS + pointer) % TOTAL_NUMBERS;
-      numTimesAtZero++;
-
-      // adjustment -- don't double count if pointer is at 0
-      if (pointer === 0) {
-        numTimesAtZero--;
-      }
-    } else if (pointer >= TOTAL_NUMBERS) {
-      pointer = pointer % TOTAL_NUMBERS;
-      numTimesAtZero++;
-    }
+    pointer = newPointer;
   }
 
   return numTimesAtZero;
@@ -97,8 +111,8 @@ const testMoves = parseInput(TEST_INPUT);
 const puzzleInput = fs.readFileSync("data/day01_input.txt").toString();
 const puzzleMoves = parseInput(puzzleInput);
 
-console.log(part1(testMoves));
+assert(part1(testMoves) === 3, "part 1 test failed");
 console.log("part 1:", part1(puzzleMoves));
 
-console.log(part2(testMoves));
+assert(part2(testMoves) === 6, "part 2 test failed");
 console.log("part 2:", part2(puzzleMoves));
