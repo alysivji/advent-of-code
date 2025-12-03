@@ -10,6 +10,7 @@ Strengthening my TS skills by working my way through [Advent of Code 2025](https
 - [Daily Impressions](#daily-impressions)
   - [Day 1: Secret Entrance](#day-1-secret-entrance)
   - [Day 2: Gift Shop](#day-2-gift-shop)
+  - [Day 3: Lobby](#day-3-lobby)
 - [Todo](#todo)
 
 <!-- /TOC -->
@@ -31,6 +32,12 @@ Part 1 was fairly straight forward. Part 2, I got accidently. My edge cases were
 Part 2 took a while as I created a array chunker from scratch. In Part 1, I used an array to keep track of the productIds -- but in part 2, productIds were in the array twice so I had to use a set. The runtime is slightly slow at `719.746ms` but I think this is good enough.
 
 Tomorrow will take a look at other solutions.
+
+### [Day 3: Lobby](https://adventofcode.com/2025/day/3)
+
+Generalized my part 1 solution for part 2. First time this year. Took some time to complete part 2 because I forgot that `Array.sort()` is a in-place operation.
+
+Not really a big fan of debugging with `tsx`. Don't really like `ts-node` either. Thinking about switching to [bun](https://bun.com/) -- probably a good use of time now that [Anthropic bought Bun](https://bun.com/blog/bun-joins-anthropic). Better to do it now and only have to modify a few things.
 
 ## Todo
 

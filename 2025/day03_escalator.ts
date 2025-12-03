@@ -14,22 +14,35 @@ const parseInput = (inputText: string): number[][] => {
     .map((bank) => bank.split("").map(Number));
 };
 
-const part1 = (batteryBanks: number[][]): number => {
-  // find each bank's joltage -- largest number we can put together
+const calculateTotalOutputJoltage = (
+  batteryBanks: number[][],
+  numBatteriesToUse: number,
+): number => {
+  // find each bank's joltage -- largest number with `numBatteriesToUse` digits
   // sum all joltages
 
   const joltages: number[] = [];
 
   for (const bank of batteryBanks) {
-    // find largest number in 0 to n-1 elements
-    const firstDigit = bank.slice(0, -1).sort((a, b) => b - a)[0]!;
+    const batteriesToUse: number[] = [];
 
-    // first largest number in numbers after first digit
-    const secondDigit = bank
-      .slice(bank.indexOf(firstDigit) + 1)
-      .sort((a, b) => b - a)[0]!;
+    let start = 0;
+    while (batteriesToUse.length < numBatteriesToUse) {
+      const end = bank.length - numBatteriesToUse + batteriesToUse.length + 1;
+      const batteriesToExamine = bank.slice(start, end);
 
-    joltages.push(firstDigit * 10 + secondDigit);
+      const largestDigit = [...batteriesToExamine].sort((a, b) => b - a)[0]!;
+
+      batteriesToUse.push(largestDigit);
+
+      start += batteriesToExamine.indexOf(largestDigit) + 1;
+    }
+
+    const joltage = batteriesToUse
+      .map((value, idx) => value * 10 ** (batteriesToUse.length - idx - 1))
+      .reduce((acc, value) => acc + value);
+
+    joltages.push(joltage);
   }
 
   return joltages.reduce((acc, value) => acc + value);
@@ -40,5 +53,14 @@ const testBatteryBanks = parseInput(TEST_INPUT);
 const puzzleInput = fs.readFileSync("data/day03_input.txt").toString();
 const batteryBanks = parseInput(puzzleInput);
 
-assert(part1(testBatteryBanks) === 357, "part 1 test failed");
-console.log("part1", part1(batteryBanks));
+assert(
+  calculateTotalOutputJoltage(testBatteryBanks, 2) === 357,
+  "part 1 test failed",
+);
+console.log("part1", calculateTotalOutputJoltage(batteryBanks, 2));
+
+assert(
+  calculateTotalOutputJoltage(testBatteryBanks, 12) === 3121910778619,
+  "part 2 test failed",
+);
+console.log("part2", calculateTotalOutputJoltage(batteryBanks, 12));
