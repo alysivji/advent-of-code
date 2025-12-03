@@ -42,3 +42,5 @@ Not really a big fan of debugging with `tsx`. Don't really like `ts-node` either
 ## Todo
 
 - [ ] fix import errors in IDE for node imports
+- [ ] migrate to Bun
+- [ ] solve day 2 with RegEx
