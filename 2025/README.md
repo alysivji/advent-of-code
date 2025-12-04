@@ -11,6 +11,7 @@ Strengthening my TS skills by working my way through [Advent of Code 2025](https
   - [Day 1: Secret Entrance](#day-1-secret-entrance)
   - [Day 2: Gift Shop](#day-2-gift-shop)
   - [Day 3: Lobby](#day-3-lobby)
+  - [Day 4: Printing Department](#day-4-printing-department)
 - [Todo](#todo)
 
 <!-- /TOC -->
@@ -38,6 +39,14 @@ Tomorrow will take a look at other solutions.
 Generalized my part 1 solution for part 2. First time this year. Took some time to complete part 2 because I forgot that `Array.sort()` is a in-place operation.
 
 Not really a big fan of debugging with `tsx`. Don't really like `ts-node` either. Thinking about switching to [bun](https://bun.com/) -- probably a good use of time now that [Anthropic bought Bun](https://bun.com/blog/bun-joins-anthropic). Better to do it now and only have to modify a few things.
+
+### [Day 4: Printing Department](https://adventofcode.com/2025/day/4)
+
+Normally I write out the GridMap data structure, but today I decided to use the one I wrote out last year.
+
+Not happy with my part 2, feels like it could have been cleaner or used my part 1.
+
+Spent time dealing with Xfinity issues so had to use my hotspot. This also means I didn't have time to switch over to Bun.
 
 ## Todo
 
