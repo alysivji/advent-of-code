@@ -12,6 +12,7 @@ Strengthening my TS skills by working my way through [Advent of Code 2025](https
   - [Day 2: Gift Shop](#day-2-gift-shop)
   - [Day 3: Lobby](#day-3-lobby)
   - [Day 4: Printing Department](#day-4-printing-department)
+  - [Day 5: Cafeteria](#day-5-cafeteria)
 - [Todo](#todo)
 
 <!-- /TOC -->
@@ -47,6 +48,14 @@ Normally I write out the GridMap data structure, but today I decided to use the 
 Not happy with my part 2, feels like it could have been cleaner or used my part 1.
 
 Spent time dealing with Xfinity issues so had to use my hotspot. This also means I didn't have time to switch over to Bun.
+
+### [Day 5: Cafeteria](https://adventofcode.com/2025/day/5)
+
+Finished part 1 fairly quickly the night the challenge came out. My algorithm for part 2 tried to find overlapping intervals using two for loops, but that wasn't working. Got a hint from ChatGPT that sorting the intervals would help out and would only require a single loop. That did it!
+
+Had another hint about using [Interval Trees](https://en.wikipedia.org/wiki/Interval_tree), but feels like a bit more work than I actually want to put in.
+
+Sorting to simplify problems by only looping once is definitely another trick I need to put in my toolbox.
 
 ## Todo
 
