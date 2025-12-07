@@ -13,6 +13,7 @@ Strengthening my TS skills by working my way through [Advent of Code 2025](https
   - [Day 3: Lobby](#day-3-lobby)
   - [Day 4: Printing Department](#day-4-printing-department)
   - [Day 5: Cafeteria](#day-5-cafeteria)
+  - [Day 6: Trash Compactor](#day-6-trash-compactor)
 - [Todo](#todo)
 
 <!-- /TOC -->
@@ -56,6 +57,12 @@ Finished part 1 fairly quickly the night the challenge came out. My algorithm fo
 Had another hint about using [Interval Trees](https://en.wikipedia.org/wiki/Interval_tree), but feels like a bit more work than I actually want to put in.
 
 Sorting to simplify problems by only looping once is definitely another trick I need to put in my toolbox.
+
+### [Day 6: Trash Compactor](https://adventofcode.com/2025/day/6)
+
+This was an easy problem. Did it while watching the College Football Conference Championships so not really fully paying attention.
+
+First time this year I've had to modify my input parsing for part 2.
 
 ## Todo
 
