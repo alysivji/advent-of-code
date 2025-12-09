@@ -14,6 +14,9 @@ Strengthening my TS skills by working my way through [Advent of Code 2025](https
   - [Day 4: Printing Department](#day-4-printing-department)
   - [Day 5: Cafeteria](#day-5-cafeteria)
   - [Day 6: Trash Compactor](#day-6-trash-compactor)
+  - [Day 7: Laboratories](#day-7-laboratories)
+  - [Day 8 -- have not attempted it yet](#day-8----have-not-attempted-it-yet)
+  - [Day 9: Movie Theater](#day-9-movie-theater)
 - [Todo](#todo)
 
 <!-- /TOC -->
@@ -63,6 +66,18 @@ Sorting to simplify problems by only looping once is definitely another trick I 
 This was an easy problem. Did it while watching the College Football Conference Championships so not really fully paying attention.
 
 First time this year I've had to modify my input parsing for part 2.
+
+### [Day 7: Laboratories](https://adventofcode.com/2025/day/7)
+
+Part 1 was pretty straight forward. Part 2 I got two different ways, but one of the ways was too much to brute force and the other way feels like the answer is a coincidence.
+
+I thought about working backwards, but realized it make more sense to work forwards and build up the beam count. Did the trick! :boom:
+
+### Day 8 -- have not attempted it yet
+
+### [Day 9: Movie Theater](https://adventofcode.com/2025/day/9)
+
+While stuck on Day 7, I saw how simple Part 1 was so I just went ahead and did it. Still trying to comprehend how to solve Part 2. All my
 
 ## Todo
 

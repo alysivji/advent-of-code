@@ -59,45 +59,30 @@ const part1 = (diagram: string[][]) => {
 };
 
 const part2 = (diagram: string[][]) => {
-  const splitters = new GridSet();
-  diagram.forEach((line, row) =>
-    line.forEach((value, col) => {
-      if (value !== "^") {
-        return;
-      }
+  let currBeam: number[] = diagram[0]!.map((value) => (value === "S" ? 1 : 0));
 
-      const point = new Point(col, row);
-      splitters.add(point);
-    }),
-  );
-
-  const entranceIndex = diagram[0]!.indexOf("S");
-  const beamStack = [new Point(entranceIndex, 0)];
-
-  let numPaths = 0;
-  while (beamStack.length > 0) {
-    const currBeam = beamStack.pop()!;
-    const newBeamLocation = new Point(currBeam.x, currBeam.y + 2);
-
-    if (newBeamLocation.y > diagram.length) {
-      numPaths++;
-    } else {
-      if (!splitters.has(newBeamLocation)) {
-        beamStack.push(newBeamLocation);
-      } else {
-        beamStack.push(new Point(newBeamLocation.x - 1, newBeamLocation.y));
-        beamStack.push(new Point(newBeamLocation.x + 1, newBeamLocation.y));
-      }
-    }
+  for (let index = 2; index < diagram.length; index += 2) {
+    const updatedBeam = new Array(currBeam.length).fill(0);
+    diagram[index]!.map((value) => value === "^").forEach(
+      (hasSplitter, colIndex) => {
+        if (hasSplitter) {
+          updatedBeam[colIndex - 1] += currBeam[colIndex];
+          updatedBeam[colIndex] = 0;
+          updatedBeam[colIndex + 1] += currBeam[colIndex];
+        } else {
+          updatedBeam[colIndex] += currBeam[colIndex]!;
+        }
+      },
+    );
+    currBeam = updatedBeam;
   }
-
-  return numPaths;
+  return currBeam.reduce((a, b) => a + b);
 };
+
+const testManifoldDiagram = parseInput(TEST_INPUT);
 
 const puzzleInput = fs.readFileSync("data/day07_input.txt").toString();
 const manifoldDiagram = parseInput(puzzleInput);
-
-const testManifoldDiagram = parseInput(TEST_INPUT);
 
 assert(part1(testManifoldDiagram) === 21, "part 1 is incorrect");
 console.log("part 1:", part1(manifoldDiagram));
