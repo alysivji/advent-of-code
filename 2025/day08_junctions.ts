@@ -71,71 +71,53 @@ const part1 = (junctionBoxes: Point3D[], numConnectionsToMake: number) => {
 
   allDistances.sort((a, b) => a.value - b.value);
 
+  const uniqueCircuits = new Set<string>();
   const shortestConnections = allDistances
     .slice(0, numConnectionsToMake)
-    .map((d) => d.pairs);
+    .map((d) => {
+      uniqueCircuits.add(d.pairs[0].toString());
+      uniqueCircuits.add(d.pairs[1].toString());
+      return d.pairs;
+    });
 
-  const circuits: Set<string>[] = [];
-  for (let index = 0; index < shortestConnections.length; index++) {
-    const connection = shortestConnections[index];
-
-    let isNewCircuit = true;
-    const circuitsToCombine: number[] = [];
-    for (let circuitIndex = 0; circuitIndex < circuits.length; circuitIndex++) {
-      const circuit = circuits[circuitIndex];
-
-      if (circuit.has(connection[0].toString())) {
-        circuit.add(connection[1].toString());
-        isNewCircuit = false;
-        circuitsToCombine.push(circuitIndex);
-      }
-
-      if (circuit.has(connection[1].toString())) {
-        circuit.add(connection[0].toString());
-        isNewCircuit = false;
-        circuitsToCombine.push(circuitIndex);
-      }
-    }
-
-    if (isNewCircuit) {
-      const newCircuit = new Set<string>();
-      newCircuit.add(connection[0].toString());
-      newCircuit.add(connection[1].toString());
-
-      circuits.push(newCircuit);
-    }
-
-    // bug i need to fix
-    // if connection points are different sets, we need to merge
+  let circuits: Set<string>[] = [];
+  for (const [value, _] of Array.from(uniqueCircuits.entries())) {
+    const newCircuit = new Set<string>();
+    newCircuit.add(value);
+    circuits.push(newCircuit);
   }
 
-  for (let i = 0; i < circuits.length; i++) {
-    for (let j = i + 1; j < circuits.length; j++) {
-      const set1 = circuits[i];
-      const set2 = circuits[j];
+  for (const boxes of shortestConnections) {
+    const connectionSet = new Set(boxes.map((p) => p.toString()));
 
-      if (set1.intersection(set2).size > 0) {
-        for (const [entry, _] of Array.from(set2.entries())) {
-          set1.add(entry);
-          set2.delete(entry);
+    for (const circuit of circuits) {
+      if (circuit.intersection(connectionSet).size > 0) {
+        for (const junctionBox of boxes) {
+          circuit.add(junctionBox.toString());
         }
       }
     }
   }
 
-  for (let i = 0; i < circuits.length; i++) {
-    for (let j = i + 1; j < circuits.length; j++) {
-      const set1 = circuits[i];
-      const set2 = circuits[j];
+  let numCircuits;
+  do {
+    numCircuits = circuits.length;
+    for (let i = 0; i < numCircuits; i++) {
+      for (let j = i + 1; j < numCircuits; j++) {
+        const set1 = circuits[i];
+        const set2 = circuits[j];
 
-      if (set1.intersection(set2).size > 0) {
-        for (const [entry, _] of Array.from(set2.entries())) {
-          set1.add(entry);
-          set2.delete(entry);
+        if (set1.intersection(set2).size > 0) {
+          for (const [entry, _] of Array.from(set2.entries())) {
+            set1.add(entry);
+            set2.delete(entry);
+          }
         }
       }
     }
-  }
+
+    circuits = circuits.filter((set) => set.size > 0);
+  } while (numCircuits !== circuits.length);
 
   circuits.sort((a, b) => b.size - a.size);
 
@@ -150,5 +132,5 @@ const testJunctionBoxes = parseInput(TEST_INPUT);
 const puzzleInput = fs.readFileSync("data/day08_input.txt").toString();
 const junctionBoxes = parseInput(puzzleInput);
 
-// assert(part1(testJunctionBoxes, 10) === 40, "part 1 is incorrect");
+assert(part1(testJunctionBoxes, 10) === 40, "part 1 is incorrect");
 console.log("part 1:", part1(junctionBoxes, 1000));
