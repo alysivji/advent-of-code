@@ -11,7 +11,7 @@ export class Point3D {
 
   static fromString(pointStr: string) {
     const parts = pointStr.split(",").map(Number);
-    return new Point3D(parts[0], parts[1], parts[2]);
+    return new Point3D(parts[0]!, parts[1]!, parts[2]!);
   }
 
   distance(other: Point3D) {
@@ -61,9 +61,9 @@ const part1 = (junctionBoxes: Point3D[], numConnectionsToMake: number) => {
 
   for (let i = 0; i < junctionBoxes.length; i++) {
     for (let j = i + 1; j < junctionBoxes.length; j++) {
-      const item = {
-        value: junctionBoxes[i].distance(junctionBoxes[j]),
-        pairs: [junctionBoxes[i], junctionBoxes[j]],
+      const item: Distance = {
+        value: junctionBoxes[i]!.distance(junctionBoxes[j]!),
+        pairs: [junctionBoxes[i]!, junctionBoxes[j]!],
       };
       allDistances.push(item);
     }
@@ -75,8 +75,8 @@ const part1 = (junctionBoxes: Point3D[], numConnectionsToMake: number) => {
   const shortestConnections = allDistances
     .slice(0, numConnectionsToMake)
     .map((d) => {
-      uniqueCircuits.add(d.pairs[0].toString());
-      uniqueCircuits.add(d.pairs[1].toString());
+      uniqueCircuits.add(d.pairs[0]!.toString());
+      uniqueCircuits.add(d.pairs[1]!.toString());
       return d.pairs;
     });
 
@@ -104,8 +104,8 @@ const part1 = (junctionBoxes: Point3D[], numConnectionsToMake: number) => {
     numCircuits = circuits.length;
     for (let i = 0; i < numCircuits; i++) {
       for (let j = i + 1; j < numCircuits; j++) {
-        const set1 = circuits[i];
-        const set2 = circuits[j];
+        const set1 = circuits[i]!;
+        const set2 = circuits[j]!;
 
         if (set1.intersection(set2).size > 0) {
           for (const [entry, _] of Array.from(set2.entries())) {
@@ -127,6 +127,52 @@ const part1 = (junctionBoxes: Point3D[], numConnectionsToMake: number) => {
     .reduce((acc, value) => acc * value, 1);
 };
 
+const part2 = (junctionBoxes: Point3D[]) => {
+  const allDistances: Distance[] = [];
+
+  for (let i = 0; i < junctionBoxes.length; i++) {
+    for (let j = i + 1; j < junctionBoxes.length; j++) {
+      const item: Distance = {
+        value: junctionBoxes[i]!.distance(junctionBoxes[j]!),
+        pairs: [junctionBoxes[i]!, junctionBoxes[j]!],
+      };
+      allDistances.push(item);
+    }
+  }
+
+  allDistances.sort((a, b) => a.value - b.value);
+
+  const junctionBoxesNotInCircuits = new Set<string>(
+    junctionBoxes.map((point) => point.toString()),
+  );
+  const shortestConnections = allDistances.map((d) => d.pairs);
+
+  const circuits: Set<string>[] = [];
+  for (const boxes of shortestConnections) {
+    const connectionSet = new Set(boxes.map((p) => p.toString()));
+
+    if (junctionBoxesNotInCircuits.intersection(connectionSet).size == 2) {
+      circuits.push(connectionSet);
+      for (const junctionBox of connectionSet) {
+        junctionBoxesNotInCircuits.delete(junctionBox);
+      }
+    } else {
+      for (const circuit of circuits) {
+        if (circuit.intersection(connectionSet).size > 0) {
+          for (const junctionBox of boxes) {
+            circuit.add(junctionBox.toString());
+            junctionBoxesNotInCircuits.delete(junctionBox.toString());
+          }
+        }
+      }
+
+      if (junctionBoxesNotInCircuits.size === 0) {
+        return boxes[0]!.x * boxes[1]!.x;
+      }
+    }
+  }
+};
+
 const testJunctionBoxes = parseInput(TEST_INPUT);
 
 const puzzleInput = fs.readFileSync("data/day08_input.txt").toString();
@@ -134,3 +180,6 @@ const junctionBoxes = parseInput(puzzleInput);
 
 assert(part1(testJunctionBoxes, 10) === 40, "part 1 is incorrect");
 console.log("part 1:", part1(junctionBoxes, 1000));
+
+assert(part2(testJunctionBoxes) === 25272, "part 2 is incorrect");
+console.log("part 2:", part2(junctionBoxes));

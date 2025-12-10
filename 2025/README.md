@@ -15,7 +15,7 @@ Strengthening my TS skills by working my way through [Advent of Code 2025](https
   - [Day 5: Cafeteria](#day-5-cafeteria)
   - [Day 6: Trash Compactor](#day-6-trash-compactor)
   - [Day 7: Laboratories](#day-7-laboratories)
-  - [Day 8 -- have not attempted it yet](#day-8----have-not-attempted-it-yet)
+  - [Day 8: Playground](#day-8-playground)
   - [Day 9: Movie Theater](#day-9-movie-theater)
 - [Todo](#todo)
 
@@ -73,7 +73,9 @@ Part 1 was pretty straight forward. Part 2 I got two different ways, but one of 
 
 I thought about working backwards, but realized it make more sense to work forwards and build up the beam count. Did the trick! :boom:
 
-### Day 8 -- have not attempted it yet
+### [Day 8: Playground](https://adventofcode.com/2025/day/8)
+
+Part 2 was a lot easier than Part 1. The solution was a lot longer than I enjoyed -- maybe I just have really bad TypeScript skills here. Might be worthwhile to look at other people's solutions.
 
 ### [Day 9: Movie Theater](https://adventofcode.com/2025/day/9)
 
