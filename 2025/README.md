@@ -86,6 +86,8 @@ While stuck on Day 7, I saw how simple Part 1 was so I just went ahead and did i
 
 Got the algorithm correct for the test case for Part 1, but it's not efficient enough to solve the actual example. Think I need to do something with greedy algoriths. Maybe as a heuristic, pick the button that gives you the minimum number of digits off.
 
+Tried a heap, but my comparator function might not be completely correct here. Again, works for some cases, but not all.
+
 ## Todo
 
 - [ ] fix import errors in IDE for node imports
