@@ -1,7 +1,7 @@
 import assert from "node:assert";
 import fs from "node:fs";
 import os from "node:os";
-import { Point } from "../2024/utilities/grid";
+import { GridSet, Point, Vector } from "../2024/utilities/grid";
 
 const TEST_INPUT = `7,1
 11,1
@@ -39,10 +39,50 @@ const part1 = (points: Point[]): number => {
   return maxArea;
 };
 
+const part2 = (points: Point[]): number => {
+  const pointsToConnect: Point[] = [...points, points[0]!];
+
+  const border: Point[] = [];
+  border.push(pointsToConnect.pop()!);
+
+  while (pointsToConnect.length > 0) {
+    const nextPointToConnect = pointsToConnect.pop()!;
+    const lastPointConnected = border.pop()!;
+
+    const diff = lastPointConnected.directionalVector(nextPointToConnect);
+
+    // can only move in 4 directions so 1 of the differences will be 0
+    let unitDirectionVector: Vector;
+    if (diff.xDiff === 0) {
+      unitDirectionVector = new Vector(0, diff.yDiff / Math.abs(diff.yDiff));
+    } else if (diff.yDiff === 0) {
+      unitDirectionVector = new Vector(diff.xDiff / Math.abs(diff.xDiff), 0);
+    } else {
+      throw new Error("should not get here");
+    }
+
+    let pointToAdd: Point = lastPointConnected;
+    while (true) {
+      border.push(pointToAdd);
+      if (pointToAdd.equals(nextPointToConnect)) break;
+
+      pointToAdd = pointToAdd.add(unitDirectionVector);
+    }
+  }
+
+  const borderSet = new GridSet(border);
+
+  console.log(borderSet);
+
+  return 0;
+};
+
 const testTiles = parseInput(TEST_INPUT);
 
 const puzzleInput = fs.readFileSync("data/day09_input.txt").toString();
 const tiles = parseInput(puzzleInput);
 
-assert(part1(testTiles) === 50, "part 1 is incorrect");
-console.log("part 1:", part1(tiles));
+// assert(part1(testTiles) === 50, "part 1 is incorrect");
+// console.log("part 1:", part1(tiles));
+
+part2(testTiles);
