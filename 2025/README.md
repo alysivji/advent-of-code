@@ -17,6 +17,7 @@ Strengthening my TS skills by working my way through [Advent of Code 2025](https
   - [Day 7: Laboratories](#day-7-laboratories)
   - [Day 8: Playground](#day-8-playground)
   - [Day 9: Movie Theater](#day-9-movie-theater)
+  - [Day 10: Factory](#day-10-factory)
 - [Todo](#todo)
 
 <!-- /TOC -->
@@ -81,8 +82,13 @@ Part 2 was a lot easier than Part 1. The solution was a lot longer than I enjoye
 
 While stuck on Day 7, I saw how simple Part 1 was so I just went ahead and did it. Still trying to comprehend how to solve Part 2. All my
 
+### [Day 10: Factory](https://adventofcode.com/2025/day/10)
+
+Got the algorithm correct for the test case for Part 1, but it's not efficient enough to solve the actual example. Think I need to do something with greedy algoriths. Maybe as a heuristic, pick the button that gives you the minimum number of digits off.
+
 ## Todo
 
 - [ ] fix import errors in IDE for node imports
 - [ ] migrate to Bun
 - [ ] solve day 2 with RegEx
+- [ ] solve day 8 with Disjoint Set Union
