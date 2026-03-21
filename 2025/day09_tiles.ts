@@ -40,39 +40,56 @@ const part1 = (points: Point[]): number => {
 };
 
 const part2 = (points: Point[]): number => {
-  const pointsToConnect: Point[] = [...points, points[0]!];
+  const getBorder = () => {
+    const pointsToConnect: Point[] = [...points, points[0]!];
 
-  const border: Point[] = [];
-  border.push(pointsToConnect.pop()!);
+    const border: Point[] = [];
+    border.push(pointsToConnect.pop()!);
 
-  while (pointsToConnect.length > 0) {
-    const nextPointToConnect = pointsToConnect.pop()!;
-    const lastPointConnected = border.pop()!;
+    while (pointsToConnect.length > 0) {
+      const nextPointToConnect = pointsToConnect.pop()!;
+      const lastPointConnected = border.pop()!;
 
-    const diff = lastPointConnected.directionalVector(nextPointToConnect);
+      const diff = lastPointConnected.directionalVector(nextPointToConnect);
 
-    // can only move in 4 directions so 1 of the differences will be 0
-    let unitDirectionVector: Vector;
-    if (diff.xDiff === 0) {
-      unitDirectionVector = new Vector(0, diff.yDiff / Math.abs(diff.yDiff));
-    } else if (diff.yDiff === 0) {
-      unitDirectionVector = new Vector(diff.xDiff / Math.abs(diff.xDiff), 0);
-    } else {
-      throw new Error("should not get here");
+      // can only move in 4 directions so 1 of the differences will be 0
+      let unitDirectionVector: Vector;
+      if (diff.xDiff === 0) {
+        unitDirectionVector = new Vector(0, diff.yDiff / Math.abs(diff.yDiff));
+      } else if (diff.yDiff === 0) {
+        unitDirectionVector = new Vector(diff.xDiff / Math.abs(diff.xDiff), 0);
+      } else {
+        throw new Error("should not get here");
+      }
+
+      let pointToAdd: Point = lastPointConnected;
+      while (true) {
+        border.push(pointToAdd);
+        if (pointToAdd.equals(nextPointToConnect)) break;
+
+        pointToAdd = pointToAdd.add(unitDirectionVector);
+      }
     }
 
-    let pointToAdd: Point = lastPointConnected;
-    while (true) {
-      border.push(pointToAdd);
-      if (pointToAdd.equals(nextPointToConnect)) break;
+    return {
+      border: new GridSet(border),
+      minX: Math.min(...border.map((point) => point.x)),
+      maxX: Math.max(...border.map((point) => point.x)),
+      minY: Math.min(...border.map((point) => point.y)),
+      maxY: Math.max(...border.map((point) => point.y)),
+    };
+  };
 
-      pointToAdd = pointToAdd.add(unitDirectionVector);
-    }
-  }
+  const { border, minX, maxX, minY, maxY } = getBorder();
 
-  const borderSet = new GridSet(border);
+  // pick a point inside the border (how do i know it's inside the border)
+  // check up, down, left, and right. has to hit all of them
+  // then the point is inside. from there build out an frontier
+  // once our frontier == the border, those points are part of the inside
 
-  console.log(borderSet);
+  // then for each pair, we'd need to do a set intersection
+
+  // this still seems inefficient, anything we can do to improve?
 
   return 0;
 };
@@ -85,4 +102,5 @@ const tiles = parseInput(puzzleInput);
 // assert(part1(testTiles) === 50, "part 1 is incorrect");
 // console.log("part 1:", part1(tiles));
 
-part2(testTiles);
+// part2(testTiles);
+part2(tiles);
